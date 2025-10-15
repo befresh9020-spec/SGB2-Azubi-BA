@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGB II – Audio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #E2001A;
+      min-height: 100vh;
+      padding: 20px;
+      color: white;
+      line-height: 1.6;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.3);
+      margin: 10px auto;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .content {
+      max-width: 700px;
+      margin: 0 auto 25px auto;
+      background: rgba(0,0,0,0.4);
+      padding: 20px 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
+      text-align: center;
+    }
+
+    .content h2 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+    }
+
+    /* Stylischer Audio-Button */
+    .audio-btn {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.6);
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-size: 1.5rem;
+      line-height: 60px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 10px;
+    }
+
+    .audio-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="index.html" class="back-button">⬅ Zurück zur Übersicht</a>
+    <h1>SGB II – Audio</h1>
+  </div>
+
+  <div class="content">
+    <h2>Was ist Einkommen?</h2>
+    <audio id="audio1" src="audio/sgb2_1.mp3"></audio>
+    <div class="audio-btn" onclick="togglePlay('audio1', this)">▶</div>
+  </div>
+
+  <div class="content">
+    <h2>Was sind Absetzbeträge bei der Anrechnung von Einkommen?</h2>
+    <audio id="audio2" src="audio/sgb2_2.mp3"></audio>
+    <div class="audio-btn" onclick="togglePlay('audio2', this)">▶</div>
+  </div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <a href="index.html" class="back-button">⬅ Zurück zur Übersicht</a>
+  </div>
+
+  <script>
+    function togglePlay(id, btn) {
+      const audio = document.getElementById(id);
+
+      // Stoppe andere Audios, wenn eins abgespielt wird
+      document.querySelectorAll("audio").forEach(a => {
+        if (a !== audio) {
+          a.pause();
+          a.currentTime = 0;
+          const otherBtn = a.nextElementSibling;
+          if (otherBtn) otherBtn.textContent = "▶";
+        }
+      });
+
+      if (audio.paused) {
+        audio.play();
+        btn.textContent = "⏸";
+      } else {
+        audio.pause();
+        btn.textContent = "▶";
+      }
+
+      // Wenn Audio zu Ende ist → Button zurücksetzen
+      audio.onended = () => {
+        btn.textContent = "▶";
+      };
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGB II – Berechtigte</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #E2001A;
+      min-height: 100vh;
+      padding: 20px;
+      color: white;
+      line-height: 1.6;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.3);
+      margin: 10px auto;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .content {
+      max-width: 900px;
+      margin: 0 auto 25px auto;
+      background: rgba(0,0,0,0.4);
+      padding: 20px 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .content h2 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .content p {
+      margin-bottom: 12px;
+    }
+
+    .content ol, .content ul {
+      margin: 10px 0 15px 25px;
+    }
+
+    /* Tabellen-Styling */
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    thead {
+      background: rgba(255,255,255,0.15);
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    th {
+      font-weight: 600;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Responsive Tabelle */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      .content {
+        padding: 15px;
+        font-size: 0.95rem;
+      }
+
+      thead {
+        display: none;
+      }
+      table, tbody, tr, td {
+        display: block;
+        width: 100%;
+      }
+      tr {
+        margin-bottom: 15px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 10px;
+        padding: 10px;
+      }
+      td {
+        padding: 8px 8px 8px 50%;
+        position: relative;
+        border: none;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+      }
+      td:last-child {
+        border-bottom: none;
+      }
+      td::before {
+        position: absolute;
+        left: 10px;
+        top: 8px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: 600;
+        color: #fff;
+      }
+      td:nth-of-type(1)::before { content: "Geburtsjahrgang"; }
+      td:nth-of-type(2)::before { content: "Anhebung (Monate)"; }
+      td:nth-of-type(3)::before { content: "Altersgrenze"; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="index.html" class="back-button">⬅ Zurück zur Übersicht</a>
+    <h1>SGB II – Leistungsberechtigte </h1>
+  </div>
+
+  <div class="content">
+    <h2>§ 7 - Leistungsberechtigte</h2>
+    (1) Leistungen nach diesem Buch erhalten Personen, die
+    <ol>
+      <li>das 15. Lebensjahr vollendet und die Altersgrenze nach § 7a noch nicht erreicht haben,</li>
+      <li>erwerbsfähig sind,</li>
+      <li>hilfebedürftig sind und</li>
+      <li>ihren gewöhnlichen Aufenthalt in der Bundesrepublik Deutschland haben (erwerbsfähige Leistungsberechtigte).</li>
+    </ol>
+    (…)
+    <p>(2) Leistungen erhalten auch Personen, die mit erwerbsfähigen Leistungsberechtigten in einer Bedarfsgemeinschaft leben. 
+    Dienstleistungen und Sachleistungen werden ihnen nur erbracht, wenn dadurch Hemmnisse bei der Eingliederung der erwerbsfähigen Leistungsberechtigten beseitigt oder vermindert werden. (…)</p>
+    <p>(3) Zur Bedarfsgemeinschaft gehören</p>
+    <ol>
+      <li>die erwerbsfähigen Leistungsberechtigten,</li>
+      <li>die im Haushalt lebenden Eltern oder der im Haushalt lebende Elternteil eines unverheirateten erwerbsfähigen Kindes, 
+          welches das 25. Lebensjahr noch nicht vollendet hat, und die im Haushalt lebende Partnerin oder der im Haushalt lebende Partner dieses Elternteils,</li>
+      <li>als Partnerin oder Partner der erwerbsfähigen Leistungsberechtigten</li>
+
+      <p>a) die nicht dauernd getrennt lebende Ehegattin oder der nicht dauernd getrennt lebende Ehegatte,</p>
+      <p>b) die nicht dauernd getrennt lebende Lebenspartnerin oder der nicht dauernd getrennt lebende Lebenspartner,<p>
+      <p>c) eine Person, die mit der erwerbsfähigen leistungsberechtigten Person in einem gemeinsamen Haushalt so zusammenlebt, 
+           dass nach verständiger Würdigung der wechselseitige Wille anzunehmen ist, Verantwortung füreinander zu tragen und füreinander einzustehen.</p>
+
+      <li>die dem Haushalt angehörenden unverheirateten Kinder der in den Nummern 1 bis 3 genannten Personen, wenn sie das 25. Lebensjahr noch nicht vollendet haben, 
+      soweit sie die Leistungen zur Sicherung ihres Lebensunterhalts nicht aus eigenem Einkommen oder Vermögen beschaffen können.</li>
+    </ol>
+
+    (3a) Ein wechselseitiger Wille, Verantwortung füreinander zu tragen und füreinander einzustehen, wird vermutet, wenn Partner
+    <ol>
+      <li>länger als ein Jahr zusammenleben,</li>
+      <li>mit einem gemeinsamen Kind zusammenleben,</li>
+      <li>Kinder oder Angehörige im Haushalt versorgen oder</li>
+      <li>befugt sind, über Einkommen oder Vermögen des anderen zu verfügen.</li>
+    </ol>
+
+    (4) Leistungen nach diesem Buch erhält nicht, wer in einer stationären Einrichtung untergebracht ist, 
+    Rente wegen Alters oder Knappschaftsausgleichsleistung oder ähnliche Leistungen öffentlich-rechtlicher Art bezieht. 
+    Dem Aufenthalt in einer stationären Einrichtung ist der Aufenthalt in einer Einrichtung zum Vollzug richterlich angeordneter Freiheitsentziehung gleichgestellt. 
+    Abweichend von Satz 1 erhält Leistungen nach diesem Buch,
+
+    <ol>
+      <li>wer voraussichtlich für weniger als sechs Monate in einem Krankenhaus (§ 107 des Fünften Buches) untergebracht ist oder</li>
+      <li>wer in einer stationären Einrichtung nach Satz 1 untergebracht und unter den üblichen Bedingungen des allgemeinen Arbeitsmarktes 
+      mindestens 15 Stunden wöchentlich erwerbstätig ist.</li>
+    </ol>
+
+    Die Sätze 1 und 3 Nummer 2 gelten für Bewohner von Räumlichkeiten im Sinne des § 42a Absatz 2 Satz 1 Nummer 2 und Satz 3 des Zwölften Buches entsprechend.
+    <p>(4a) nicht ausbildungsrelevant</p>
+    <p>(5) nicht ausbildungsrelevant</p>
+    <p>(6) nicht ausbildungsrelevant</p>
+
+    <h2>§ 7a - Altersgrenze</h2>
+    <p>Personen, die vor dem 1. Januar 1947 geboren sind, erreichen die Altersgrenze mit Ablauf des Monats, 
+    in dem sie das 65. Lebensjahr vollenden. Für Personen, die nach dem 31. Dezember 1946 geboren sind, wird die Altersgrenze wie folgt angehoben:</p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Geburtsjahrgang</th>
+            <th>Anhebung um (Monate)</th>
+            <th>Altersgrenze</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>bis 1946</td><td>—</td><td>65 Jahre</td></tr>
+          <tr><td>1947</td><td>1</td><td>65 Jahre und 1 Monat</td></tr>
+          <tr><td>1948</td><td>2</td><td>65 Jahre und 2 Monate</td></tr>
+          <tr><td>1949</td><td>3</td><td>65 Jahre und 3 Monate</td></tr>
+          <tr><td>1950</td><td>4</td><td>65 Jahre und 4 Monate</td></tr>
+          <tr><td>1951</td><td>5</td><td>65 Jahre und 5 Monate</td></tr>
+          <tr><td>1952</td><td>6</td><td>65 Jahre und 6 Monate</td></tr>
+          <tr><td>1953</td><td>7</td><td>65 Jahre und 7 Monate</td></tr>
+          <tr><td>1954</td><td>8</td><td>65 Jahre und 8 Monate</td></tr>
+          <tr><td>1955</td><td>9</td><td>65 Jahre und 9 Monate</td></tr>
+          <tr><td>1956</td><td>10</td><td>65 Jahre und 10 Monate</td></tr>
+          <tr><td>1957</td><td>11</td><td>65 Jahre und 11 Monate</td></tr>
+          <tr><td>1958</td><td>12</td><td>66 Jahre</td></tr>
+          <tr><td>1959</td><td>14</td><td>66 Jahre und 2 Monate</td></tr>
+          <tr><td>1960</td><td>16</td><td>66 Jahre und 4 Monate</td></tr>
+          <tr><td>1961</td><td>18</td><td>66 Jahre und 6 Monate</td></tr>
+          <tr><td>1962</td><td>20</td><td>66 Jahre und 8 Monate</td></tr>
+          <tr><td>1963</td><td>22</td><td>66 Jahre und 10 Monate</td></tr>
+          <tr><td>ab 1964</td><td>24</td><td>67 Jahre</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>§ 37 - Antragserfordernis</h2>
+    <p>(1) Leistungen nach diesem Buch werden auf Antrag erbracht. (…) </p>
+    <p>(2) Leistungen nach diesem Buch werden nicht für Zeiten vor der Antragstellung erbracht. 
+    Der Antrag auf Leistungen zur Sicherung des Lebensunterhalts wirkt auf den Ersten des Monats zurück. (…) </p>
+
+    <h2>§ 38 Vertretung der Bedarfsgemeinschaft</h2>
+    <p>(1) Soweit Anhaltspunkte dem nicht entgegenstehen, wird vermutet, dass die oder der erwerbsfähige Leistungsberechtigte bevollmächtigt ist, 
+    Leistungen nach diesem Buch auch für die mit ihm in einer Bedarfsgemeinschaft lebenden Personen zu beantragen und entgegenzunehmen. 
+    Leben mehrere erwerbsfähige Leistungsberechtigte in einer Bedarfsgemeinschaft, gilt diese Vermutung zugunsten der Antrag stellenden Person.</p>
+    <p>(2) nicht ausbildungsrelevant</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGB2 lernen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #E2001A;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white !important;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            color: white !important;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            color: white !important;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 320px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.07);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .flip-card-front {
+            background: #DDE3E8;
+            color: #333;
+        }
+
+        .flip-card-back {
+            background: rgba(0,0,0,0.8);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            background: linear-gradient(45deg, #E2001A, #a0001a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .flip-card-back h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .flip-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .flip-card-back p {
+            margin-bottom: 20px;
+        }
+
+        .card-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .card-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .card-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .card-link.pdf-link {
+            background: rgba(226, 0, 26, 0.3);
+            border-color: rgba(226, 0, 26, 0.5);
+        }
+
+        .card-link.pdf-link:hover {
+            background: rgba(226, 0, 26, 0.5);
+        }
+
+        .flip-card-front .logo {
+            width: 70px;
+            height: 70px;
+            background-color: #E2001A;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(226, 0, 26, 0.3);
+            position: relative;
+        }
+
+        .flip-card-front .logo::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #ff0000 0deg,
+                #ff8000 45deg,
+                #ffff00 90deg,
+                #80ff00 135deg,
+                #00ff00 180deg,
+                #00ff80 225deg,
+                #00ffff 270deg,
+                #0080ff 315deg,
+                #0000ff 360deg,
+                #8000ff 405deg,
+                #ff00ff 450deg,
+                #ff0080 495deg,
+                #ff0000 540deg
+            );
+            z-index: -1;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: scale(1.02);
+        }
+
+        .flip-card.flipped:hover .flip-card-inner {
+            transform: rotateY(180deg) scale(1.02);
+        }
+
+        .tip {
+            text-align: center;
+            color: rgba(255,255,255,0.8) !important;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .flip-card {
+                height: 280px;
+            }
+
+            .flip-card-front h3, .flip-card-back h3 {
+                font-size: 1.5rem;
+            }
+
+            .flip-card p {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .flip-card:hover .flip-card-inner {
+                transform: none;
+            }
+
+            .flip-card.flipped:hover .flip-card-inner {
+                transform: rotateY(180deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>SGB II - Bürgergeld</h1>
+        <p>Ein Überblick für Auszubildende der Bundesagentur für Arbeit zum Thema SGB II</p>
+    </div>
+
+    <div class="container">
+        <!-- Karte 1 -->
+        <div class="flip-card" onclick="flipCard(this)">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="logo"></div>
+                    <h3>Leistungsberechtigte, Bedarfsgemeinschaft & Leistungsausschlüsse</h3>
+                    <p>§ 7 (1) - (4), § 7a, § 37, § 38</p>
+                </div>
+                <div class="flip-card-back">
+                    <h3>Überblick</h3>
+                    <p>Hier findest du den relevanten Gesetzestext mit Vertiefungsgrad und Sachverhalte zum Üben.</p>
+                    <div class="card-links">
+                        <a href="Berechtigte.html" class="card-link">📖 Gesetz</a>
+                        <a href="Berechtigte_SV.pdf" class="card-link">📄 Sachverhalte</a>
+                        <a href="Berechtigte_LV.pdf" class="card-link pdf-link">✅ Lösungen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Karte 2 -->
+        <div class="flip-card" onclick="flipCard(this)">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="logo"></div>
+                    <h3>Bedarfe</h3>
+                    <p>§ 19, § 20, § 21, § 22, § 23, § 72</p>
+                </div>
+                <div class="flip-card-back">
+                    <h3>Übersicht</h3>
+                    <p>Hier findest du den relevanten Gesetzestext mit Vertiefungsgrad und Sachverhalte zum Üben.</p>
+                    <div class="card-links">
+                        <a href="Bedarfe.html" class="card-link">📖 Gesetz</a>
+                        <a href="Bedarfe_SV.pdf" class="card-link">📄 Sachverhalte</a>
+                        <a href="Bedarfe_LV.pdf" class="card-link pdf-link">✅ Lösungen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Karte 3 -->
+        <div class="flip-card" onclick="flipCard(this)">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="logo"></div>
+                    <h3>Anrechnung Vermögen</h3>
+                    <p>§ 12, § 7 (1) Bürgergeld-V</p>
+                </div>
+                <div class="flip-card-back">
+                    <h3>Übersicht</h3>
+                    <p>Hier findest du den relevanten Gesetzestext mit Vertiefungsgrad und Sachverhalte zum Üben.</p>
+                    <div class="card-links">
+                        <a href="VM.html" class="card-link">📖 Gesetz</a>
+                        <a href="VM_SV.pdf" class="card-link">📄 Sachverhalte</a>
+                        <a href="VM_LV.pdf" class="card-link pdf-link">✅ Lösungen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Karte 4 -->
+        <div class="flip-card" onclick="flipCard(this)">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="logo"></div>
+                    <h3>Anrechnung Einkommen</h3>
+                    <p>§ 11, § 11a, § 11b, §§ 1, 2, 6 Bürgergeld-V</p>
+                </div>
+                <div class="flip-card-back">
+                    <h3>Übersicht</h3>
+                    <p>Hier findest du den relevanten Gesetzestext mit Vertiefungsgrad und Sachverhalte zum Üben.</p>
+                    <div class="card-links">
+                        <a href="EK.html" class="card-link">📖 Gesetz</a>
+                        <a href="EK_SV.pdf" class="card-link">📄 Sachverhalte</a>
+                        <a href="EK_LV.pdf" class="card-link pdf-link">✅ Lösungen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Karte 5 -->
+        <div class="flip-card" onclick="flipCard(this)">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="logo"></div>
+                    <h3>Hilfebedürftigkeit</h3>
+                    <p>§ 9</p>
+                </div>
+                <div class="flip-card-back">
+                    <h3>Übersicht</h3>
+                    <p>Hier findest du den relevanten Gesetzestext mit Vertiefungsgrad und Sachverhalte zum Üben.</p>
+                    <div class="card-links">
+                        <a href="Hilfebeduerftigkeit.html" class="card-link">📖 Gesetz</a>
+                        <a href="9_SV.pdf" class="card-link">📄 Sachverhalte</a>
+                        <a href="9_LV.pdf" class="card-link pdf-link">✅ Lösungen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Karte 6 -->
+        <div class="flip-card" onclick="flipCard(this)">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="logo"></div>
+                    <h3>Leistungsminderungen</h3>
+                    <p>§ 31, § 31a, § 31b, § 32</p>
+                </div>
+                <div class="flip-card-back">
+                    <h3>Übersicht</h3>
+                    <p>Hier findest du den relevanten Gesetzestext mit Vertiefungsgrad und Sachverhalte zum Üben.</p>
+                    <div class="card-links">
+                        <a href="Minderung.html" class="card-link">📖 Gesetz</a>
+                        <a href="Minderung-SV.html" class="card-link">📄 Sachverhalte</a>
+                        <a href="Minderung_LV.pdf" class="card-link pdf-link">✅ Lösungen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	<!-- Karte 7 -->
+        <div class="flip-card" onclick="flipCard(this)">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="logo"></div>
+                    <h3>Bildung und Teilhabe</h3>
+                    <p>§ 28</p>
+                </div>
+                <div class="flip-card-back">
+                    <h3>Übersicht</h3>
+                    <p>Hier findest du den relevanten Gesetzestext mit Vertiefungsgrad.</p>
+                    <div class="card-links">
+                        <a href="BuT.html" class="card-link">📖 Gesetz</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	<!-- Karte 8 -->
+        <div class="flip-card" onclick="flipCard(this)">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="logo"></div>
+                    <h3>Audio-Content</h3>
+		    <p>Bald verfügbar</p>
+                </div>
+                <div class="flip-card-back">
+                    <h3>Übersicht</h3>
+                    <p>Mit einem Klick auf Audio kannst du dir die Themen zum SGB II anhören.</p>
+                    <div class="card-links">
+                        <a href="Audio.html" class="card-link">📖 Audio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+		<!-- Karte 9 -->
+        <div class="flip-card" onclick="flipCard(this)">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="logo"></div>
+                    <h3>AGP</h3>
+                    <p>Diese Karte wird zu einem späteren Zeitpunkt mit Inhalten gefüllt.</p>
+                </div>
+                <div class="flip-card-back">
+                    <h3>Übersicht</h3>
+                    <p>Hier findest du den relevanten Gesetzestext mit Vertiefungsgrad und Sachverhalte zum Üben.</p>
+                    <div class="card-links">
+                        <a href=".html" class="card-link">📖 Gesetz</a>
+                        <a href=".html" class="card-link">📄 Sachverhalte</a>
+                        <a href="".html"" class="card-link pdf-link">✅ Lösungen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tip">
+        💡 Tipp: Klicken Sie erneut auf eine Karte, um sie zurück zu drehen
+    </div>
+
+    <script>
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+            card.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                card.style.transform = '';
+            }, 150);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.flip-card');
+            cards.forEach(card => {
+                card.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                card.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>
