@@ -1,90 +1,125 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SGB II – Bedarfe</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGB II – Bedarfe</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: #E2001A;
-      min-height: 100vh;
-      padding: 20px;
-      color: white;
-      line-height: 1.6;
-    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #E2001A;
+      min-height: 100vh;
+      padding: 20px;
+      color: white;
+      line-height: 1.6;
+    }
 
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-    .header h1 {
-      font-size: 2.2rem;
-      font-weight: 300;
-      margin-bottom: 10px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    }
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
 
-    .back-button {
-      display: inline-block;
-      padding: 10px 20px;
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      text-decoration: none;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255,255,255,0.3);
-      margin: 10px auto;
-    }
+    .back-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.3);
+      margin: 10px auto;
+    }
 
-    .back-button:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-    }
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    }
 
-    .content {
-      max-width: 900px;
-      margin: 0 auto 25px auto;
-      background: rgba(0,0,0,0.4);
-      padding: 20px 25px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.2);
-    }
+    .content {
+      max-width: 900px;
+      margin: 0 auto 25px auto;
+      background: rgba(0,0,0,0.4);
+      padding: 20px 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
 
-    .content h2 {
-      font-size: 1.6rem;
-      margin-bottom: 15px;
-      text-align: center;
-    }
+    .content h2 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      text-align: center;
+    }
 
-    .content p {
-      margin-bottom: 12px;
-    }
+    .content p {
+      margin-bottom: 12px;
+    }
 
-    .content ol, .content ul {
-      margin: 10px 0 15px 25px;
-    }
+    .content ol, .content ul {
+      margin: 10px 0 15px 25px;
+    }
 
-    @media (max-width: 768px) {
-      .header h1 {
-        font-size: 1.8rem;
-      }
-      .content {
-        padding: 15px;
-        font-size: 0.95rem;
-      }
-    }
-  </style>
+    /* Tabellen-Stil */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+      color: white;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    caption {
+      caption-side: top;
+      text-align: left;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      .content {
+        padding: 15px;
+        font-size: 0.95rem;
+      }
+      th, td {
+        font-size: 0.85rem;
+        padding: 6px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="header">
@@ -138,6 +173,46 @@
   <p>(5) (weggefallen)</p>
 
     </div>
+    
+      <div class="content">
+    <h2>Anlage zu § 28 SGB XII — Regelbedarfsstufen in Euro</h2>
+    <p>Quelle: <a href="https://www.gesetze-im-internet.de/sgb_12/anlage.html" style="color:#FFD;">gesetze-im-internet.de</a></p>
+    
+    <div class="table-container">
+      <table>
+        <caption>Regelbedarfsstufen nach § 28 SGB XII (gültig ab 01.01.2025)</caption>
+        <thead>
+          <tr>
+            <th>Gültig ab</th>
+            <th>Stufe 1</th>
+            <th>Stufe 2</th>
+            <th>Stufe 3</th>
+            <th>Stufe 4</th>
+            <th>Stufe 5</th>
+            <th>Stufe 6</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>01.01.2011</td><td>364</td><td>328</td><td>291</td><td>287</td><td>251</td><td>215</td></tr>
+          <tr><td>01.01.2012</td><td>374</td><td>337</td><td>299</td><td>287</td><td>251</td><td>219</td></tr>
+          <tr><td>01.01.2013</td><td>382</td><td>345</td><td>306</td><td>289</td><td>255</td><td>224</td></tr>
+          <tr><td>01.01.2014</td><td>391</td><td>353</td><td>313</td><td>296</td><td>261</td><td>229</td></tr>
+          <tr><td>01.01.2015</td><td>399</td><td>360</td><td>320</td><td>302</td><td>267</td><td>234</td></tr>
+          <tr><td>01.01.2016</td><td>404</td><td>364</td><td>324</td><td>306</td><td>270</td><td>237</td></tr>
+          <tr><td>01.01.2017</td><td>409</td><td>368</td><td>327</td><td>311</td><td>291</td><td>237</td></tr>
+          <tr><td>01.01.2018</td><td>416</td><td>374</td><td>332</td><td>316</td><td>296</td><td>240</td></tr>
+          <tr><td>01.01.2019</td><td>424</td><td>382</td><td>339</td><td>322</td><td>302</td><td>245</td></tr>
+          <tr><td>01.01.2020</td><td>432</td><td>389</td><td>345</td><td>328</td><td>308</td><td>250</td></tr>
+          <tr><td>01.01.2021</td><td>446</td><td>401</td><td>357</td><td>373</td><td>309</td><td>283</td></tr>
+          <tr><td>01.01.2022</td><td>449</td><td>404</td><td>360</td><td>376</td><td>311</td><td>285</td></tr>
+          <tr><td>01.01.2023</td><td>502</td><td>451</td><td>402</td><td>420</td><td>348</td><td>318</td></tr>
+          <tr><td>01.01.2024</td><td>563</td><td>506</td><td>451</td><td>471</td><td>390</td><td>357</td></tr>
+          <tr><td>01.01.2025</td><td>563</td><td>506</td><td>451</td><td>471</td><td>390</td><td>357</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 
   <div class="content">
   <h2>§ 21 - Mehrbedarfe</h2>
