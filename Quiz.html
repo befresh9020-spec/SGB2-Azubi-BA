@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quiz – SGB II</title>
+<style>
+  /* Dein vorhandenes CSS */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #E2001A;
+    min-height: 100vh;
+    padding: 20px;
+    color: white;
+    line-height: 1.6;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: 2.2rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+
+  .back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.3);
+    margin: 10px auto;
+  }
+
+  .back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+  }
+
+  .content {
+    max-width: 900px;
+    margin: 0 auto 25px auto;
+    background: rgba(0,0,0,0.4);
+    padding: 20px 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .content h2 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  /* Quiz-Styling */
+  .quiz-question {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .quiz-answers {
+    display: grid;
+    gap: 12px;
+  }
+
+  .quiz-answer {
+    padding: 12px 15px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 10px;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .quiz-answer:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  .quiz-answer.correct {
+    background: #3ddc97;
+    color: black;
+  }
+
+  .quiz-answer.wrong {
+    background: #ff6b6b;
+  }
+
+  .quiz-button {
+    display: block;
+    margin: 25px auto 0;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 25px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .quiz-button:hover {
+    background: rgba(255,255,255,0.4);
+    transform: translateY(-2px);
+  }
+
+  .quiz-score {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .header h1 {
+      font-size: 1.8rem;
+    }
+    .content {
+      padding: 15px;
+      font-size: 0.95rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>Quiz - SGB II</h1>
+    <a href="#" class="back-button">Zurück</a>
+  </div>
+
+  <div class="content">
+    <div id="quiz">
+      <div id="question" class="quiz-question"></div>
+      <div id="answers" class="quiz-answers"></div>
+      <button id="next-btn" class="quiz-button">Nächste Frage</button>
+      <div id="score" class="quiz-score"></div>
+      <button id="restart-btn" class="quiz-button" style="display:none;">Neue Runde</button>
+    </div>
+  </div>
+
+<script>
+const questions = [
+  {question: "Wobei handelt es sich um ein privilegiertes Einkommen (also ein nicht zu berücksichtigendes Einkommen)?", answers: [
+    {text: "Mutterschaftsgeld", correct: true},
+    {text: "Elterngeld", correct: false},
+    {text: "Krankengeld", correct: false},
+    {text: "Arbeitslosengeld", correct: false}
+  ]},
+  {question: "Bei welcher Rente handelt es sich um ein privilegiertes Einkommen (also ein nicht zu berücksichtigendes Einkommen)?", answers: [
+    {text: "Rente wegen Alters", correct: false},
+    {text: "Renten nach dem Bundesentschädigungsgesetz", correct: true},
+    {text: "Rente wegen voller Erwerbsminderung", correct: false},
+    {text: "Rente wegen teilweiser Erwerbsminderung", correct: false}
+  ]},
+  {question: "Wobei handelt es sich um ein privilegiertes Einkommen (also ein nicht zu berücksichtigendes Einkommen)?", answers: [
+    {text: "Arbeitslosengeld bei Arbeitslosigkeit nach § 137 SGB III", correct: false},
+    {text: "Berufsausbildungsbeihilfe nach § 56 SGB III", correct: false},
+    {text: "Kurzarbeitergeld nach § 95 SGB III", correct: false},
+    {text: "Einstiegsgeld nach § 16b SGB II", correct: true}
+  ]},
+  {question: "Kann man als nichterwerbsfähiger Leistungsberechtigter Bürgergeld erhalten?", answers: [
+    {text: "Ja, wenn der nichterwerbsfähige Leistungsberechtigte keinen Anspruch auf Leistungen nach dem 4. Kapitel SGB XII hat", correct: true},
+    {text: "Nein", correct: false},
+    {text: "Ja, wenn der nichterwerbsfähige Leistungsberechtigte arbeitslos ist", correct: false},
+    {text: "Ja, wenn der nichterwerbsfähige Leistungsberechtigte keinen Anspruch auf Leistungen nach dem 3. Kapitel SGB XII hat", correct: false}
+  ]},
+  {question: "Eine Person erhält ein tägliches Arbeitslosengeld in Höhe von 39,17 Euro. Wie viel ist monatlich als Einkommen auf das Bürgergeld anzurechnen?", answers: [
+    {text: "1175,10 Euro", correct: false},
+    {text: "1075,10 Euro", correct: false},
+    {text: "1145,10 Euro", correct: true},
+    {text: "927,10 Euro", correct: false}
+  ]},
+  {question: "Eine Person erhält ein tägliches Arbeitslosengeld in Höhe von 27,12 Euro. Wie viel ist monatlich als Einkommen auf das Bürgergeld anzurechnen?", answers: [
+    {text: "813,60 Euro", correct: false},
+    {text: "783,60 Euro", correct: true},
+    {text: "713,60 Euro", correct: false},
+    {text: "683,60 Euro", correct: false}
+  ]},
+ {question: "Ein Familienvater erzielt aus einer Beschäftigung einen Lohn in Höhe von 990,00 Euro netto (1300,00 Euro brutto). Wie hoch ist das anzurechnende Einkommen? Er werden keine weiteren Aufwendungen geltend gemacht.", answers: [
+    {text: "960,00 Euro", correct: false},
+    {text: "890,00 Euro", correct: false},
+    {text: "612,00 Euro", correct: false},
+    {text: "632,00 Euro", correct: true}
+  ]},
+ {question: "Eine alleinerziehende Mutter erzielt aus einer Beschäftigung einen Lohn in Höhe von 1150,00 Euro netto (1600,00 Euro brutto). Wie hoch ist das anzurechnende Einkommen? Für die Kfz-Haftpflichtversicherung fallen monatlich 40,00 Euro an.", answers: [
+    {text: "802,00 Euro", correct: false},
+    {text: "772,00 Euro", correct: true},
+    {text: "1020,00 Euro", correct: false},
+    {text: "1050,00 Euro", correct: false}
+  ]},
+ {question: "Eine alleinstehende Person erzielt aus einer Beschäftigung einen Lohn in Höhe von 300,00 Euro brutto/netto. Wie hoch ist das anzurechnende Einkommen? Für die Kfz-Haftpflichtversicherung fallen monatlich 35,00 Euro an. Zudem werden Fahrtkosten in Höhe von 58,00 Euro monatlich geltend gemacht.", answers: [
+    {text: "160,00 Euro", correct: true},
+    {text: "177,00 Euro", correct: false},
+    {text: "200,00 Euro", correct: false},
+    {text: "207,00 Euro", correct: false}
+  ]},
+ {question: "Mario (38 Jahre alt, wohnt in Stuttgart) bezieht Arbeitslosengeld, das ihm zur Bestreitung seines Lebensunterhalts nicht ausreicht. Handelt es sich um einen erwerbsfähigen Leistungsberechtigten?", answers: [
+    {text: "Nein, er hat seinen gewöhnlichen Aufenthalt nicht in Deutschland.", correct: false},
+    {text: "Ja, er ist über 15 Jahre alt und hat die Altersgrenze noch nicht erreicht, ist erwerbsfähig, hilfebedürftig und hat seinen gewöhnlichen Aufenthalt in Deutschland.", correct: true},
+    {text: "Nein, er ist nicht erwerbsfähig.", correct: false},
+    {text: "Nein, er hat die Altersgrenze erreicht.", correct: false}
+  ]},
+ {question: "Luigi (geboren am 10.11.1944, wohnt in Stuttgart) bezieht Rente, die ihm zur Bestreitung seines Lebensunterhalts nicht ausreicht. Handelt es sich um einen erwerbsfähigen Leistungsberechtigten?", answers: [
+    {text: "Nein, er hat seinen gewöhnlichen Aufenthalt nicht in Deutschland.", correct: false},
+    {text: "Ja, er ist über 15 Jahre alt und hat die Altersgrenze noch nicht erreicht, ist erwerbsfähig, hilfebedürftig und hat seinen gewöhnlichen Aufenthalt in Deutschland.", correct: false},
+    {text: "Nein, er hat die Altersgrenze erreicht.", correct: true},
+    {text: "Nein, er bezieht eine Rente.", correct: false}
+  ]},
+ {question: "Was ist kein Ausschlussgrund nach § 7 Absatz 4 SGB II?", answers: [
+    {text: "Bezug einer Altersrente", correct: false},
+    {text: "Krankenhausaufenthalt über 6 Monate", correct: false},
+    {text: "Inhaftierung", correct: false},
+    {text: "Bezug von Arbeitslosengeld", correct: true}
+  ]},
+ {question: "Was ist ein Ausschlussgrund nach § 7 Absatz 4 SGB II?", answers: [
+    {text: "Krankenhausaufenthalt für 3 Monate", correct: false},
+    {text: "Bezug einer Rente wegen Alters", correct: true},
+    {text: "Bezug einer Rente wegen Erwerbsminderung", correct: false},
+    {text: "Bezug von Arbeitslosengeld", correct: false}
+  ]},
+ {question: "Eine Person, die Bürgergeld bezieht, erscheint zum 3. Mal nicht zu einem Meldetermin bei der Arbeitsvermittlung. Wie hoch ist die Leistungsminderung?", answers: [
+    {text: "10 % des maßgebenden Regelbedarfs", correct: true},
+    {text: "20 % des maßgebenden Regelbedarfs", correct: false},
+    {text: "30 % des maßgebenden Regelbedarfs", correct: false},
+    {text: "100 %", correct: false}
+  ]},
+ {question: "Eine Person, die Bürgergeld bezieht, lehnt erstmalig ein Arbeitsangebot ohne wichtigen Grund ab. Wie hoch ist die Leistungsminderung?", answers: [
+    {text: "30 % des maßgebenden Regelbedarfs", correct: false},
+    {text: "10 % des maßgebenden Regelbedarfs", correct: true},
+    {text: "100 %", correct: false},
+    {text: "Es erfolgt keine Minderung.", correct: false}
+  ]},
+ {question: "Eine Person, die Bürgergeld bezieht, erscheint zum 2. Mal nicht zu einem Meldetermin beim Fallmanager. Wie lange dauert die Leistungsminderung?", answers: [
+    {text: "1 Monat", correct: true},
+    {text: "2 Monate", correct: false},
+    {text: "3 Monate", correct: false},
+    {text: "1 Woche", correct: false}
+  ]},
+ {question: "Bei einer Person, die Bürgergeld bezieht, tritt eine Sperrzeit nach § 159 SGB III wegen einer erstmaligen Arbeitsablehnung ein. Die Sperrzeit dauert 3 Wochen. Wie hoch ist die Leistungsminderung und wie lange dauert sie?", answers: [
+    {text: "10 % des maßgebenden Regelbedarfs & 3 Wochen", correct: false},
+    {text: "10 % des maßgebenden Regelbedarfs & 1 Monat", correct: true},
+    {text: "30 % des maßgebenden Regelbedarfs & 3 Wochen", correct: false},
+    {text: "30 % des maßgebenden Regelbedarfs & 3 Monate", correct: false}
+  ]},
+ {question: "Bei welcher der folgenden Kosten handelt es nicht um eine Leistung für Bildung und Teilhabe?", answers: [
+    {text: "Anschaffung/Ausleihe von Schulbüchern", correct: true},
+    {text: "mehrtägige Klassenfahrten", correct: false},
+    {text: "gemeinschaftliches Mittagessen", correct: false},
+    {text: "Lernförderung", correct: false}
+  ]},
+
+
+];
+
+
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const nextBtn = document.getElementById("next-btn");
+const restartBtn = document.getElementById("restart-btn");
+const scoreEl = document.getElementById("score");
+
+let shuffledQuestions = [];
+let currentIndex = 0;
+let score = 0;
+
+function startQuiz() {
+  shuffledQuestions = questions.sort(() => Math.random() - 0.5).slice(0, 5);
+  currentIndex = 0;
+  score = 0;
+  scoreEl.textContent = "";
+  restartBtn.style.display = "none";
+  nextBtn.textContent = "Nächste Frage";
+  showQuestion();
+}
+
+function showQuestion() {
+  resetState();
+  const current = shuffledQuestions[currentIndex];
+  questionEl.textContent = `Frage ${currentIndex + 1}: ${current.question}`;
+  current.answers.forEach(ans => {
+    const btn = document.createElement("button");
+    btn.textContent = ans.text;
+    btn.classList.add("quiz-answer");
+    btn.addEventListener("click", () => selectAnswer(btn, ans.correct));
+    answersEl.appendChild(btn);
+  });
+}
+
+function resetState() {
+  nextBtn.style.display = "none";
+  while (answersEl.firstChild) answersEl.removeChild(answersEl.firstChild);
+}
+
+function selectAnswer(button, correct) {
+  const all = answersEl.children;
+  for (const btn of all) {
+    btn.disabled = true;
+    const a = shuffledQuestions[currentIndex].answers.find(x => x.text === btn.textContent);
+    if (a.correct) btn.classList.add("correct");
+  }
+  if (!correct) button.classList.add("wrong");
+  else score++;
+  nextBtn.style.display = "block";
+}
+
+nextBtn.addEventListener("click", () => {
+  currentIndex++;
+  if (currentIndex < shuffledQuestions.length) {
+    showQuestion();
+  } else {
+    showScore();
+  }
+});
+
+function showScore() {
+  resetState();
+  questionEl.textContent = "Ergebnis";
+  scoreEl.textContent = `Du hast ${score} von ${shuffledQuestions.length} Fragen richtig beantwortet.`;
+  nextBtn.style.display = "none";
+  restartBtn.style.display = "block";
+}
+
+restartBtn.addEventListener("click", startQuiz);
+startQuiz();
+</script>
+</body>
+</html>
