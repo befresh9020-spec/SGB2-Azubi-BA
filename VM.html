@@ -83,6 +83,37 @@
         padding: 15px;
         font-size: 0.95rem;
       }
+      a.law-responsive {
+  color: #66ccff;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 1px;
+  transition: all 0.3s ease;
+}
+
+/* Hover-Effekt für Desktop */
+a.law-responsive:hover {
+  color: #b3e6ff;
+  border-bottom: 2px solid #b3e6ff;
+}
+
+/* Mobile-Ansicht: Link wird zum Button */
+@media (max-width: 768px) {
+  a.law-responsive {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin-left: 6px;
+    border-bottom: none;
+  }
+
+  a.law-responsive:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
     }
   </style>
 </head>
@@ -98,8 +129,12 @@
     <p>(1) Alle verwertbaren Vermögensgegenstände sind vorbehaltlich des Satzes 2 als Vermögen zu berücksichtigen. Nicht zu berücksichtigen sind:</p>
 
     <ul>
-      <li>1. angemessener Hausrat; für die Beurteilung der Angemessenheit sind die Lebensumstände während des Bezugs von Bürgergeld maßgebend,</li>
-      <li>2. ein angemessenes Kraftfahrzeug für jede in der Bedarfsgemeinschaft lebende erwerbsfähige Person; die Angemessenheit wird vermutet, wenn die Antragstellerin oder der Antragsteller dies im Antrag erklärt,</li>
+      <li>1. angemessener Hausrat; für die Beurteilung der Angemessenheit sind die Lebensumstände während des Bezugs von Bürgergeld maßgebend,
+      <a href="VM_FW_Hausrat.html" target="_blank" class="law-responsive">Fachliche Weisung beachten</a>
+      </li>
+      <li>2. ein angemessenes Kraftfahrzeug für jede in der Bedarfsgemeinschaft lebende erwerbsfähige Person; die Angemessenheit wird vermutet, wenn die Antragstellerin oder der Antragsteller dies im Antrag erklärt,
+      <a href="VM_FW_KFZ.html" target="_blank" class="law-responsive">Fachliche Weisung beachten</a>
+      </li>
       <li>3. für die Altersvorsorge bestimmte Versicherungsverträge; zudem andere Formen der Altersvorsorge, wenn sie nach Bundesrecht ausdrücklich als Altersvorsorge gefördert werden,</li>
       <li>4. nicht ausbildungsrelevant</li>
       <li>5. ein selbst genutztes Hausgrundstück mit einer Wohnfläche von bis zu 140 Quadratmetern oder eine selbst genutzte Eigentumswohnung von bis zu 130 Quadratmetern; bewohnen mehr als vier Personen das Hausgrundstück beziehungsweise die Eigentumswohnung, erhöht sich die maßgebende Wohnfläche um jeweils 20 Quadratmeter für jede weitere Person; höhere Wohnflächen sind anzuerkennen, sofern die Berücksichtigung als Vermögen eine besondere Härte bedeuten würde,</li>
@@ -129,3 +164,4 @@
   </div>
 </body>
 </html>
+
