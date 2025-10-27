@@ -250,6 +250,16 @@
             .flip-card.flipped:hover .flip-card-inner {
                 transform: rotateY(180deg);
             }
+
+/* optional: kleine Anpassungen für die Rückseite */
+.flip-card-back a {
+    color: #fff; /* weiß bleibt gut */
+}
+.flip-card-back small {
+    display: block;
+    margin-top: 4px;
+    opacity: 0.7;
+}
         }
     </style>
 </head>
@@ -453,7 +463,26 @@
                 </div>
             </div>
         </div>
+
+<!-- Karte: Bürgergeld News (mehrere Quellen + Filter + Datum) -->
+<div class="flip-card" onclick="flipCard(this)">
+    <div class="flip-card-inner">
+        <div class="flip-card-front">
+            <div class="logo">📰</div>
+            <h3>News zum Bürgergeld</h3>
+            <p>Politik, Reformen & SGB II-Leistungen</p>
+        </div>
+        <div class="flip-card-back">
+            <h3>Aktuelle Meldungen</h3>
+            <p>Beiträge mit „Bürgergeld“ oder „SGB II“</p>
+            <ul id="news-list" style="text-align:left; padding-left:15px; font-size:0.9rem; color:white;"></ul>
+            <div id="news-footer" style="margin-top:10px; font-size:0.8rem; opacity:0.8; text-align:center;">
+                <em>Stand: <span id="news-timestamp">…</span></em>
+            </div>
+        </div>
     </div>
+  </div>
+</div>
 
     <div class="tip">
         💡 Tipp: Klicken Sie erneut auf eine Karte, um sie zurück zu drehen
@@ -493,12 +522,75 @@
             }
             lastTouchEnd = now;
         }, false);
+  
+  async function loadFilteredRSS() {
+    const sources = [
+        { url: "https://www.tagesschau.de/infoservices/alle-meldungen-100~rss2.xml", name: "tagesschau" },
+        { url: "https://www.zdf.de/rss/zdf/nachrichten", name: "ZDFheute" },
+        // Hinweis: wir nehmen an für BA eine öffentliche RSS-URL – die tatsächliche müsste geprüft werden:
+        { url: "https://www.arbeitsagentur.de/news.rss", name: "BA" }
+    ];
+
+    const filterKeywords = ["bürgergeld", "sgb ii", "leistungen nach dem sgb ii"];
+    const maxItems = 5; // max Anzahl Einträge insgesamt
+    const newsList = document.getElementById("news-list");
+    newsList.innerHTML = "<li>Lade News …</li>";
+
+    let collected = [];
+
+    for (const src of sources) {
+        try {
+            const resp = await fetch(src.url);
+            const text = await resp.text();
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(text, "application/xml");
+            const items = xml.querySelectorAll("item");
+
+            items.forEach(item => {
+                if (collected.length >= maxItems) return;
+
+                const titleElem = item.querySelector("title");
+                const linkElem  = item.querySelector("link");
+                const descElem  = item.querySelector("description");
+
+                const title = titleElem ? titleElem.textContent : "";
+                const link  = linkElem ? linkElem.textContent : "";
+                const desc  = descElem ? descElem.textContent : "";
+
+                const combined = (title + " " + desc).toLowerCase();
+
+                // Filter: enthält eines der Schlüsselwörter?
+                if ( filterKeywords.some(k => combined.includes(k)) ) {
+                    collected.push({ title, link, source: src.name });
+                }
+            });
+        } catch (e) {
+            console.warn("Fehler beim Laden von RSS:", src.url, e);
+        }
+    }
+
+    if (collected.length === 0) {
+        newsList.innerHTML = "<li>Keine passenden News gefunden.</li>";
+    } else {
+        newsList.innerHTML = "";
+        collected.forEach(entry => {
+            const li = document.createElement("li");
+            li.style.marginBottom = "8px";
+            li.innerHTML = `<a href="${entry.link}" target="_blank" style="color:#fff; text-decoration:none;">🔗 ${entry.title} <small style="font-size:0.8rem; opacity:0.8;">(${entry.source})</small></a>`;
+            newsList.appendChild(li);
+        });
+    }
+}
+
+document.addEventListener("DOMContentLoaded", loadFilteredRSS);
+
+  
     </script>
+
+
+
 </body>
 
 </html>
-
-
-
 
 
