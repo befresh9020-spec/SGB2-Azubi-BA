@@ -162,6 +162,35 @@ article.flip-card {
   align-items: center;
 }
 
+/* Regenbogen-Ring */
+.logo {
+  position: relative; /* wichtig für ::before Positionierung */
+}
+
+.logo::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 50%;
+  background: conic-gradient(
+    red, orange, yellow, lime, green, aqua, cyan,
+    blue, indigo, violet, magenta, red
+  );
+  z-index: -1;
+  filter: saturate(1.2) brightness(1.05);
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+/* Animation für Nutzerfreude */
+article.flip-card:hover .logo::before,
+article.flip-card:focus .logo::before {
+  transform: scale(1.06);
+  filter: saturate(1.4) brightness(1.1);
+}
+
 /* =============== */
 /* TIP FOOTER      */
 /* =============== */
@@ -197,8 +226,9 @@ footer {
     transition: none !important;
     transform: none !important;
   }
-  
-  /* =============================== */
+}
+
+/* =============================== */
 /* DARK MODE – automatische Version */
 /* =============================== */
 
@@ -240,57 +270,13 @@ footer {
     background-color: #E2001A;
     box-shadow: 0 4px 15px rgba(226,0,26,0.3);
   }
+  
+  /* Regenbogen im Dark Mode leicht anpassen */
+.logo::before {
+  filter: saturate(1.1) brightness(0.95);
+}
 
   footer {
     color: rgba(255,255,255,0.75);
   }
-
-/* ============================ */
-/* THEME SWITCH                 */
-/* ============================ */
-
-.theme-toggle {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  background: rgba(0,0,0,0.4);
-  border: 1px solid rgba(255,255,255,0.5);
-  color: #fff;
-  padding: 8px 12px;
-  font-size: 1rem;
-  border-radius: 25px;
-  cursor: pointer;
-  z-index: 10000;
-  backdrop-filter: blur(6px);
-  transition: background 0.25s;
 }
-
-.theme-toggle:hover,
-.theme-toggle:focus {
-  background: rgba(0,0,0,0.6);
-  outline: 3px solid #FFD600;
-  outline-offset: 3px;
-}
-
-/* Screenreader-Text verstecken */
-.sr-only {
-  position: absolute;
-  clip: rect(1px,1px,1px,1px);
-  padding: 0;
-  border: 0;
-  height: 1px; width: 1px;
-  overflow: hidden;
-}
-
-/* Umschalten als Klasse am HTML-Element */
-html.dark-mode body {
-  background-color: #1a1a1a;
-}
-
-/* (Restliche Dark-Mode-Regeln bleiben wie zuvor und greifen, 
-   sobald .dark-mode gesetzt ist) */
-
-  
-}
-
-
