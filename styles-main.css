@@ -1,54 +1,78 @@
-/* =============== */
-/* GLOBAL BASICS   */
-/* =============== */
+/* GLOBAL */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #E2001A;
   padding: 20px;
   min-height: 100vh;
+  color: #000;
 }
 
-html.dark-mode body {
+/* Nutzerwahl */
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* AUTO (Fallback, nur wenn kein data-theme vorhanden) */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    color-scheme: dark;
+  }
+  html:not([data-theme]) body {
+    background-color: #1a1a1a;
+    color: #fff;
+  }
+  html:not([data-theme]) .flip-card-front {
+    background: #2b2b2b;
+    color: #fff;
+  }
+  html:not([data-theme]) .flip-card-back {
+    background: #151515;
+    color: #fff;
+  }
+  html:not([data-theme]) .card-link {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.25);
+  }
+  html:not([data-theme]) .card-link:hover,
+  html:not([data-theme]) .card-link:focus {
+    background: rgba(255,255,255,0.2);
+  }
+  html:not([data-theme]) .logo {
+    background-color: #E2001A;
+    box-shadow: 0 4px 15px rgba(226,0,26,0.3);
+  }
+  html:not([data-theme]) .logo::before {
+    filter: saturate(1.1) brightness(0.95);
+  }
+}
+
+/* MANUELLER DARK MODE */
+html[data-theme="dark"] body {
   background-color: #1a1a1a;
   color: #fff;
 }
-
-/* =============== */
-/* HEADER          */
-/* =============== */
 
 header {
   text-align: center;
   color: #fff;
   margin-bottom: 30px;
 }
-
 header h1 {
   font-size: 2.5rem;
   font-weight: 300;
   margin-bottom: 10px;
   text-shadow: 0 2px 10px rgba(0,0,0,0.35);
 }
-
 header p {
   font-size: 1.1rem;
   opacity: 0.95;
 }
-
-/* =============== */
-/* LAYOUT GRID     */
-/* =============== */
 
 main {
   max-width: 1200px;
@@ -58,10 +82,7 @@ main {
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
 
-/* =============== */
-/* FLIP CARDS      */
-/* =============== */
-
+/* Flips */
 article.flip-card {
   background-color: transparent;
   height: 320px;
@@ -69,84 +90,66 @@ article.flip-card {
   cursor: pointer;
   outline: none;
 }
-
 .flip-card-inner {
-  position: relative;
   width: 100%;
   height: 100%;
   transition: transform 0.8s cubic-bezier(0.175,0.885,0.32,1.275);
   transform-style: preserve-3d;
 }
-
-.flip-card:hover .flip-card-inner {
-  transform: scale(1.02);
-}
-
-.flip-card.flipped .flip-card-inner {
-  transform: rotateY(180deg);
-}
+.flip-card:hover .flip-card-inner { transform: scale(1.02); }
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
 
 .flip-card-front,
 .flip-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden;
   border-radius: 20px;
   padding: 25px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  backface-visibility: hidden;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
 }
 
-/* Vorderseite */
+/* Hell */
 .flip-card-front {
   background: #DDE3E8;
   color: #333;
-  text-align: center;
 }
-
-/* Rückseite */
 .flip-card-back {
   background: rgba(0,0,0,0.85);
   color: #fff;
   transform: rotateY(180deg);
-  text-align: center;
 }
 
-.flip-card-front h3 {
-  margin: 15px 0;
-  font-size: 1.5rem;
-  font-weight: 600;
+/* Manueller DARK */
+html[data-theme="dark"] .flip-card-front {
+  background: #2b2b2b;
+  color: #fff;
 }
-
-.flip-card-back h3 {
-  font-size: 1.4rem;
-  margin-bottom: 12px;
+html[data-theme="dark"] .flip-card-back {
+  background: #151515;
+  color: #fff;
 }
 
 .card-links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
+  display: flex; flex-direction: column;
+  gap: 10px; width: 100%;
 }
-
 .card-link {
   background: rgba(0,0,0,0.25);
   border-radius: 20px;
   padding: 10px 14px;
   font-size: 0.9rem;
   border: 1px solid rgba(255,255,255,0.2);
-  text-decoration: none;
   color: #fff;
   text-align: center;
-  transition: all 0.3s ease;
+  text-decoration: none;
+  transition: .3s;
 }
-
-/* bessere Kontrastwirkung */
 .card-link:hover,
 .card-link:focus {
   background: rgba(0,0,0,0.45);
@@ -154,52 +157,52 @@ article.flip-card {
   outline-offset: 3px;
 }
 
-/* Icons */
+/* DARK link Overrides */
+html[data-theme="dark"] .card-link {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.25);
+}
+html[data-theme="dark"] .card-link:hover,
+html[data-theme="dark"] .card-link:focus {
+  background: rgba(255,255,255,0.2);
+}
+
 .logo {
-  aria-hidden: true;
   width: 70px;
   height: 70px;
   background-color: #E2001A;
   border-radius: 50%;
   margin-bottom: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  display: flex; justify-content: center; align-items: center;
 }
-
-/* Regenbogen-Ring */
-.logo {
-  position: relative; /* wichtig für ::before Positionierung */
-}
-
 .logo::before {
   content: '';
   position: absolute;
-  top: -6px;
-  left: -6px;
-  right: -6px;
-  bottom: -6px;
+  top:-6px; left:-6px; right:-6px; bottom:-6px;
   border-radius: 50%;
   background: conic-gradient(
     red, orange, yellow, lime, green, aqua, cyan,
     blue, indigo, violet, magenta, red
   );
   z-index: -1;
-  filter: saturate(1.2) brightness(1.05);
   transition: transform 0.4s ease, filter 0.4s ease;
 }
-
-/* Animation für Nutzerfreude */
 article.flip-card:hover .logo::before,
 article.flip-card:focus .logo::before {
   transform: scale(1.06);
-  filter: saturate(1.4) brightness(1.1);
 }
 
-/* =============== */
-/* TIP FOOTER      */
-/* =============== */
+/* DARK Logo */
+html[data-theme="dark"] .logo {
+  background-color: #E2001A;
+  box-shadow: 0 4px 15px rgba(226,0,26,0.3);
+}
+html[data-theme="dark"] .logo::before {
+  filter: saturate(1.1) brightness(0.95);
+}
 
+/* Footer */
 footer {
   text-align: center;
   color: rgba(255,255,255,0.85);
@@ -207,117 +210,11 @@ footer {
   font-size: 0.85rem;
   animation: pulse 2s infinite;
 }
-
 @keyframes pulse {
   0%,100% { opacity: 0.6; }
   50% { opacity: 1; }
 }
 
-/* =============== */
-/* RESPONSIVE      */
-/* =============== */
-
-@media (max-width: 768px) {
-  header h1 { font-size: 2rem; }
-  article.flip-card { height: 280px; }
-}
-
-/* =============== */
-/* REDUCED MOTION  */
-/* =============== */
-
-@media (prefers-reduced-motion: reduce) {
-  .flip-card-inner {
-    transition: none !important;
-    transform: none !important;
-  }
-}
-
-/* Default (hell) bleibt wie gehabt */
-body {
-  background-color: #E2001A;
-  color: #000; /* falls nötig */
-}
-
-/* --- MANUELLES DARK THEME (hat Vorrang) --- */
-:root[data-theme="dark"] body {
-  background-color: #1a1a1a;
-  color: #fff;
-}
-
-:root[data-theme="dark"] .flip-card-front {
-  background: #2b2b2b;
-  color: #fff;
-}
-
-:root[data-theme="dark"] .flip-card-back {
-  background: #151515;
-  color: #fff;
-}
-
-:root[data-theme="dark"] .card-link {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.25);
-}
-
-:root[data-theme="dark"] .card-link:hover,
-:root[data-theme="dark"] .card-link:focus {
-  background: rgba(255,255,255,0.2);
-}
-
-:root[data-theme="dark"] .logo {
-  background-color: #E2001A;
-  box-shadow: 0 4px 15px rgba(226,0,26,0.3);
-}
-
-:root[data-theme="dark"] .logo::before {
-  filter: saturate(1.1) brightness(0.95);
-}
-
-/* Optional: native Form-Controls etc. passend rendern */
-:root[data-theme="dark"] {
-  color-scheme: dark;
-}
-:root[data-theme="light"] {
-  color-scheme: light;
-}
-
-/* --- AUTOMATISCHES DARK THEME (nur wenn KEIN data-theme gesetzt ist) --- */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) body {
-    background-color: #1a1a1a;
-    color: #fff;
-  }
-  :root:not([data-theme]) .flip-card-front {
-    background: #2b2b2b;
-    color: #fff;
-  }
-  :root:not([data-theme]) .flip-card-back {
-    background: #151515;
-    color: #fff;
-  }
-  :root:not([data-theme]) .card-link {
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(255,255,255,0.25);
-  }
-  :root:not([data-theme]) .card-link:hover,
-  :root:not([data-theme]) .card-link:focus {
-    background: rgba(255,255,255,0.2);
-  }
-  :root:not([data-theme]) .logo {
-    background-color: #E2001A;
-    box-shadow: 0 4px 15px rgba(226,0,26,0.3);
-  }
-  :root:not([data-theme]) .logo::before {
-    filter: saturate(1.1) brightness(0.95);
-  }
-  
-  /* Regenbogen im Dark Mode leicht anpassen */
-.logo::before {
-  filter: saturate(1.1) brightness(0.95);
-}
-
-  footer {
-    color: rgba(255,255,255,0.75);
-  }
+@media (max-width:768px){
+  article.flip-card { height:280px; }
 }
