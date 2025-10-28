@@ -374,3 +374,45 @@ article.flip-card:focus .logo::before {
   transform: scale(1.08);
   filter: saturate(1.6) brightness(1.25);
 }
+
+/* Regenbogenring – nur auf der Vorderseite sichtbar */
+.flip-card-front .logo {
+  position: relative;
+  z-index: 1;
+}
+
+/* dezenter schmaler Rand mit leichtem Farbwandel */
+.flip-card-front .logo::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  background: conic-gradient(
+    red,
+    orange,
+    yellow,
+    lime,
+    aqua,
+    blue,
+    violet,
+    red
+  );
+  filter: saturate(1.05) brightness(1.0);
+  z-index: -1;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+/* minimales Interaktions-Feedback */
+article.flip-card:hover .flip-card-front .logo::before,
+article.flip-card:focus .flip-card-front .logo::before {
+  transform: scale(1.04);
+  filter: saturate(1.15) brightness(1.05);
+}
+
+/* sicherstellen, dass Rückseite KEINEN Ring hat */
+.flip-card-back .logo::before {
+  content: none !important;
+}
