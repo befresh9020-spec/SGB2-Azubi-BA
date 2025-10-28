@@ -292,3 +292,31 @@ footer {
   header h1 { font-size: 2rem; }
   article.flip-card { height: 280px; }
 }
+/* FIX: Header wieder sauber ausrichten */
+header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* FIX: Switch-Button Abstand nach unten */
+.theme-toggle {
+  margin-bottom: 15px;
+}
+
+/* FIX: Linkliste auf Kartenrückseiten zentrieren */
+.card-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.card-link {
+  width: 90%;
+  max-width: 260px;
+}
