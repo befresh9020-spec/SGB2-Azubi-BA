@@ -282,13 +282,42 @@ footer {
     gap: 4px;
   }
 
-.pixi {
-  animation: popIn 0.35s ease-out 1;
+
+/* Pixi – Basis */
+.pixi-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes popIn {
-  0% { transform: scale(0.5) opacity(0); }
-  100% { transform: scale(1) opacity(1); }
+/* Safari/All: Animation auf dem Wrapper, nicht auf dem SVG */
+@keyframes pixiPop {
+  0%   { transform: scale(0.6) translateY(8px); opacity: 0; }
+  60%  { transform: scale(1.05) translateY(-2px); }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* einmaliges „Pop-in“ beim Laden */
+.pixi-wrapper {
+  animation: pixiPop 420ms cubic-bezier(.2,.7,.2,1) both;
+}
+
+/* Barrierearmut: Bewegung auf Wunsch aus */
+@media (prefers-reduced-motion: reduce) {
+  .pixi-wrapper { animation: none !important; }
+}
+
+/* Falls du später doch das SVG animierst: Safari braucht diese zwei Zeilen */
+.pixi {
+  transform-box: fill-box;     /* wichtig für SVG in Safari */
+  transform-origin: center;    /* Mittelpunkt als Referenz */
+  will-change: transform, opacity;
+}
+
+/* Deine Mobile-Größe 48px + schöner Umbruch */
+@media (max-width: 600px) {
+  .pixi { width: 48px; height: 48px; }
+  .page-footer .branding { flex-direction: column; gap: 4px; }
 }
 
 /* =================================== */
