@@ -1,78 +1,99 @@
-/* GLOBAL */
+/* =================================== */
+/* RESET & GLOBAL STRUCTURE            */
+/* =================================== */
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #E2001A;
   padding: 20px;
   min-height: 100vh;
+  transition: background-color 0.4s ease, color 0.4s ease;
   color: #000;
 }
 
-/* Nutzerwahl */
-html[data-theme="dark"] {
-  color-scheme: dark;
-}
-html[data-theme="light"] {
-  color-scheme: light;
-}
+/* Theme Rendering von nativen Controls */
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="light"] { color-scheme: light; }
 
-/* AUTO (Fallback, nur wenn kein data-theme vorhanden) */
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme]) {
-    color-scheme: dark;
-  }
-  html:not([data-theme]) body {
-    background-color: #1a1a1a;
-    color: #fff;
-  }
-  html:not([data-theme]) .flip-card-front {
-    background: #2b2b2b;
-    color: #fff;
-  }
-  html:not([data-theme]) .flip-card-back {
-    background: #151515;
-    color: #fff;
-  }
-  html:not([data-theme]) .card-link {
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(255,255,255,0.25);
-  }
-  html:not([data-theme]) .card-link:hover,
-  html:not([data-theme]) .card-link:focus {
-    background: rgba(255,255,255,0.2);
-  }
-  html:not([data-theme]) .logo {
-    background-color: #E2001A;
-    box-shadow: 0 4px 15px rgba(226,0,26,0.3);
-  }
-  html:not([data-theme]) .logo::before {
-    filter: saturate(1.1) brightness(0.95);
-  }
-}
+/* =================================== */
+/* TYPOGRAFIE – IMMER GÜLTIG           */
+/* =================================== */
 
-/* MANUELLER DARK MODE */
-html[data-theme="dark"] body {
-  background-color: #1a1a1a;
-  color: #fff;
-}
-
-header {
-  text-align: center;
-  color: #fff;
-  margin-bottom: 30px;
-}
 header h1 {
   font-size: 2.5rem;
   font-weight: 300;
   margin-bottom: 10px;
   text-shadow: 0 2px 10px rgba(0,0,0,0.35);
 }
+
 header p {
   font-size: 1.1rem;
   opacity: 0.95;
 }
+
+.flip-card-front h3 {
+  margin: 15px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.flip-card-back h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.flip-card-front p,
+.flip-card-back p {
+  font-size: 1rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* =================================== */
+/* THEME-BUTTON                        */
+/* =================================== */
+
+.theme-toggle {
+  margin-top: 15px;
+  padding: 8px 14px;
+  border-radius: 25px;
+  border: 2px solid rgba(255,255,255,0.6);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.05);
+}
+.theme-toggle:focus {
+  outline: 3px solid #FFD600;
+  outline-offset: 4px;
+}
+
+/* visuelles gedrückt-Feedback: Button wird dunkler im Dark-Mode */
+html[data-theme="dark"] .theme-toggle {
+  border-color: rgba(255,255,255,0.7);
+}
+
+/* =================================== */
+/* LAYOUT                              */
+/* =================================== */
 
 main {
   max-width: 1200px;
@@ -82,22 +103,29 @@ main {
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
 
-/* Flips */
 article.flip-card {
   background-color: transparent;
   height: 320px;
   perspective: 1000px;
   cursor: pointer;
   outline: none;
+  transition: transform 0.3s ease;
 }
+
 .flip-card-inner {
   width: 100%;
   height: 100%;
   transition: transform 0.8s cubic-bezier(0.175,0.885,0.32,1.275);
   transform-style: preserve-3d;
 }
-.flip-card:hover .flip-card-inner { transform: scale(1.02); }
-.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+
+.flip-card:hover .flip-card-inner {
+  transform: scale(1.02);
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
 
 .flip-card-front,
 .flip-card-back {
@@ -112,33 +140,24 @@ article.flip-card {
   flex-direction: column;
   align-items: center;
   box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
-/* Hell */
+/* =================================== */
+/* HELL-MODUS                          */
+/* =================================== */
+
 .flip-card-front {
   background: #DDE3E8;
   color: #333;
 }
+
 .flip-card-back {
   background: rgba(0,0,0,0.85);
   color: #fff;
   transform: rotateY(180deg);
 }
 
-/* Manueller DARK */
-html[data-theme="dark"] .flip-card-front {
-  background: #2b2b2b;
-  color: #fff;
-}
-html[data-theme="dark"] .flip-card-back {
-  background: #151515;
-  color: #fff;
-}
-
-.card-links {
-  display: flex; flex-direction: column;
-  gap: 10px; width: 100%;
-}
 .card-link {
   background: rgba(0,0,0,0.25);
   border-radius: 20px;
@@ -148,8 +167,9 @@ html[data-theme="dark"] .flip-card-back {
   color: #fff;
   text-align: center;
   text-decoration: none;
-  transition: .3s;
+  transition: all 0.3s ease;
 }
+
 .card-link:hover,
 .card-link:focus {
   background: rgba(0,0,0,0.45);
@@ -157,15 +177,67 @@ html[data-theme="dark"] .flip-card-back {
   outline-offset: 3px;
 }
 
-/* DARK link Overrides */
+/* =================================== */
+/* DARK MODE – manuelle Nutzerwahl     */
+/* =================================== */
+
+html[data-theme="dark"] body {
+  background-color: #1a1a1a;
+  color: #eee;
+}
+
+html[data-theme="dark"] .flip-card-front {
+  background: #2b2b2b;
+  color: #fff;
+}
+html[data-theme="dark"] .flip-card-back {
+  background: #151515;
+  color: #fff;
+}
+
+html[data-theme="dark"] header p {
+  opacity: .9;
+}
+
 html[data-theme="dark"] .card-link {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.35);
 }
 html[data-theme="dark"] .card-link:hover,
 html[data-theme="dark"] .card-link:focus {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.3);
 }
+
+/* =================================== */
+/* DARK MODE – System bevorzugt        */
+/* =================================== */
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) body {
+    background-color: #1a1a1a;
+    color: #eee;
+  }
+  html:not([data-theme]) .flip-card-front {
+    background: #2b2b2b;
+    color: #fff;
+  }
+  html:not([data-theme]) .flip-card-back {
+    background: #151515;
+    color: #fff;
+  }
+  html:not([data-theme]) .card-link {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.35);
+  }
+  html:not([data-theme]) .card-link:hover,
+  html:not([data-theme]) .card-link:focus {
+    background: rgba(255,255,255,0.3);
+  }
+}
+
+/* =================================== */
+/* LOGO                                */
+/* =================================== */
 
 .logo {
   width: 70px;
@@ -174,12 +246,14 @@ html[data-theme="dark"] .card-link:focus {
   border-radius: 50%;
   margin-bottom: 15px;
   position: relative;
-  display: flex; justify-content: center; align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .logo::before {
   content: '';
   position: absolute;
-  top:-6px; left:-6px; right:-6px; bottom:-6px;
+  top: -6px; left: -6px; right: -6px; bottom: -6px;
   border-radius: 50%;
   background: conic-gradient(
     red, orange, yellow, lime, green, aqua, cyan,
@@ -193,28 +267,28 @@ article.flip-card:focus .logo::before {
   transform: scale(1.06);
 }
 
-/* DARK Logo */
-html[data-theme="dark"] .logo {
-  background-color: #E2001A;
-  box-shadow: 0 4px 15px rgba(226,0,26,0.3);
-}
-html[data-theme="dark"] .logo::before {
-  filter: saturate(1.1) brightness(0.95);
-}
+/* =================================== */
+/* FOOTER                              */
+/* =================================== */
 
-/* Footer */
 footer {
   text-align: center;
   color: rgba(255,255,255,0.85);
   margin-top: 30px;
   font-size: 0.85rem;
   animation: pulse 2s infinite;
+  transition: color 0.4s ease;
 }
 @keyframes pulse {
   0%,100% { opacity: 0.6; }
   50% { opacity: 1; }
 }
 
-@media (max-width:768px){
-  article.flip-card { height:280px; }
+/* =================================== */
+/* RESPONSIVE                          */
+/* =================================== */
+
+@media (max-width: 768px) {
+  header h1 { font-size: 2rem; }
+  article.flip-card { height: 280px; }
 }
