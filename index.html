@@ -258,12 +258,12 @@
 </footer>
 
 
-	<script>
+<script>
     function updateAriaState(card, expanded) {
         const front = card.querySelector('.flip-card-front');
         const back = card.querySelector('.flip-card-back');
 
-        // Sichtbarkeit im Screenreader steuern
+        // Sichtbarkeit für Screenreader steuern
         front.setAttribute('aria-hidden', expanded);
         back.setAttribute('aria-hidden', !expanded);
 
@@ -279,7 +279,7 @@
             navigator.vibrate(50);
         }
 
-        // Leichter Klick-Feedback-Effekt
+        // Klick-Feedback-Effekt
         card.style.transform = 'scale(0.98)';
         setTimeout(() => {
             card.style.transform = '';
@@ -300,7 +300,12 @@
             front.setAttribute('aria-hidden', 'false');
             back.setAttribute('aria-hidden', 'true');
 
-            // Tastatursteuerung für Barrierefreiheit
+            // Maus-Klick & Tap (umdrehen)
+            card.addEventListener('click', function() {
+                flipCard(card);
+            });
+
+            // Tastatursteuerung
             card.addEventListener('keydown', function(e) {
                 const keys = ['Enter', ' ', 'Spacebar'];
                 if (keys.includes(e.key)) {
@@ -309,7 +314,7 @@
                 }
             });
 
-            // Touch-Feedback (bestehende Funktionalität behalten)
+            // Touch-Feedback (Skalierung)
             card.addEventListener('touchstart', function() {
                 this.style.transform = 'scale(0.98)';
             });
@@ -321,7 +326,7 @@
         });
     });
 
-    // Doppeltap-Zoom verhindern (Mobiles Safari)
+    // Doppeltap-Zoom verhindern (iOS Safari)
     let lastTouchEnd = 0;
     document.addEventListener('touchend', function(event) {
         const now = (new Date()).getTime();
@@ -337,6 +342,7 @@
 </body>
 
 </html>
+
 
 
 
