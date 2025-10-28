@@ -299,7 +299,7 @@ footer {
 
 /* einmaliges „Pop-in“ beim Laden */
 .pixi-wrapper {
-  animation: pixiPop 2s cubic-bezier(.2,.7,.2,1) both;
+  animation: pixiPop 2s cubic-bezier(.21,.77,.29,1.01) both;
 }
 
 /* Barrierearmut: Bewegung auf Wunsch aus */
