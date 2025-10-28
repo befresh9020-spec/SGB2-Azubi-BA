@@ -197,4 +197,52 @@ footer {
     transition: none !important;
     transform: none !important;
   }
+  
+  /* =============================== */
+/* DARK MODE – automatische Version */
+/* =============================== */
+
+@media (prefers-color-scheme: dark) {
+
+  body {
+    background-color: #1a1a1a; /* neutrales tiefes Grau */
+    color: #fff;
+  }
+
+  header p {
+    opacity: 0.9;
+  }
+
+  /* Karten-Design angepasst */
+  .flip-card-front {
+    background: #2b2b2b;
+    color: #fff;
+  }
+
+  .flip-card-back {
+    background: #151515;
+    color: #fff;
+  }
+
+  /* Buttons im Darkmode klarer sichtbar */
+  .card-link {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  .card-link:hover,
+  .card-link:focus {
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* Akzentpunkte Rot behalten */
+  .logo {
+    background-color: #E2001A;
+    box-shadow: 0 4px 15px rgba(226,0,26,0.3);
+  }
+
+  footer {
+    color: rgba(255,255,255,0.75);
+  }
 }
+
