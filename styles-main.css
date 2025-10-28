@@ -320,3 +320,57 @@ header {
   width: 90%;
   max-width: 260px;
 }
+
+/* Visueller Akzent für den Kreis */
+.logo {
+  background-color: #E2001A;
+  position: relative;
+  z-index: 1;
+}
+
+/* Kräftigerer, hochwertigerer Regenbogenring */
+.logo::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  right: -7px;
+  bottom: -7px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #ff0033,
+    #ff9900,
+    #ffee00,
+    #00dd55,
+    #00aaff,
+    #6633ff,
+    #cc00cc,
+    #ff0033
+  );
+  filter: saturate(1.3) brightness(1.15);
+  transition: transform 0.4s ease, filter 0.4s ease;
+  z-index: -1;
+}
+
+/* Dezente Aura für Tiefe */
+.logo::after {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: -9px;
+  right: -9px;
+  bottom: -9px;
+  border-radius: 50%;
+  background: radial-gradient(
+    rgba(0,0,0,0.12),
+    transparent 70%
+  );
+  z-index: -2;
+}
+
+/* Spielerischer Hover – nicht zu viel */
+article.flip-card:hover .logo::before,
+article.flip-card:focus .logo::before {
+  transform: scale(1.08);
+  filter: saturate(1.6) brightness(1.25);
+}
