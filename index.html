@@ -342,25 +342,26 @@
         lastTouchEnd = now;
     }, false);
 
-	// ========== THEME SWITCH ========== //
+// Theme-Switch Button
 
 const themeButton = document.getElementById('themeToggle');
 
-// gespeicherte Einstellung wiederherstellen
+// gespeicherte Einstellung setzen
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
     document.documentElement.classList.add('dark-mode');
     themeButton.setAttribute('aria-pressed', 'true');
 }
 
+// klickbarer Toggle
 themeButton.addEventListener('click', () => {
     const html = document.documentElement;
     const isDark = html.classList.toggle('dark-mode');
-    
-    // Accessibility-Status
+
+    // Accessibility
     themeButton.setAttribute('aria-pressed', isDark ? 'true' : 'false');
 
-    // speichern
+    // speichern für nächsten Besuch
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
