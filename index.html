@@ -227,30 +227,35 @@
         </div>
      </div>
 
-		<!-- Karte 12 -->
-       <div class="flip-card" onclick="flipCard(this)">
-         <div class="flip-card-inner">
-            <div class="flip-card-front">
-                <div class="logo"></div>
-                <h3>Bundesagentur für Arbeit & BMAS</h3>
-                <p>Merkblatt SGB II & Infomaterial</p>
+<!-- Beispiel News-Karte (mit externen Link-Verbesserungen) -->
+    <article class="flip-card" tabindex="0" role="button" aria-expanded="false">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" aria-hidden="false">
+                <div class="logo" aria-hidden="true">📰</div>
+                <h3>News zum SGB II</h3>
+                <p>Politik, Reformen & SGB II-Leistungen</p>
             </div>
-            <div class="flip-card-back">
-                <h3>Überblick</h3>
-                <p>Material zur Vorbereitung auf die praktische Abschlussprüfung</p>
-                <div class="card-links">
-            <a href="https://www.arbeitsagentur.de/datei/merkblatt-buergergeld_ba043375.pdf" class="card-link">💡 Merkblatt Bürgergeld</a>
-			<a href="https://www.arbeitsagentur.de/datei/grundsicherung-einfach-erklaer_ba032300.pdf" class="card-link">👍 Einfach erklärt</a>
-			<a href="https://www.bmas.de/DE/Arbeit/Grundsicherung-Buergergeld/grundsicherung-buergergeld.html" class="card-link">🏢 BMAS: Bürgergeld auf einen Blick</a>
-     </div>
-    </div>
-  </div>
- </div>
-</div>
+            <div class="flip-card-back" aria-hidden="true">
+                <h3>Aktuelle Meldungen</h3>
+                <p>Über das SGB II wird regelmäßig in den Medien berichtet.</p>
+                <a href="https://www.dw.com/de/deutschland-kaum-sparpotenzial-beim-bürgergeld/a-74474306"
+                   class="card-link"
+                   target="_blank"
+                   rel="noopener noreferrer">📰 DW: Kaum Sparpotenzial beim Bürgergeld</a>
+                <a href="https://www.tagesschau.de/inland/innenpolitik/buergergeldreform-kritik-100.html"
+                   class="card-link"
+                   target="_blank"
+                   rel="noopener noreferrer">📰 Tagesschau: „Ablenkungsmanöver“</a>
+            </div>
+        </div>
+    </article>
 
-    <div class="tip">
-        💡 Tipp: Klicken Sie erneut auf eine Karte, um sie zurück zu drehen
-    </div>
+</main>
+
+<footer class="tip" aria-label="Interaktionshinweis">
+    💡 Tipp: Klicken oder Enter drücken, um eine Karte zu drehen
+</footer>
+
 
 	<script>
     function updateAriaState(card, expanded) {
@@ -331,6 +336,7 @@
 </body>
 
 </html>
+
 
 
 
