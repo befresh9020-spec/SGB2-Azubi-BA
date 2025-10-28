@@ -290,28 +290,27 @@ footer {
   justify-content: center;
 }
 
-/* Safari/All: Animation auf dem Wrapper, nicht auf dem SVG */
-@keyframes pixiPop {
-  0%   { transform: scale(0.6) translateY(8px); opacity: 0; }
-  60%  { transform: scale(1.05) translateY(-2px); }
-  100% { transform: scale(1) translateY(0); opacity: 1; }
+/* Safari/All – Animation auf dem Wrapper */
+@keyframes pixiBounce {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  25%  { transform: translateY(-8px) rotate(-3deg); }
+  50%  { transform: translateY(0) rotate(3deg); }
+  75%  { transform: translateY(-6px) rotate(-2deg); }
+  100% { transform: translateY(0) rotate(0deg); opacity: 1; }
 }
 
-/* einmaliges „Pop-in“ beim Laden */
+/* Pixi betritt die Bühne mit Hüpfen */
 .pixi-wrapper {
-  animation: pixiPop 2s cubic-bezier(.21,.77,.29,1.01) both;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: pixiBounce 1.6s ease-out 1;
 }
 
-/* Barrierearmut: Bewegung auf Wunsch aus */
+/* Motion-Reduction beachten */
 @media (prefers-reduced-motion: reduce) {
   .pixi-wrapper { animation: none !important; }
-}
-
-/* Falls du später doch das SVG animierst: Safari braucht diese zwei Zeilen */
-.pixi {
-  transform-box: fill-box;     /* wichtig für SVG in Safari */
-  transform-origin: center;    /* Mittelpunkt als Referenz */
-  will-change: transform, opacity;
 }
 
 /* Deine Mobile-Größe 48px + schöner Umbruch */
