@@ -6,36 +6,39 @@
     <title>SGB2 lernen</title>
     <link rel="stylesheet" href="styles-main.css">
 </head>
+	
 <body>
-    <div class="header">
-        <h1>SGB II - Bürgergeld</h1>
-        <p>Ein Überblick für Auszubildende der Bundesagentur für Arbeit zum Thema SGB II</p>
-    </div>
+<header class="header">
+    <h1>SGB II - Bürgergeld</h1>
+    <p>Ein Überblick für Auszubildende der Bundesagentur für Arbeit zum Thema SGB II</p>
+</header>
 
-    <div class="container">
-        <!-- Karte 1 -->
-        <div class="flip-card" onclick="flipCard(this)">
-            <div class="flip-card-inner">
-                <div class="flip-card-front">
-                    <div class="logo"></div>
-                    <h3>Leistungsberechtigte, Bedarfsgemeinschaft & Leistungsausschlüsse</h3>
-                    <p>§ 7 (1) - (4), § 7a, § 37, § 38</p>
-                </div>
-                <div class="flip-card-back">
-                    <h3>Überblick</h3>
-                    <p>Hier findest du den relevanten Gesetzestext mit Vertiefungsgrad und Sachverhalte zum Üben.</p>
-                    <div class="card-links">
-                        <a href="Berechtigte.html" class="card-link">📖 Gesetz</a>
-                        <a href="Berechtigte_SV.pdf" class="card-link">📄 Sachverhalte</a>
-                        <a href="Berechtigte_LV.pdf" class="card-link pdf-link">✅ Lösungen</a>
-                    </div>
+<main class="container">
+
+    <!-- Karte 1 -->
+    <article class="flip-card" tabindex="0" role="button" aria-expanded="false">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" aria-hidden="false">
+                <div class="logo" aria-hidden="true"></div>
+                <h3>Leistungsberechtigte, Bedarfsgemeinschaft & Leistungsausschlüsse</h3>
+                <p>§ 7 (1) - (4), § 7a, § 37, § 38</p>
+            </div>
+            <div class="flip-card-back" aria-hidden="true">
+                <h3>Überblick</h3>
+                <p>Hier findest du den relevanten Gesetzestext mit Vertiefungsgrad und Sachverhalte zum Üben.</p>
+                <div class="card-links">
+                    <a href="Berechtigte.html" class="card-link">📖 Gesetz</a>
+                    <a href="Berechtigte_SV.pdf" class="card-link">📄 Sachverhalte</a>
+                    <a href="Berechtigte_LV.pdf" class="card-link pdf-link">✅ Lösungen</a>
                 </div>
             </div>
         </div>
+    </article>
+
 
         <!-- Karte 2 -->
-        <div class="flip-card" onclick="flipCard(this)">
-            <div class="flip-card-inner">
+       <article class="flip-card" tabindex="0" role="button" aria-expanded="false">
+            <div class="logo" aria-hidden="true"></div>
                 <div class="flip-card-front">
                     <div class="logo"></div>
                     <h3>Bedarfe</h3>
@@ -51,11 +54,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </article>
 
         <!-- Karte 3 -->
-        <div class="flip-card" onclick="flipCard(this)">
-            <div class="flip-card-inner">
+        <article class="flip-card" tabindex="0" role="button" aria-expanded="false">
+           <div class="logo" aria-hidden="true"></div>
                 <div class="flip-card-front">
                     <div class="logo"></div>
                     <h3>Anrechnung Vermögen</h3>
@@ -249,44 +252,86 @@
         💡 Tipp: Klicken Sie erneut auf eine Karte, um sie zurück zu drehen
     </div>
 
-    <script>
-        function flipCard(card) {
-            card.classList.toggle('flipped');
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
-            }
-            card.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                card.style.transform = '';
-            }, 150);
+	<script>
+    function updateAriaState(card, expanded) {
+        const front = card.querySelector('.flip-card-front');
+        const back = card.querySelector('.flip-card-back');
+
+        // Sichtbarkeit im Screenreader steuern
+        front.setAttribute('aria-hidden', expanded);
+        back.setAttribute('aria-hidden', !expanded);
+
+        // Status für Screenreader (Button expanded/collapsed)
+        card.setAttribute('aria-expanded', expanded);
+    }
+
+    function flipCard(card) {
+        const expanded = card.classList.toggle('flipped');
+        updateAriaState(card, expanded);
+
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.flip-card');
-            cards.forEach(card => {
-                card.addEventListener('touchstart', function() {
-                    this.style.transform = 'scale(0.98)';
-                });
-                card.addEventListener('touchend', function() {
-                    setTimeout(() => {
-                        this.style.transform = '';
-                    }, 150);
-                });
+        // Leichter Klick-Feedback-Effekt
+        card.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+            card.style.transform = '';
+        }, 150);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.flip-card');
+
+        cards.forEach(card => {
+            // Wichtige ARIA-Grundausstattung
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-expanded', 'false');
+
+            const front = card.querySelector('.flip-card-front');
+            const back = card.querySelector('.flip-card-back');
+            front.setAttribute('aria-hidden', 'false');
+            back.setAttribute('aria-hidden', 'true');
+
+            // Tastatursteuerung für Barrierefreiheit
+            card.addEventListener('keydown', function(e) {
+                const keys = ['Enter', ' ', 'Spacebar'];
+                if (keys.includes(e.key)) {
+                    e.preventDefault();
+                    flipCard(card);
+                }
+            });
+
+            // Touch-Feedback (bestehende Funktionalität behalten)
+            card.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('touchend', function() {
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
             });
         });
+    });
 
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-    </script>
+    // Doppeltap-Zoom verhindern (Mobiles Safari)
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+</script>
+
+
+	
 </body>
 
 </html>
+
 
 
 
