@@ -63,6 +63,7 @@ header p {
 /* =================================== */
 /* HEADER — Zentrierung & Button       */
 /* =================================== */
+
 header {
   text-align: center;
   display: flex;
@@ -93,6 +94,7 @@ html[data-theme="dark"] .theme-toggle {
 /* =================================== */
 /* LAYOUT: Kartenraster                */
 /* =================================== */
+
 main {
   max-width: 1200px;
   margin: 0 auto;
@@ -179,28 +181,22 @@ article.flip-card {
 }
 
 /* =================================== */
-/* DARK MODE — manuell                 */
+/* DARK MODE                           */
 /* =================================== */
-html[data-theme="dark"] body {
-  background-color: #1a1a1a;
-  color: #fff;
-}
-
+html[data-theme="dark"] body { background-color: #1a1a1a; color: #fff; }
 html[data-theme="dark"] .flip-card-front { background: #2b2b2b; color: #fff; }
 html[data-theme="dark"] .flip-card-back { background: #151515; color: #fff; }
-
 html[data-theme="dark"] .card-link {
   background: rgba(255,255,255,0.15);
   border-color: rgba(255,255,255,0.35);
 }
-
 html[data-theme="dark"] .card-link:hover,
 html[data-theme="dark"] .card-link:focus {
   background: rgba(255,255,255,0.3);
 }
 
 /* =================================== */
-/* DARK MODE – System bevorzugt        */
+/* SYSTEM DARK FALLBACK                */
 /* =================================== */
 @media (prefers-color-scheme: dark) {
   html:not([data-theme]) body { background-color: #1a1a1a; color: #fff; }
@@ -210,57 +206,22 @@ html[data-theme="dark"] .card-link:focus {
     background: rgba(255,255,255,0.15);
     border-color: rgba(255,255,255,0.35);
   }
-  html:not([data-theme]) .card-link:hover,
-  html:not([data-theme]) .card-link:focus {
-    background: rgba(255,255,255,0.3);
-  }
 }
 
 /* =================================== */
-/* LOGO – nur Vorderseite mit Ring     */
+/* LOGO – nur Vorderseite: Rot + Rand   */
 /* =================================== */
 
-/* Vorderseite: roter Kreis + Regenbogenring */
 .flip-card-front .logo {
   width: 70px;
   height: 70px;
   background-color: #E2001A;
   border-radius: 50%;
+  border: 3px solid #111; /* dezenter schwarzer Rand */
   margin-bottom: 15px;
-  position: relative;
-  z-index: 1;
 }
 
-.flip-card-front .logo::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  border-radius: 50%;
-  background: conic-gradient(
-    red,
-    orange,
-    yellow,
-    lime,
-    cyan,
-    blue,
-    violet,
-    red
-  );
-  z-index: -1;
-  filter: saturate(1.05) brightness(1.05);
-  transition: transform 0.2s ease;
-}
-
-/* dezentes Hover-Feedback */
-article.flip-card:hover .flip-card-front .logo::before,
-article.flip-card:focus .flip-card-front .logo::before {
-  transform: scale(1.05);
-}
-
-/* Rückseite: KEIN Kreis */
+/* Rückseite: kein Logo */
 .flip-card-back .logo {
   display: none !important;
 }
