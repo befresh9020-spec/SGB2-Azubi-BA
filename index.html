@@ -341,6 +341,29 @@
         }
         lastTouchEnd = now;
     }, false);
+
+	// ========== THEME SWITCH ========== //
+
+const themeButton = document.getElementById('themeToggle');
+
+// gespeicherte Einstellung wiederherstellen
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    document.documentElement.classList.add('dark-mode');
+    themeButton.setAttribute('aria-pressed', 'true');
+}
+
+themeButton.addEventListener('click', () => {
+    const html = document.documentElement;
+    const isDark = html.classList.toggle('dark-mode');
+    
+    // Accessibility-Status
+    themeButton.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+
+    // speichern
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
+
 </script>
 
 
@@ -348,6 +371,7 @@
 </body>
 
 </html>
+
 
 
 
