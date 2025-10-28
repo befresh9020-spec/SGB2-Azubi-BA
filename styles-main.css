@@ -239,11 +239,63 @@ html[data-theme="dark"] .card-link:focus {
 /* LOGO                                */
 /* =================================== */
 
+/* =================================== */
+/* LOGO – Rot & feiner Regenbogenring  */
+/* =================================== */
 
+/* Vorderseite */
+.flip-card-front .logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #E2001A;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
 }
-article.flip-card:hover .logo::before,
-article.flip-card:focus .logo::before {
-  transform: scale(1.06);
+
+/* Regenbogenring um den Kreis */
+.flip-card-front .logo::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: conic-gradient(
+    red,
+    orange,
+    yellow,
+    lime,
+    cyan,
+    blue,
+    violet,
+    red
+  );
+  z-index: -1;
+  filter: saturate(1.05) brightness(1.05);
+  transition: transform 0.2s ease;
+}
+
+/* dezente Hover-Interaktion */
+article.flip-card:hover .flip-card-front .logo::before,
+article.flip-card:focus .flip-card-front .logo::before {
+  transform: scale(1.05);
+}
+
+/* Rückseite — nur roter Kreis */
+.flip-card-back .logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #E2001A;
+  margin-bottom: 15px;
+}
+
+/* kein Ring hinten */
+.flip-card-back .logo::before {
+  content: none !important;
 }
 
 /* =================================== */
@@ -300,49 +352,6 @@ header {
   max-width: 260px;
 }
 
-/* Visueller Akzent für den Kreis */
-.logo {
-  background-color: #E2001A;
-  position: relative;
-  z-index: 1;
-}
-
-/* Spielerischer Hover – nicht zu viel */
-article.flip-card:hover .logo::before,
-article.flip-card:focus .logo::before {
-  transform: scale(1.08);
-  filter: saturate(1.6) brightness(1.25);
-}
-
-/* Regenbogenring – nur auf der Vorderseite sichtbar */
-.flip-card-front .logo {
-  position: relative;
-  z-index: 1;
-}
-
-/* dezenter schmaler Rand mit leichtem Farbwandel */
-.flip-card-front .logo::before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  border-radius: 50%;
-  background: conic-gradient(
-    red,
-    orange,
-    yellow,
-    lime,
-    aqua,
-    blue,
-    violet,
-    red
-  );
-  filter: saturate(1.05) brightness(1.0);
-  z-index: -1;
-  transition: transform 0.25s ease, filter 0.25s ease;
-}
 
 /* minimales Interaktions-Feedback */
 article.flip-card:hover .flip-card-front .logo::before,
@@ -354,60 +363,4 @@ article.flip-card:focus .flip-card-front .logo::before {
 /* sicherstellen, dass Rückseite KEINEN Ring hat */
 .flip-card-back .logo::before {
   content: none !important;
-}
-
-/* =================================== */
-/* LOGO – Rot & Regenbogen-Ring auf der Vorderseite */
-/* =================================== */
-
-.flip-card-front .logo {
-  width: 70px;
-  height: 70px;
-  background-color: #E2001A; /* Unser Rot */
-  border-radius: 50%;
-  margin-bottom: 15px;
-  position: relative;
-  z-index: 1;
-}
-
-/* Dezenter, feiner Regenbogen-Ring */
-.flip-card-front .logo::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  border-radius: 50%;
-  background: conic-gradient(
-    red,
-    orange,
-    yellow,
-    lime,
-    cyan,
-    blue,
-    violet,
-    red
-  );
-  filter: saturate(1.0) brightness(1.05);
-  z-index: -1;
-  transition: transform 0.25s ease;
-}
-
-/* Mini-Interaktionsfeedback */
-article.flip-card:hover .flip-card-front .logo::before,
-article.flip-card:focus .flip-card-front .logo::before {
-  transform: scale(1.05);
-}
-
-/* Auf der Rückseite kein Regenbogen */
-.flip-card-back .logo::before {
-  content: none !important;
-}
-.flip-card-back .logo {
-  width: 70px;
-  height: 70px;
-  background-color: #E2001A;
-  border-radius: 50%;
-  margin-bottom: 15px;
 }
