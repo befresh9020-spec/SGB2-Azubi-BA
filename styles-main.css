@@ -239,28 +239,7 @@ html[data-theme="dark"] .card-link:focus {
 /* LOGO                                */
 /* =================================== */
 
-.logo {
-  width: 70px;
-  height: 70px;
-  background-color: #E2001A;
-  border-radius: 50%;
-  margin-bottom: 15px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.logo::before {
-  content: '';
-  position: absolute;
-  top: -6px; left: -6px; right: -6px; bottom: -6px;
-  border-radius: 50%;
-  background: conic-gradient(
-    red, orange, yellow, lime, green, aqua, cyan,
-    blue, indigo, violet, magenta, red
-  );
-  z-index: -1;
-  transition: transform 0.4s ease, filter 0.4s ease;
+
 }
 article.flip-card:hover .logo::before,
 article.flip-card:focus .logo::before {
@@ -352,21 +331,6 @@ header {
   z-index: -1;
 }
 
-/* Dezente Aura für Tiefe */
-.logo::after {
-  content: '';
-  position: absolute;
-  top: -9px;
-  left: -9px;
-  right: -9px;
-  bottom: -9px;
-  border-radius: 50%;
-  background: radial-gradient(
-    rgba(0,0,0,0.12),
-    transparent 70%
-  );
-  z-index: -2;
-}
 
 /* Spielerischer Hover – nicht zu viel */
 article.flip-card:hover .logo::before,
@@ -415,4 +379,60 @@ article.flip-card:focus .flip-card-front .logo::before {
 /* sicherstellen, dass Rückseite KEINEN Ring hat */
 .flip-card-back .logo::before {
   content: none !important;
+}
+
+/* =================================== */
+/* LOGO – Rot & Regenbogen-Ring auf der Vorderseite */
+/* =================================== */
+
+.flip-card-front .logo {
+  width: 70px;
+  height: 70px;
+  background-color: #E2001A; /* Unser Rot */
+  border-radius: 50%;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Dezenter, feiner Regenbogen-Ring */
+.flip-card-front .logo::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: conic-gradient(
+    red,
+    orange,
+    yellow,
+    lime,
+    cyan,
+    blue,
+    violet,
+    red
+  );
+  filter: saturate(1.0) brightness(1.05);
+  z-index: -1;
+  transition: transform 0.25s ease;
+}
+
+/* Mini-Interaktionsfeedback */
+article.flip-card:hover .flip-card-front .logo::before,
+article.flip-card:focus .flip-card-front .logo::before {
+  transform: scale(1.05);
+}
+
+/* Auf der Rückseite kein Regenbogen */
+.flip-card-back .logo::before {
+  content: none !important;
+}
+.flip-card-back .logo {
+  width: 70px;
+  height: 70px;
+  background-color: #E2001A;
+  border-radius: 50%;
+  margin-bottom: 15px;
 }
