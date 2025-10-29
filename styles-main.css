@@ -319,6 +319,63 @@ footer {
   .page-footer .branding { flex-direction: column; gap: 4px; }
 }
 
+.page-footer {
+  text-align: center;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-footer .tip {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.page-footer .author {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.page-footer .branding {
+  font-size: 0.75rem;
+  opacity: 0.85;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.pixi-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pixi {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.page-footer .branding:hover .pixi {
+  transform: translateY(-1px) scale(1.05);
+}
+
+/* Mobile: größere Pixi + sauber untereinander */
+@media (max-width: 600px) {
+  .pixi {
+    width: 48px;
+    height: 48px;
+  }
+  .page-footer .branding {
+    flex-direction: column;
+  }
+
 /* =================================== */
 /* RESPONSIVE                          */
 /* =================================== */
