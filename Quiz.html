@@ -122,8 +122,7 @@
   }
 
   .quiz-answers {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 12px;
   }
 
@@ -179,149 +178,6 @@
     .header h1 { font-size: 1.8rem; }
     .content { padding: 15px; font-size: 0.95rem; }
   }
-  
-  /* =================================== */
-/* SANFTERE DUNKELMODUS-HAPTIK         */
-/* =================================== */
-
-html[data-theme="dark"] body {
-  background: radial-gradient(circle at top, #1c1c1c, #121212);
-  color: #f5f5f5;
-}
-
-html[data-theme="dark"] .content {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-}
-
-/* Leichte Glüheffekte auf Buttons und Antworten */
-html[data-theme="dark"] .quiz-button:hover,
-html[data-theme="dark"] .quiz-answer:hover {
-  background: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
-}
-
-/* Dezente Farbvarianz bei Hover im hellen Modus */
-html[data-theme="light"] .quiz-button:hover,
-html[data-theme="light"] .quiz-answer:hover {
-  background: rgba(255, 255, 255, 0.35);
-}
-
-/* Sanfter Übergang bei Theme-Wechsel */
-body, .content, .quiz-button, .quiz-answer {
-  transition: background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
-}
-
-  /* =================================== */
-/* BA-ROT ALS AKZENTFARBE              */
-/* =================================== */
-
-/* Grunddefinition der Akzentfarbe als Variable */
-:root {
-  --accent: #E2001A;
-  --accent-light: #ff4d4d;
-  --accent-glow: rgba(226, 0, 26, 0.35);
-}
-
-/* Für Dark-Mode etwas wärmer abgestuft */
-html[data-theme="dark"] {
-  --accent: #ff4d4d;
-  --accent-light: #ff6f6f;
-  --accent-glow: rgba(255, 77, 77, 0.3);
-}
-
-/* ------------------------- */
-/* Header und Links          */
-/* ------------------------- */
-.header h1 {
-  color: var(--accent);
-  text-shadow: 0 2px 10px var(--accent-glow);
-}
-
-.back-button {
-  border-color: var(--accent);
-  color: #fff;
-}
-
-.back-button:hover {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 0 12px var(--accent-glow);
-}
-
-/* ------------------------- */
-/* Quiz-Buttons              */
-/* ------------------------- */
-.quiz-button {
-  background: var(--accent);
-  border: none;
-  color: #fff;
-  font-weight: 500;
-  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-}
-
-.quiz-button:hover {
-  background: var(--accent-light);
-  box-shadow: 0 0 10px var(--accent-glow);
-  transform: translateY(-2px);
-}
-
-/* ------------------------- */
-/* Antworten                 */
-/* ------------------------- */
-.quiz-answer {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: background 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.quiz-answer:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 10px var(--accent-glow);
-}
-
-/* Richtig/Falsch klar, aber nicht grell */
-.quiz-answer.correct {
-  background: var(--accent-light);
-  color: #fff;
-  font-weight: 600;
-  box-shadow: 0 0 10px var(--accent-glow);
-}
-
-.quiz-answer.wrong {
-  background: rgba(255, 99, 99, 0.6);
-  color: #fff;
-}
-
-/* ------------------------- */
-/* Ergebnisanzeige           */
-/* ------------------------- */
-.quiz-score {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid var(--accent);
-  border-radius: 10px;
-  padding: 15px;
-  margin-top: 20px;
-  box-shadow: 0 0 10px var(--accent-glow);
-  color: #fff;
-  font-weight: 500;
-}
-
-.quiz-answers > *:empty {
-  display: none !important;
-}
-
-.quiz-answers {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-html {
-  background-color: #121212;
-}
-  
 </style>
 </head>
 <body>
@@ -458,7 +314,6 @@ const questions = [
 
 ];
 
-
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
 const nextBtn = document.getElementById("next-btn");
@@ -494,10 +349,7 @@ function showQuestion() {
 
 function resetState() {
   nextBtn.style.display = "none";
-  // Alle Kindelemente vollständig entfernen
-  while (answersEl.firstChild) {
-    answersEl.removeChild(answersEl.firstChild);
-  }
+  while (answersEl.firstChild) answersEl.removeChild(answersEl.firstChild);
 }
 
 function selectAnswer(button, correct) {
@@ -514,11 +366,8 @@ function selectAnswer(button, correct) {
 
 nextBtn.addEventListener("click", () => {
   currentIndex++;
-  if (currentIndex < shuffledQuestions.length) {
-    showQuestion();
-  } else {
-    showScore();
-  }
+  if (currentIndex < shuffledQuestions.length) showQuestion();
+  else showScore();
 });
 
 function showScore() {
@@ -553,8 +402,6 @@ themeButton.addEventListener('click', () => {
   localStorage.setItem('theme', next);
   themeButton.setAttribute('aria-pressed', next === 'dark');
 });
-
 </script>
 </body>
 </html>
-
