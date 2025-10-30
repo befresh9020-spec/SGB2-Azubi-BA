@@ -184,6 +184,21 @@
     background: radial-gradient(circle at top, #1c1c1c, #121212); 
   }
   
+  html[data-theme="dark"] .content {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+  }
+  
+  html[data-theme="light"] .quiz-button:hover,
+  html[data-theme="light"] .quiz-answer:hover {
+  background: rgba(255, 255, 255, 0.35);
+  }
+  
+  html {
+  background-color: #121212;
+  }
+  
 </style>
 </head>
 <body>
