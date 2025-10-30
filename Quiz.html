@@ -199,6 +199,59 @@
   background-color: #121212;
   }
   
+  /* =================================== */
+/* SANFTER, ATMOSPHÄRISCHER DARK MODE  */
+/* =================================== */
+
+html[data-theme="dark"] body {
+  /* sanfter radialer Verlauf, Mittelpunkt etwas nach oben verschoben */
+  background: radial-gradient(circle at 50% 20%, #232323 0%, #121212 80%);
+  color: #f5f5f5;
+  background-attachment: fixed; /* lässt den Verlauf "ruhen", auch beim Scrollen */
+}
+
+/* Dynamische Tiefe für mittlere Screens */
+@media (max-width: 1024px) {
+  html[data-theme="dark"] body {
+    background: radial-gradient(circle at 50% 25%, #252525 0%, #111 85%);
+  }
+}
+
+/* Sehr dunkle, minimal kontrastreichere Variante für Mobile */
+@media (max-width: 600px) {
+  html[data-theme="dark"] body {
+    background: radial-gradient(circle at 50% 30%, #1e1e1e 0%, #0f0f0f 90%);
+  }
+}
+
+/* Sanfte Panel-Optik für Quiz-Container */
+html[data-theme="dark"] .content {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px); /* leichte Glas-Optik */
+}
+
+/* Hover-Gefühl: sanftes Glühen */
+html[data-theme="dark"] .quiz-button:hover,
+html[data-theme="dark"] .quiz-answer:hover {
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+/* Heller Modus – dezente Aufhellung für Konsistenz */
+html[data-theme="light"] .quiz-button:hover,
+html[data-theme="light"] .quiz-answer:hover {
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Weiche Übergänge zwischen Themes */
+body, .content, .quiz-button, .quiz-answer {
+  transition: background 0.6s ease, color 0.6s ease, box-shadow 0.6s ease, transform 0.2s ease;
+}
+  
 </style>
 </head>
 <body>
