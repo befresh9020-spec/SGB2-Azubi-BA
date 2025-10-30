@@ -178,6 +178,40 @@
     .header h1 { font-size: 1.8rem; }
     .content { padding: 15px; font-size: 0.95rem; }
   }
+  
+  /* =================================== */
+/* SANFTERE DUNKELMODUS-HAPTIK         */
+/* =================================== */
+
+html[data-theme="dark"] body {
+  background: radial-gradient(circle at top, #1c1c1c, #121212);
+  color: #f5f5f5;
+}
+
+html[data-theme="dark"] .content {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* Leichte Glüheffekte auf Buttons und Antworten */
+html[data-theme="dark"] .quiz-button:hover,
+html[data-theme="dark"] .quiz-answer:hover {
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+/* Dezente Farbvarianz bei Hover im hellen Modus */
+html[data-theme="light"] .quiz-button:hover,
+html[data-theme="light"] .quiz-answer:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Sanfter Übergang bei Theme-Wechsel */
+body, .content, .quiz-button, .quiz-answer {
+  transition: background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+}
+  
 </style>
 </head>
 <body>
