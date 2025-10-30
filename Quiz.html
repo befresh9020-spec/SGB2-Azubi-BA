@@ -307,10 +307,8 @@ html[data-theme="dark"] {
   font-weight: 500;
 }
   
-  .quiz-answers {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.quiz-answers > *:empty {
+  display: none !important;
 }
 
 html {
