@@ -486,9 +486,9 @@ function showQuestion() {
 }
 
 function resetState() {
-  // Alle vorherigen Antworten komplett entfernen (inkl. Textknoten)
-  answersEl.innerHTML = "";
   nextBtn.style.display = "none";
+  // ALLE Textknoten und Elemente löschen
+  answersEl.textContent = "";
 }
 
 function selectAnswer(button, correct) {
