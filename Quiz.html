@@ -493,8 +493,10 @@ function showQuestion() {
 
 function resetState() {
   nextBtn.style.display = "none";
-  // ALLE Textknoten und Elemente löschen
-  answersEl.textContent = "";
+  // Alle Kindelemente vollständig entfernen
+  while (answersEl.firstChild) {
+    answersEl.removeChild(answersEl.firstChild);
+  }
 }
 
 function selectAnswer(button, correct) {
