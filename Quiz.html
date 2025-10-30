@@ -488,8 +488,9 @@ function showQuestion() {
 }
 
 function resetState() {
+  // Alle vorherigen Antworten komplett entfernen (inkl. Textknoten)
+  answersEl.innerHTML = "";
   nextBtn.style.display = "none";
-  while (answersEl.firstChild) answersEl.removeChild(answersEl.firstChild);
 }
 
 function selectAnswer(button, correct) {
@@ -506,8 +507,11 @@ function selectAnswer(button, correct) {
 
 nextBtn.addEventListener("click", () => {
   currentIndex++;
-  if (currentIndex < shuffledQuestions.length) showQuestion();
-  else showScore();
+  if (currentIndex < shuffledQuestions.length) {
+    showQuestion();
+  } else {
+    showScore();
+  }
 });
 
 function showScore() {
@@ -542,6 +546,7 @@ themeButton.addEventListener('click', () => {
   localStorage.setItem('theme', next);
   themeButton.setAttribute('aria-pressed', next === 'dark');
 });
+
 </script>
 </body>
 </html>
