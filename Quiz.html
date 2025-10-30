@@ -5,11 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Quiz – SGB II</title>
 <style>
-  /* Dein vorhandenes CSS */
+  /* ====== BASIS-RESET ====== */
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -19,11 +23,27 @@
     padding: 20px;
     color: white;
     line-height: 1.6;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
+  html[data-theme="dark"] body {
+    background-color: #1a1a1a;
+    color: #fff;
+  }
+
+  html[data-theme="light"] body {
+    background-color: #E2001A;
+    color: #fff;
+  }
+
+  /* ====== HEADER ====== */
   .header {
     text-align: center;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
 
   .header h1 {
@@ -43,7 +63,7 @@
     font-size: 0.9rem;
     transition: all 0.3s ease;
     border: 1px solid rgba(255,255,255,0.3);
-    margin: 10px auto;
+    margin: 5px auto;
   }
 
   .back-button:hover {
@@ -52,6 +72,26 @@
     box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
   }
 
+  /* ====== THEME TOGGLE ====== */
+  .theme-toggle {
+    padding: 8px 14px;
+    border-radius: 25px;
+    border: 2px solid rgba(255,255,255,0.6);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .theme-toggle:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
+  .theme-toggle:focus { outline: 3px solid #FFD600; outline-offset: 4px; }
+
+  html[data-theme="dark"] .theme-toggle {
+    border-color: rgba(255,255,255,0.8);
+  }
+
+  /* ====== QUIZ-CONTAINER ====== */
   .content {
     max-width: 900px;
     margin: 0 auto 25px auto;
@@ -60,6 +100,12 @@
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     border: 1px solid rgba(255,255,255,0.2);
+    transition: background 0.4s ease, border 0.4s ease;
+  }
+
+  html[data-theme="dark"] .content {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.15);
   }
 
   .content h2 {
@@ -68,7 +114,7 @@
     text-align: center;
   }
 
-  /* Quiz-Styling */
+  /* ====== QUIZ-STYLING ====== */
   .quiz-question {
     font-size: 1.2rem;
     margin-bottom: 20px;
@@ -129,19 +175,15 @@
   }
 
   @media (max-width: 768px) {
-    .header h1 {
-      font-size: 1.8rem;
-    }
-    .content {
-      padding: 15px;
-      font-size: 0.95rem;
-    }
+    .header h1 { font-size: 1.8rem; }
+    .content { padding: 15px; font-size: 0.95rem; }
   }
 </style>
 </head>
 <body>
   <div class="header">
     <h1>Quiz - SGB II</h1>
+    <button id="themeToggle" class="theme-toggle" aria-pressed="false">🌙 / ☀️</button>
     <a href="index.html" class="back-button">Zurück</a>
   </div>
 
@@ -156,6 +198,9 @@
   </div>
 
 <script>
+/* =============================
+   QUIZ-FUNKTIONALITÄT
+============================= */
 const questions = [
   {question: "Wobei handelt es sich um ein privilegiertes Einkommen (also ein nicht zu berücksichtigendes Einkommen)?", answers: [
     {text: "Mutterschaftsgeld", correct: true},
@@ -169,6 +214,8 @@ const questions = [
     {text: "Rente wegen voller Erwerbsminderung", correct: false},
     {text: "Rente wegen teilweiser Erwerbsminderung", correct: false}
   ]},
+  // ... (restliche Fragen)
+  
   {question: "Wobei handelt es sich um ein privilegiertes Einkommen (also ein nicht zu berücksichtigendes Einkommen)?", answers: [
     {text: "Arbeitslosengeld bei Arbeitslosigkeit nach § 137 SGB III", correct: false},
     {text: "Berufsausbildungsbeihilfe nach § 56 SGB III", correct: false},
@@ -322,11 +369,8 @@ function selectAnswer(button, correct) {
 
 nextBtn.addEventListener("click", () => {
   currentIndex++;
-  if (currentIndex < shuffledQuestions.length) {
-    showQuestion();
-  } else {
-    showScore();
-  }
+  if (currentIndex < shuffledQuestions.length) showQuestion();
+  else showScore();
 });
 
 function showScore() {
@@ -339,6 +383,28 @@ function showScore() {
 
 restartBtn.addEventListener("click", startQuiz);
 startQuiz();
+
+/* =============================
+   THEME SWITCH (wie Startseite)
+============================= */
+const themeButton = document.getElementById('themeToggle');
+const saved = localStorage.getItem('theme');
+
+if (saved === 'dark' || saved === 'light') {
+  document.documentElement.setAttribute('data-theme', saved);
+  themeButton.setAttribute('aria-pressed', saved === 'dark');
+}
+
+themeButton.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const effective = current ?? (systemDark ? 'dark' : 'light');
+  const next = effective === 'dark' ? 'light' : 'dark';
+
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  themeButton.setAttribute('aria-pressed', next === 'dark');
+});
 </script>
 </body>
 </html>
