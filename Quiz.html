@@ -398,7 +398,44 @@ const questions = [
     {text: "gemeinschaftliches Mittagessen", correct: false},
     {text: "Lernförderung", correct: false}
   ]},
+   {question: "Wie wird die Personengruppe Aufstocker definiert?", answers: [
+    {text: "Personen, die zusätzlich zum Arbeitslosengeld aufstockend Bürgergeld beziehen.", correct: true},
+    {text: "Personen, die zusätzlich zum Lohn / Gehalt Bürgergeld beziehen.", correct: false},
+    {text: "Personen, die zusätzlich zum Bürgergeld Leistungen nach dem SGB XII - Sozialhilfe beziehen.", correct: false},
+    {text: "Personen, die zusätzlich zu einer Rente Bürgergeld beziehen.", correct: false}
+  ]},
+ {question: "Wie wird die Personengruppe Ergänzer definiert?", answers: [
+    {text: "Personen, die zusätzlich zum Arbeitslosengeld aufstockend Bürgergeld beziehen.", correct: false},
+    {text: "Personen, die zusätzlich zum Lohn / Gehalt Bürgergeld beziehen.", correct: true},
+    {text: "Personen, die zusätzlich zum Bürgergeld Leistungen nach dem SGB XII - Sozialhilfe beziehen.", correct: false},
+    {text: "Personen, die nur Bürgergeld beziehen.", correct: false}
+  ]},
+   {question: "Welcher Träger kann/ muss die Leistung Einstiegsgeld erbringen?", answers: [
+    {text: "Agentur für Arbeit", correct: false},
+    {text: "Jobcenter", correct: true},
+    {text: "Agentur für Arbeit und Jobcenter", correct: false},
+    {text: "anderer Träger", correct: false}
+  ]},
+    {question: "Welcher Träger kann/ muss die Leistung Berufsausbildungsbeihilfe erbringen?", answers: [
+    {text: "Agentur für Arbeit", correct: true},
+    {text: "Jobcenter", correct: false},
+    {text: "Agentur für Arbeit und Jobcenter", correct: false},
+    {text: "anderer Träger", correct: false}
+  ]},
 
+  {question: "Welcher Träger kann/ muss Leistungen aus dem Vermittlungsbudget erbringen?", answers: [
+    {text: "Agentur für Arbeit", correct: false},
+    {text: "Jobcenter", correct: false},
+    {text: "Agentur für Arbeit und Jobcenter", correct: true},
+    {text: "anderer Träger", correct: false}
+  ]},
+
+  {question: "Welcher Träger kann/ muss die Leistung Gründungszuschuss erbringen?", answers: [
+    {text: "Agentur für Arbeit", correct: true},
+    {text: "Jobcenter", correct: false},
+    {text: "Agentur für Arbeit und Jobcenter", correct: false},
+    {text: "anderer Träger", correct: false}
+  ]},
 
 ];
 
@@ -493,3 +530,4 @@ themeButton.addEventListener('click', () => {
 </script>
 </body>
 </html>
+
