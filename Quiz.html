@@ -422,21 +422,61 @@ const questions = [
     {text: "Agentur für Arbeit und Jobcenter", correct: false},
     {text: "anderer Träger", correct: false}
   ]},
-
   {question: "Welcher Träger kann/ muss Leistungen aus dem Vermittlungsbudget erbringen?", answers: [
     {text: "Agentur für Arbeit", correct: false},
     {text: "Jobcenter", correct: false},
     {text: "Agentur für Arbeit und Jobcenter", correct: true},
     {text: "anderer Träger", correct: false}
   ]},
-
   {question: "Welcher Träger kann/ muss die Leistung Gründungszuschuss erbringen?", answers: [
     {text: "Agentur für Arbeit", correct: true},
     {text: "Jobcenter", correct: false},
     {text: "Agentur für Arbeit und Jobcenter", correct: false},
     {text: "anderer Träger", correct: false}
   ]},
-
+  {question: "Welcher Träger kann/ muss die Leistung Eingliederungszuschuss erbringen?", answers: [
+    {text: "Agentur für Arbeit", correct: false},
+    {text: "Jobcenter", correct: false},
+    {text: "Agentur für Arbeit und Jobcenter", correct: true},
+    {text: "anderer Träger", correct: false}
+  ]},
+  {question: "Welcher Träger kann/ muss die Leistung Förderung der beruflichen Weiterbildung erbringen?", answers: [
+    {text: "Agentur für Arbeit", correct: true},
+    {text: "Jobcenter", correct: false},
+    {text: "Agentur für Arbeit und Jobcenter", correct: false},
+    {text: "anderer Träger", correct: false}
+  ]},
+  {question: "Ein Antrag auf Bürgergeld wird am 12. November 2025 gestellt. Ab wann wirkt der Antrag?", answers: [
+    {text: "ab 12. November 2025 (Leistungen werden nicht vor Antragstellung erbracht)", correct: false},
+    {text: "ab 1. Dezember 2025 (Leistungen werden ab dem Folgemonat erbacht)", correct: false},
+    {text: "ab 1. November 2025 (der Antrag wird auf den Ersten des Monats zurück", correct: true},
+    {text: "ab 17. November 2025 (Leistungen werden nur für volle Kalenderwochen erbracht)", correct: false}
+  ]},
+  {question: "Eine alleinerziehende Mutter mit 1 Kind (4 Jahre alt) erhält den Mehrbedarf für Alleinerziehende. In welcher Höhe wird der Mehrbedarf anerkannt?", answers: [
+    {text: "182,16 Euro", correct: false},
+    {text: "357,00 Euro", correct: false},
+    {text: "67,56 Euro", correct: false},
+    {text: "202,68 Euro", correct: true}
+  ]},
+  {question: "Eine alleinerziehende Mutter mit 1 Kind (11 Jahre alt) erhält den Mehrbedarf für Alleinerziehende. In welcher Höhe wird der Mehrbedarf anerkannt?", answers: [
+    {text: "563,00 Euro", correct: false},
+    {text: "357,00 Euro", correct: false},
+    {text: "67,56 Euro", correct: true},
+    {text: "202,68 Euro", correct: false}
+  ]},
+   {question: "Eine alleinerziehende Mutter mit 2 Kindern (12 und 14 Jahre alt) erhält den Mehrbedarf für Alleinerziehende. In welcher Höhe wird der Mehrbedarf anerkannt?", answers: [
+    {text: "563,00 Euro", correct: false},
+    {text: "135,12 Euro", correct: false},
+    {text: "67,56 Euro", correct: false},
+    {text: "202,68 Euro", correct: true}
+  ]},
+  {question: "Eine alleinerziehende Mutter mit 2 Kindern (9 und 17 Jahre alt) erhält den Mehrbedarf für Alleinerziehende. In welcher Höhe wird der Mehrbedarf anerkannt?", answers: [
+    {text: "563,00 Euro", correct: false},
+    {text: "135,12 Euro", correct: true},
+    {text: "67,56 Euro", correct: false},
+    {text: "202,68 Euro", correct: false}
+  ]},
+  
 ];
 
 const questionEl = document.getElementById("question");
@@ -530,4 +570,5 @@ themeButton.addEventListener('click', () => {
 </script>
 </body>
 </html>
+
 
