@@ -462,6 +462,46 @@ html[data-theme="dark"] .train .window {
   .branding .train-wrapper {
     margin-top: 8px;
   }
+  
+  /* =================================== */
+/* FINALER FOOTER-LAYOUTHACK FÜR DEN ZUG */
+/* =================================== */
+
+/* Branding-Block im Footer: immer untereinander, egal wie breit der Bildschirm ist */
+.page-footer .branding {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.35;
+  gap: 6px;
+  /* deine bisherige Schriftgröße/Transparenz kannst du lassen,
+     falls du vorher z. B. font-size / opacity gesetzt hattest */
+}
+
+/* Der Zug selbst soll immer in einer eigenen Zeile unter dem Text stehen */
+.page-footer .branding .train-wrapper {
+  display: block;
+  margin-top: 4px;
+  line-height: 0; /* verhindert zusätzlichen "Text-Zwischenraum" um die SVG */
+}
+
+/* Zug skalieren/verhalten wie gehabt */
+.page-footer .branding .train {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Für größere Screens können wir den Abstand leicht anpassen,
+   damit der Zug nicht am Text klebt */
+@media (min-width: 768px) {
+  .page-footer .branding {
+    gap: 8px;
+  }
+  .page-footer .branding .train-wrapper {
+    margin-top: 6px;
+  }
 }
 
 /* =================================== */
