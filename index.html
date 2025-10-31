@@ -277,21 +277,50 @@
     🤵🏻‍♂️ Erstellt von: B. Frischer – Stand: 2025
   </div>
 
-  <!-- Branding mit Pixi -->
-  <div class="branding">
-    Für Auszubildende der BA · Dein Lernbuddy: Pixi Paragraf
-    <span class="pixi-wrapper">
-      <!-- Pixi bleibt genau hier -->
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" class="pixi">
-        <circle cx="12" cy="7" r="5" fill="#E2001A"/>
-        <circle cx="10" cy="6" r="1.2" fill="#fff"/>
-        <circle cx="14" cy="6" r="1.2" fill="#fff"/>
-        <circle cx="10" cy="6" r="0.6" fill="#111"/>
-        <circle cx="14" cy="6" r="0.6" fill="#111"/>
-        <line x1="10" y1="9" x2="14" y2="9" stroke="#111" stroke-width="1.2"/>
-        <path d="M9 12 q-3 4 3 6 q6-2 3-6 q-3-4-6 0z"
-              fill="#E2001A" stroke="#111" stroke-width="1"/>
-        <polygon points="11.5,11 12.5,11 12,13" fill="#111"/>
+  <!-- Branding mit Zug -->
+ <div class="branding">
+    Für Auszubildende der BA · Deine Lernreise:
+    <span class="train-wrapper">
+      <svg class="train" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+
+        <!-- Gleise -->
+        <rect x="0" y="32" width="120" height="2" fill="#666"/>
+        <rect x="0" y="34" width="120" height="1" fill="#444"/>
+
+        <!-- Rauch -->
+        <circle class="smoke" cx="15" cy="10" r="3" fill="rgba(255,255,255,0.7)">
+          <animate attributeName="cy" values="10;4;10" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.8;0;0.8" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="smoke" cx="20" cy="8" r="2" fill="rgba(255,255,255,0.6)">
+          <animate attributeName="cy" values="8;2;8" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+          <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+        </circle>
+
+        <!-- Lok -->
+        <rect x="10" y="20" width="18" height="10" fill="#111" stroke="#000" stroke-width="1"/>
+        <rect x="18" y="14" width="6" height="6" fill="#111" stroke="#000" stroke-width="0.8"/>
+        <rect x="9" y="30" width="20" height="2" fill="#333"/>
+        <circle cx="13" cy="32" r="2" fill="#000"/>
+        <circle cx="23" cy="32" r="2" fill="#000"/>
+        <circle cx="18" cy="32" r="2" fill="#222"/>
+
+        <!-- Erster Waggon -->
+        <rect x="32" y="22" width="20" height="8" fill="#004A9F" stroke="#002A5F" stroke-width="0.8"/>
+        <circle cx="36" cy="32" r="2" fill="#000"/>
+        <circle cx="46" cy="32" r="2" fill="#000"/>
+
+        <!-- Zweiter Waggon -->
+        <rect x="56" y="22" width="20" height="8" fill="#E2001A" stroke="#A00012" stroke-width="0.8"/>
+        <circle cx="60" cy="32" r="2" fill="#000"/>
+        <circle cx="70" cy="32" r="2" fill="#000"/>
+
+        <!-- Animation: Zug fährt kontinuierlich nach links -->
+        <animateTransform attributeName="transform"
+          type="translate"
+          values="0; -40; 0"
+          dur="3s"
+          repeatCount="indefinite"/>
       </svg>
     </span>
   </div>
