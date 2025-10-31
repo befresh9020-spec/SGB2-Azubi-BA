@@ -420,6 +420,22 @@ html[data-theme="dark"] .train rect[fill="#333"] {
     width: 160px;
     height: 60px;
   }
+  
+  /* Rauchbewegung bleibt hell in beiden Modi */
+.train .smoke { mix-blend-mode: lighten; }
+
+/* Nachtbeleuchtung: Fenster glühen im Dark Mode */
+html[data-theme="dark"] .train .window {
+  fill: #FFD43B;
+  filter: drop-shadow(0 0 2px #FFD43B);
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  0% { opacity: 0.8; filter: drop-shadow(0 0 2px #FFD43B); }
+  100% { opacity: 1; filter: drop-shadow(0 0 4px #FFEF9A); }
+}
+  
 }
 
 /* =================================== */
