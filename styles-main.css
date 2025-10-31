@@ -435,7 +435,33 @@ html[data-theme="dark"] .train .window {
   0% { opacity: 0.8; filter: drop-shadow(0 0 2px #FFD43B); }
   100% { opacity: 1; filter: drop-shadow(0 0 4px #FFEF9A); }
 }
-  
+
+/* =================================== */
+/* FIX: Zug im Footer unter Text       */
+/* =================================== */
+
+.branding {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+/* Zug-Wrapper unter Text fixieren */
+.branding .train-wrapper {
+  display: block;
+  margin-top: 6px;
+}
+
+/* sorgt für gutes Verhalten bei großen Monitoren */
+@media (min-width: 768px) {
+  .branding {
+    gap: 8px;
+  }
+  .branding .train-wrapper {
+    margin-top: 8px;
+  }
 }
 
 /* =================================== */
