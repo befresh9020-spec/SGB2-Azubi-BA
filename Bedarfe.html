@@ -1,210 +1,219 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SGB II – Bedarfe</title>
- <style>
-  /* Basis-Reset */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGB II – Bedarfe</title>
 
-  /* Seiten-Grundlayout (DEIN rotes Design bleibt erhalten) */
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: #E2001A;
-    min-height: 100vh;
-    padding: 20px;
-    color: white;
-    line-height: 1.6;
-  }
+<style>
+/* Reset und Grundlayout */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #E2001A;
+  color: #fff;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+}
 
-  .header h1 {
-    font-size: 2.2rem;
-    font-weight: 300;
-    margin-bottom: 10px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-  }
+/* Kopfbereich */
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  .back-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background: rgba(255, 255, 255, 0.15);
-    color: white;
-    text-decoration: none;
-    border-radius: 25px;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255,255,255,0.3);
-    margin: 10px auto;
-  }
+.header h1 {
+  font-size: 2.2rem;
+  font-weight: 300;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
 
-  .back-button:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-  }
+.back-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.3);
+}
 
-  .content {
-    max-width: 900px;
-    margin: 0 auto 25px auto;
-    background: rgba(0,0,0,0.4);
-    padding: 20px 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.2);
-  }
+.back-button:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+}
 
-  .content h2 {
-    font-size: 1.6rem;
-    margin-bottom: 15px;
-    text-align: center;
-  }
+/* Inhaltsverzeichnis */
+nav.toc {
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+  background: rgba(0,0,0,0.4);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+}
 
-  .content p {
-    margin-bottom: 12px;
-  }
+nav.toc h2 {
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 15px;
+}
 
-  .content ol, .content ul {
-    margin: 10px 0 15px 25px;
-  }
+nav.toc ul {
+  list-style: none;
+  text-align: center;
+}
 
-  /* --------------------------
-     Tabellen-Styling (Desktop)
-     -------------------------- */
-  .table-container {
-    overflow-x: auto;           /* ermöglicht horizontales Scrollen auf sehr schmalen Geräten */
-    margin: 20px 0;
-  }
+nav.toc li {
+  display: inline-block;
+  margin: 5px 10px;
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: rgba(255,255,255,0.05); /* dezente Table-Hintergrundfarbe */
-    border-radius: 10px;
-    overflow: hidden;
-    table-layout: fixed; /* gleichmäßige Spaltenverteilung */
-  }
+nav.toc a {
+  color: #FFD;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
 
-  thead {
-    background: rgba(255,255,255,0.12);
-  }
+nav.toc a:hover {
+  background: rgba(255,255,255,0.15);
+}
 
-  th, td {
-    padding: 10px 12px;
-    text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.12);
-    color: #fff;
-    word-wrap: break-word;
-  }
+/* Inhalt (Akkordeons) */
+.content {
+  max-width: 900px;
+  margin: 0 auto 25px auto;
+}
 
-  th {
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
+details {
+  background: rgba(0,0,0,0.4);
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  transition: background 0.3s ease;
+}
 
-  tbody tr:hover {
-    background: rgba(255,255,255,0.02);
-  }
+details:hover {
+  background: rgba(0,0,0,0.45);
+}
 
-  tr:last-child td {
-    border-bottom: none;
-  }
+summary {
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 500;
+  list-style: none;
+  text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+}
 
-  caption {
-    caption-side: top;
-    text-align: left;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: #fff;
-  }
+summary::marker {
+  display: none;
+}
 
-  a {
-    color: #FFD; /* dezenter Link-Farbton auf rotem Grund */
-  }
+summary::after {
+  content: "▼";
+  float: right;
+  transition: transform 0.3s ease;
+}
 
-  /* --------------------------
-     Responsive Verhalten (Mobile)
-     -------------------------- */
-  @media (max-width: 768px) {
-    .header h1 { font-size: 1.8rem; }
-    .content { padding: 15px; font-size: 0.95rem; }
+details[open] summary::after {
+  transform: rotate(-180deg);
+}
 
-    /* Verstecke Tabellenkopf — wir zeigen Labels mittels ::before */
-    thead { display: none; }
+details p, details ol, details ul, details table {
+  margin-top: 12px;
+}
 
-    /* Grundstruktur: jede Zeile wird Block */
-    table, tbody, tr, td {
-      display: block;
-      width: 100%;
-    }
+/* Absatzformatierung */
+p {
+  margin-bottom: 12px;
+  padding-left: 10px;
+  border-left: 2px solid rgba(255,255,255,0.2);
+}
 
-    tr {
-      margin-bottom: 15px;
-      background: rgba(255,255,255,0.03);
-      border-radius: 10px;
-      padding: 10px;
-    }
+/* Tabelle */
+.table-container {
+  overflow-x: auto;
+  margin: 15px 0;
+}
 
-    td {
-      /* Platz für das Label auf der linken Seite */
-      padding: 8px 8px 8px 50%;
-      position: relative;
-      border: none;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      text-align: left;
-      color: #fff;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-    td:last-child { border-bottom: none; }
+thead {
+  background: rgba(255,255,255,0.12);
+}
 
-    td::before {
-      position: absolute;
-      left: 12px;
-      top: 8px;
-      width: 44%;
-      white-space: nowrap;
-      font-weight: 600;
-      color: #fff;
-      font-size: 0.9rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+th, td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+}
 
-    /* LABELS: an deine Spalten angepasst (7 Spalten) */
-    td:nth-of-type(1)::before { content: "Gültig ab"; }
-    td:nth-of-type(2)::before { content: "Stufe 1"; }
-    td:nth-of-type(3)::before { content: "Stufe 2"; }
-    td:nth-of-type(4)::before { content: "Stufe 3"; }
-    td:nth-of-type(5)::before { content: "Stufe 4"; }
-    td:nth-of-type(6)::before { content: "Stufe 5"; }
-    td:nth-of-type(7)::before { content: "Stufe 6"; }
+tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
 
-    /* Optional: kleinere Schrift auf sehr schmalen Displays */
-    @media (max-width: 420px) {
-      td::before { font-size: 0.85rem; }
-      td { padding-left: 52%; }
-    }
-  }
+caption {
+  caption-side: top;
+  text-align: left;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+/* Mobile Darstellung */
+@media (max-width: 768px) {
+  nav.toc li { display: block; margin: 8px 0; }
+  summary { font-size: 1.1rem; }
+  p { font-size: 0.95rem; }
+}
 </style>
-
 </head>
-<body>
-  <div class="header">
-    <a href="index.html" class="back-button">⬅ Zurück zur Übersicht</a>
-    <h1>SGB II – Bedarfe</h1>
-  </div>
 
-  <div class="content">
-    <h2>§ 19 - Bürgergeld und Leistungen für Bildung und Teilhabe</h2>
+<body>
+
+<div class="header">
+  <a href="index.html" class="back-button">⬅ Zurück zur Übersicht</a>
+  <h1>SGB II – Bedarfe</h1>
+</div>
+
+<!-- Inhaltsverzeichnis -->
+<nav class="toc">
+  <h2>Inhalt</h2>
+  <ul>
+    <li><a href="#§19">§ 19</a></li>
+    <li><a href="#§20">§ 20</a></li>
+    <li><a href="#§21">§ 21</a></li>
+    <li><a href="#§22">§ 22</a></li>
+    <li><a href="#§23">§ 23</a></li>
+    <li><a href="#§72">§ 72</a></li>
+  </ul>
+</nav>
+
+<div class="content">
+<details id="§19">
+  <summary>§ 19 - Bürgergeld und Leistungen für Bildung und Teilhabe</summary>
      <p>(1) Erwerbsfähige Leistungsberechtigte erhalten Bürgergeld. 
             Nichterwerbsfähige Leistungsberechtigte, die mit erwerbsfähigen Leistungsberechtigten in einer Bedarfsgemeinschaft leben, 
             erhalten Bürgergeld, soweit sie keinen Anspruch auf Leistungen nach dem Vierten Kapitel des Zwölften Buches haben. 
@@ -212,10 +221,10 @@
      <p>(2) nicht ausbildungsrelevant</p>
      <p>(3) Die Leistungen zur Sicherung des Lebensunterhalts werden in Höhe der Bedarfe nach den Absätzen 1 und 2 erbracht, 
      soweit diese nicht durch das zu berücksichtigende Einkommen und Vermögen gedeckt sind. Zu berücksichtigendes Einkommen und Vermögen deckt zunächst die Bedarfe nach den §§ 20, 21 und 23, darüber hinaus die Bedarfe nach § 22. (…) </p>
-     </div>
+     </details>
 
-  <div class="content">
-    <h2>§ 20 - Regelbedarf zur Sicherung des Lebensunterhalts</h2>
+<details id="§20">
+  <summary>§ 20 - Regelbedarf zur Sicherung des Lebensunterhalts</summary>
      <p>(1) Der Regelbedarf zur Sicherung des Lebensunterhalts umfasst insbesondere Ernährung, Kleidung, Körperpflege, Hausrat, 
             Haushaltsenergie ohne die auf die Heizung und Erzeugung von Warmwasser entfallenden Anteile sowie persönliche Bedürfnisse 
             des täglichen Lebens. Zu den persönlichen Bedürfnissen des täglichen Lebens gehört in vertretbarem Umfang eine Teilhabe 
@@ -248,10 +257,10 @@
 
   <p>(5) (weggefallen)</p>
 
-    </div>
+    </details>
     
-<div class="content">
-  <h2>Anlage zu § 28 SGB XII — Regelbedarfsstufen</h2>
+<details>
+  <summary>Anlage zu § 28 SGB XII — Regelbedarfsstufen</summary>
   <p>Quelle: <a href="https://www.gesetze-im-internet.de/sgb_12/anlage.html" style="color:#FFD;">gesetze-im-internet.de</a></p>
 
   <div class="table-container">
@@ -275,7 +284,7 @@
       </tbody>
     </table>
   </div>
-</div>
+</details>
 
 
 
