@@ -229,173 +229,101 @@ html[data-theme="dark"] .card-link:focus {
 /* =================================== */
 /* FOOTER                              */
 /* =================================== */
-footer {
-  text-align: center;
-  color: rgba(255,255,255,0.85);
-  margin-top: 30px;
-  font-size: 0.85rem;
-  animation: pulse 2s infinite;
-}
 
+/* Tipp-Animation aus deiner ursprünglichen Version bleibt */
 @keyframes pulse {
   0%,100% { opacity: 0.6; }
   50% { opacity: 1; }
 }
 
-.page-footer {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 0.85rem;
-  opacity: 0.9;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.pixi-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 6px;
-}
-
-.pixi {
-  width: 24px;
-  height: 24px;
-  transform-origin: center;
-  transition: transform 0.2s ease;
-}
-
-.page-footer .branding:hover .pixi {
-  transform: translateY(-1px) scale(1.05);
-}
-
-@media (max-width: 600px) {
-  .pixi {
-    width: 48px;
-    height: 48px;
-  }
-
-@media (max-width: 600px) {
-  .page-footer .branding {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-
-/* Pixi – Basis */
-.pixi-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Safari/All – Animation auf dem Wrapper */
-@keyframes pixiBounce {
-  0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
-  10%  { opacity: 1; }
-  25%  { transform: translateY(-8px) rotate(-3deg); }
-  50%  { transform: translateY(0) rotate(3deg); }
-  75%  { transform: translateY(-6px) rotate(-2deg); }
-  100% { transform: translateY(0) rotate(0deg); opacity: 1; }
-}
-
-/* Pixi betritt die Bühne mit Hüpfen */
-.pixi-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  animation: pixiBounce 1.6s ease-out 1;
-}
-
-/* Motion-Reduction beachten */
-@media (prefers-reduced-motion: reduce) {
-  .pixi-wrapper { animation: none !important; }
-}
-
-/* Deine Mobile-Größe 48px + schöner Umbruch */
-@media (max-width: 600px) {
-  .pixi { width: 48px; height: 48px; }
-  .page-footer .branding { flex-direction: column; gap: 4px; }
-}
-
+/* gesamter Footer-Container */
 .page-footer {
   text-align: center;
   margin-top: 40px;
+  font-size: 0.85rem;
+  opacity: 0.9;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  color: rgba(255,255,255,0.85);
 }
 
+/* Zeile 1: Tipp */
 .page-footer .tip {
   font-size: 0.85rem;
   opacity: 0.9;
+  animation: pulse 2s infinite;
+  line-height: 1.4;
 }
 
+/* Zeile 2: Autor / Stand */
 .page-footer .author {
   font-size: 0.8rem;
   opacity: 0.9;
+  line-height: 1.4;
 }
 
+/* Zeile 3: Branding + Zug */
 .page-footer .branding {
   font-size: 0.75rem;
   opacity: 0.85;
-  display: inline-flex;
+  line-height: 1.35;
+  color: rgba(255,255,255,0.85);
+
+  /* WICHTIG:
+     Wir zwingen Text und Zug VERTIKAL untereinander,
+     egal wie breit der Bildschirm ist */
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
   justify-content: center;
   gap: 6px;
-  flex-wrap: wrap;
 }
 
-.pixi-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* Der Wrapper um den Zug.
+   Er ist ein eigener Block unter der Textzeile */
+.page-footer .branding .train-wrapper {
+  display: block;
+  line-height: 0;         /* entfernt zusätzliche Text-Zeilenhöhe um die SVG */
+  margin-top: 4px;
 }
 
-.pixi {
-  width: 24px;
-  height: 24px;
-  image-rendering: pixelated;
-  transform-origin: center;
-  transition: transform 0.2s ease;
-}
-
-.page-footer .branding:hover .pixi {
-  transform: translateY(-1px) scale(1.05);
-}
-
-/* Mobile: größere Pixi + sauber untereinander */
-@media (max-width: 600px) {
-  .pixi {
-    width: 48px;
-    height: 48px;
-  }
-  .page-footer .branding {
-    flex-direction: column;
-  }
-  
-  .train-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* Die SVG selbst */
+.page-footer .branding .train {
+  display: block;         /* kein Inline-Flow, kein Hochrutschen */
+  margin: 0 auto;
+  width: 120px;
   height: 40px;
-  overflow: hidden;
-  margin-left: 4px;
-}
-
-.train {
   transform-origin: center;
   animation: bounceTrain 1.5s ease-in-out infinite;
 }
 
+/* sanftes „Ruckeln“ / Fahren-Feeling */
 @keyframes bounceTrain {
   0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-1px); }
+  50%     { transform: translateY(-1px); }
 }
 
-/* Dark Mode Kontrastanpassung */
+/* die Rauch-Wolken sollen immer hell wirken */
+.train .smoke {
+  mix-blend-mode: lighten;
+}
+
+/* Nachtbeleuchtung für Fenster nur im Dark Mode */
+html[data-theme="dark"] .train .window {
+  fill: #FFD43B;
+  filter: drop-shadow(0 0 2px #FFD43B);
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  0%   { opacity: 0.8; filter: drop-shadow(0 0 2px #FFD43B); }
+  100% { opacity: 1;   filter: drop-shadow(0 0 4px #FFEF9A); }
+}
+
+/* leichte Farbkorrektur der Wagen im Dark Mode */
 html[data-theme="dark"] .train rect[fill="#004A9F"] {
   fill: #339CFF;
   stroke: #005BBB;
@@ -411,102 +339,37 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   fill: #222;
 }
 
-/* Mobile: größerer Zug */
+/* =========================== */
+/* RESPONSIVE FÜR MOBILE       */
+/* =========================== */
+
+/* auf kleinen Screens:
+   - der Zug darf größer sein
+   - Abstände leicht anpassen */
 @media (max-width: 600px) {
-  .train-wrapper {
-    height: 60px;
+
+  .page-footer {
+    gap: 12px;
   }
-  .train {
-    width: 160px;
-    height: 60px;
-  }
-  
-  /* Rauchbewegung bleibt hell in beiden Modi */
-.train .smoke { mix-blend-mode: lighten; }
 
-/* Nachtbeleuchtung: Fenster glühen im Dark Mode */
-html[data-theme="dark"] .train .window {
-  fill: #FFD43B;
-  filter: drop-shadow(0 0 2px #FFD43B);
-  animation: glow 3s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  0% { opacity: 0.8; filter: drop-shadow(0 0 2px #FFD43B); }
-  100% { opacity: 1; filter: drop-shadow(0 0 4px #FFEF9A); }
-}
-
-/* =================================== */
-/* FIX: Zug im Footer unter Text       */
-/* =================================== */
-
-.branding {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 6px;
-}
-
-/* Zug-Wrapper unter Text fixieren */
-.branding .train-wrapper {
-  display: block;
-  margin-top: 6px;
-}
-
-/* sorgt für gutes Verhalten bei großen Monitoren */
-@media (min-width: 768px) {
-  .branding {
-    gap: 8px;
-  }
-  .branding .train-wrapper {
-    margin-top: 8px;
-  }
-  
-  /* =================================== */
-/* FINALER FOOTER-LAYOUTHACK FÜR DEN ZUG */
-/* =================================== */
-
-/* Branding-Block im Footer: immer untereinander, egal wie breit der Bildschirm ist */
-.page-footer .branding {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  line-height: 1.35;
-  gap: 6px;
-  /* deine bisherige Schriftgröße/Transparenz kannst du lassen,
-     falls du vorher z. B. font-size / opacity gesetzt hattest */
-}
-
-/* Der Zug selbst soll immer in einer eigenen Zeile unter dem Text stehen */
-.page-footer .branding .train-wrapper {
-  display: block;
-  margin-top: 4px;
-  line-height: 0; /* verhindert zusätzlichen "Text-Zwischenraum" um die SVG */
-}
-
-/* Zug skalieren/verhalten wie gehabt */
-.page-footer .branding .train {
-  display: block;
-  margin: 0 auto;
-}
-
-/* Für größere Screens können wir den Abstand leicht anpassen,
-   damit der Zug nicht am Text klebt */
-@media (min-width: 768px) {
   .page-footer .branding {
     gap: 8px;
   }
+
   .page-footer .branding .train-wrapper {
     margin-top: 6px;
+  }
+
+  .page-footer .branding .train {
+    width: 160px;
+    height: 60px;
   }
 }
 
 /* =================================== */
-/* RESPONSIVE                          */
+/* RESPONSIVE HEADLINE / CARDS (deins) */
 /* =================================== */
+
 @media (max-width: 768px) {
   header h1 { font-size: 2rem; }
   article.flip-card { height: 280px; }
