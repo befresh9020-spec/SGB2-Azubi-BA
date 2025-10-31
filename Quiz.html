@@ -476,8 +476,32 @@ const questions = [
     {text: "67,56 Euro", correct: false},
     {text: "202,68 Euro", correct: false}
   ]},
-  
+  {question: "Eine alleinstehende Person (26 Jahre alt) stellt einen Antrag auf Bürgergeld. In welcher Höhe wird der Regelbedarf anerkannt?", answers: [
+    {text: "563,00 Euro", correct: true},
+    {text: "506,00 Euro", correct: false},
+    {text: "451,00 Euro", correct: false},
+    {text: "357,00 Euro", correct: false}
+  ]},
+  {question: "Eine alleinstehende Person (30 Jahre alt) stellt einen Antrag auf Bürgergeld. Er zahlt für seine Wohnung eine Miete in Höhe von 400,00 Euro. Für Strom zahlt er 40,00 Euro im Monat. Welcher Gesamtbedarf wird berücksichtigt?", answers: [
+    {text: "1003,00 Euro", correct: false},
+    {text: "563,00 Euro", correct: false},
+    {text: "963,00 Euro", correct: true},
+    {text: "603,00 Euro", correct: false}
+  ]},
+  {question: "Bei der Bewilligung von Bürgergeld handelt es sich um...", answers: [
+    {text: "einen Verwaltungsakt mit Einmalwirkung.", correct: false},
+    {text: "keinen Verwaltungsakt.", correct: false},
+    {text: "einen Verwaltungsakt mit Dauerwirkung.", correct: true},
+    {text: "einen Verwaltungsakt, den nur die Agentur für Arbeit erlassen kann.", correct: false}
+  ]},
+  {question: "Wann gilt ein Verwaltungsakt, der per Post übermittelt wird, als erlassen/ bekanntgegeben/ wirksam?", answers: [
+    {text: "am 3. Tag nach Aufgabe zur Post", correct: false},
+    {text: "am Tag nach Aufgabe zur Post", correct: false},
+    {text: "am Tag, an dem der Verwaltungsakt versendet wird", correct: false},
+    {text: "am 4. Tag nach Aufgabe zur Post", correct: true}
+  ]},
 ];
+  
 
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
@@ -570,5 +594,6 @@ themeButton.addEventListener('click', () => {
 </script>
 </body>
 </html>
+
 
 
