@@ -69,6 +69,12 @@ html[data-theme="dark"] .theme-toggle {
   box-shadow: 0 0 8px rgba(255,255,255,0.25);
 }
 
+.theme-toggle {
+  display: block;         /* Button nimmt volle Zeilenbreite ein → kann zentriert werden */
+  margin: 0 auto 15px;    /* oben 0, unten 15px Abstand, horizontal automatisch zentriert */
+  text-align: center;     /* Symbol & Text mittig ausgerichtet */
+}
+
 /* =================================== */
 /*  KARTEN (Flip-Card-Komponenten)     */
 /* =================================== */
