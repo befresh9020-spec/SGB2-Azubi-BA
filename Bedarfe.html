@@ -121,7 +121,7 @@ details:hover {
 }
 
 /* -----------------------------------
-   SUMMARY-BLOCK MIT CHEVRON
+   SUMMARY-BLOCK MIT GRÖSSEREM CHEVRON
 ----------------------------------- */
 summary {
   cursor: pointer;
@@ -129,7 +129,7 @@ summary {
   font-weight: 500;
   list-style: none;
   text-shadow: 0 1px 5px rgba(0,0,0,0.3);
-  padding-right: 35px;
+  padding-right: 40px; /* etwas mehr Platz für den größeren Chevron */
   position: relative;
 }
 
@@ -141,12 +141,14 @@ summary::after {
   bottom: 0;
   margin: auto;
   height: fit-content;
+  font-size: 1.4em; /* Chevron größer, unabhängig vom Text */
   transition: transform 0.25s ease, content 0.25s ease;
 }
 
 details[open] summary::after {
   content: "▾"; /* geöffneter Zustand */
   transform: translateY(1px);
+  font-size: 1.4em; /* gleiche Größe beibehalten */
 }
 
 /* -----------------------------------
