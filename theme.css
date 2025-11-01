@@ -2,23 +2,30 @@
 /*  GLOBALER LIGHT/DARK-MODUS-STIL     */
 /* =================================== */
 
+/* Basis-Hintergrund (wird von data-theme überschrieben) */
 body {
   background: linear-gradient(135deg, #E2001A, #8c0010);
+  color: #fff;
+  transition: background 0.8s ease, color 0.6s ease;
 }
 
-/* Grundfarben */
+/* Hellmodus */
 html[data-theme="light"] body {
   background: linear-gradient(135deg, #E2001A, #8c0010);
   color: #fff;
 }
 
+/* Dunkelmodus – jetzt linear statt radial */
 html[data-theme="dark"] body {
   background: linear-gradient(135deg, #232323, #121212);
   color: #f5f5f5;
   background-attachment: fixed;
 }
 
-/* Weiche Übergänge global */
+/* =================================== */
+/*  GLOBALE ÜBERGÄNGE                  */
+/* =================================== */
+
 body,
 header,
 .flip-card-front,
@@ -27,38 +34,21 @@ header,
 .page-footer,
 .theme-toggle {
   transition:
-    background-color 1.8s ease-in-out,
-    background 1.8s ease-in-out,
-    color 1.5s ease-in-out,
-    border-color 1.5s ease-in-out,
-    box-shadow 1.8s ease-in-out,
+    background-color 0.8s ease,
+    background 0.8s ease,
+    color 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.8s ease,
     transform 0.4s ease;
 }
 
-/* Sanfter Farbwechsel + Atmen */
-body {
-  transition: background 0.8s ease, color 0.6s ease;
+/* Sanfter Farbwechsel + leichtes Atmen */
+html[data-theme="dark"] body {
+  transform: scale(1.003);
 }
-html[data-theme="dark"] body { transform: scale(1.005); }
 
-/* Overlay für organisches Überblenden bei Gradients */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: inherit;
-  opacity: 0;
-  transition: opacity 1.8s ease-in-out;
-}
-html[data-theme="dark"] body::before {
-  background: radial-gradient(circle at 50% 20%, #232323 0%, #121212 80%);
-  opacity: 1;
-}
-html[data-theme="light"] body::before {
-  background: linear-gradient(135deg, #E2001A, #8c0010);
-  opacity: 1;
-}
+/* Overlay entfernt – Safari braucht kein inherit-Repaint */
+body::before { display: none; }
 
 /* =================================== */
 /*  THEME-TOGGLE-BUTTON                */
@@ -82,14 +72,17 @@ html[data-theme="light"] body::before {
     box-shadow 0.4s ease,
     transform 0.2s ease;
 }
+
 .theme-toggle:hover {
   background: rgba(255,255,255,0.15);
   transform: scale(1.05);
 }
+
 .theme-toggle:focus {
   outline: 3px solid #FFD600;
   outline-offset: 4px;
 }
+
 html[data-theme="dark"] .theme-toggle {
   border-color: rgba(255,255,255,0.8);
   box-shadow: 0 0 8px rgba(255,255,255,0.25);
@@ -103,14 +96,17 @@ html[data-theme="dark"] .flip-card-front {
   background: #2b2b2b;
   color: #fff;
 }
+
 html[data-theme="dark"] .flip-card-back {
   background: #151515;
   color: #fff;
 }
+
 html[data-theme="dark"] .card-link {
   background: rgba(255,255,255,0.15);
   border-color: rgba(255,255,255,0.35);
 }
+
 html[data-theme="dark"] .card-link:hover,
 html[data-theme="dark"] .card-link:focus {
   background: rgba(255,255,255,0.3);
@@ -129,6 +125,7 @@ html[data-theme="dark"] .page-footer {
   0%   { opacity: 0.8; filter: drop-shadow(0 0 2px #FFD43B); }
   100% { opacity: 1;   filter: drop-shadow(0 0 4px #FFEF9A); }
 }
+
 html[data-theme="dark"] .train .window {
   fill: #FFD43B;
   filter: drop-shadow(0 0 2px #FFD43B);
@@ -137,11 +134,15 @@ html[data-theme="dark"] .train .window {
 
 /* Farbkorrektur der Wagen */
 html[data-theme="dark"] .train rect[fill="#004A9F"] {
-  fill: #339CFF; stroke: #005BBB;
+  fill: #339CFF;
+  stroke: #005BBB;
 }
+
 html[data-theme="dark"] .train rect[fill="#E2001A"] {
-  fill: #FF3350; stroke: #A00012;
+  fill: #FF3350;
+  stroke: #A00012;
 }
+
 html[data-theme="dark"] .train rect[fill="#111"],
 html[data-theme="dark"] .train rect[fill="#333"] {
   fill: #222;
@@ -153,11 +154,12 @@ html[data-theme="dark"] .train rect[fill="#333"] {
 
 @media (max-width: 1024px) {
   html[data-theme="dark"] body {
-    background: radial-gradient(circle at 50% 25%, #252525 0%, #111 85%);
+    background: linear-gradient(135deg, #252525, #111);
   }
 }
+
 @media (max-width: 600px) {
   html[data-theme="dark"] body {
-    background: radial-gradient(circle at 50% 30%, #1e1e1e 0%, #0f0f0f 90%);
+    background: linear-gradient(135deg, #1e1e1e, #0f0f0f);
   }
 }
