@@ -1,0 +1,152 @@
+/* =================================== */
+/*  GLOBALER LIGHT/DARK-MODUS-STIL     */
+/* =================================== */
+
+/* ---------- Grundfarben ---------- */
+
+/* Standard (Hellmodus) */
+html[data-theme="light"] body {
+  background: linear-gradient(135deg, #E2001A, #8c0010);
+  color: #fff;
+}
+
+/* Dunkelmodus */
+html[data-theme="dark"] body {
+  background: radial-gradient(circle at 50% 20%, #232323 0%, #121212 80%);
+  color: #f5f5f5;
+  background-attachment: fixed; /* ruhiger Verlauf beim Scrollen */
+}
+
+/* Übergänge für weichen Farbwechsel */
+body,
+header,
+.flip-card-front,
+.flip-card-back,
+.card-link,
+.page-footer,
+.theme-toggle {
+  transition:
+    background-color 0.6s ease,
+    background 0.6s ease,
+    color 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.6s ease;
+}
+
+/* =================================== */
+/*  THEME-TOGGLE-BUTTON                */
+/* =================================== */
+
+.theme-toggle {
+  padding: 8px 14px;
+  border-radius: 25px;
+  border: 2px solid rgba(255,255,255,0.6);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition:
+    background 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.05);
+}
+
+.theme-toggle:focus {
+  outline: 3px solid #FFD600;
+  outline-offset: 4px;
+}
+
+/* Glow-Effekt im Dunkelmodus */
+html[data-theme="dark"] .theme-toggle {
+  border-color: rgba(255,255,255,0.8);
+  box-shadow: 0 0 8px rgba(255,255,255,0.25);
+}
+
+/* =================================== */
+/*  KARTEN (Flip-Card-Komponenten)     */
+/* =================================== */
+
+/* Rückseiten und Vorderseiten im Dunkelmodus */
+html[data-theme="dark"] .flip-card-front {
+  background: #2b2b2b;
+  color: #fff;
+}
+
+html[data-theme="dark"] .flip-card-back {
+  background: #151515;
+  color: #fff;
+}
+
+/* Links in Karten */
+html[data-theme="dark"] .card-link {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.35);
+}
+
+html[data-theme="dark"] .card-link:hover,
+html[data-theme="dark"] .card-link:focus {
+  background: rgba(255,255,255,0.3);
+}
+
+/* =================================== */
+/*  FOOTER & ZUG-ANPASSUNGEN           */
+/* =================================== */
+
+/* Text bleibt hell */
+html[data-theme="dark"] .page-footer {
+  color: rgba(255,255,255,0.85);
+}
+
+/* Nachtbeleuchtung für Zugfenster */
+html[data-theme="dark"] .train .window {
+  fill: #FFD43B;
+  filter: drop-shadow(0 0 2px #FFD43B);
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+/* sanftes Leuchten */
+@keyframes glow {
+  0%   { opacity: 0.8; filter: drop-shadow(0 0 2px #FFD43B); }
+  100% { opacity: 1;   filter: drop-shadow(0 0 4px #FFEF9A); }
+}
+
+/* Farbkorrektur der Wagen */
+html[data-theme="dark"] .train rect[fill="#004A9F"] {
+  fill: #339CFF;
+  stroke: #005BBB;
+}
+
+html[data-theme="dark"] .train rect[fill="#E2001A"] {
+  fill: #FF3350;
+  stroke: #A00012;
+}
+
+html[data-theme="dark"] .train rect[fill="#111"],
+html[data-theme="dark"] .train rect[fill="#333"] {
+  fill: #222;
+}
+
+/* =================================== */
+/*  RESPONSIVE & HINTERGRUNDVARIANTEN  */
+/* =================================== */
+
+/* leicht andere Tiefenwirkung auf mittleren Bildschirmen */
+@media (max-width: 1024px) {
+  html[data-theme="dark"] body {
+    background: radial-gradient(circle at 50% 25%, #252525 0%, #111 85%);
+  }
+}
+
+/* sehr dunkle, kontrastärmere Variante auf kleinen Geräten */
+@media (max-width: 600px) {
+  html[data-theme="dark"] body {
+    background: radial-gradient(circle at 50% 30%, #1e1e1e 0%, #0f0f0f 90%);
+  }
+}
