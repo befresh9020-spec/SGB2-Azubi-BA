@@ -2,22 +2,19 @@
 /*  GLOBALER LIGHT/DARK-MODUS-STIL     */
 /* =================================== */
 
-/* ---------- Grundfarben ---------- */
-
-/* Standard (Hellmodus) */
+/* Grundfarben */
 html[data-theme="light"] body {
   background: linear-gradient(135deg, #E2001A, #8c0010);
   color: #fff;
 }
 
-/* Dunkelmodus */
 html[data-theme="dark"] body {
   background: radial-gradient(circle at 50% 20%, #232323 0%, #121212 80%);
   color: #f5f5f5;
-  background-attachment: fixed; /* ruhiger Verlauf beim Scrollen */
+  background-attachment: fixed;
 }
 
-/* Übergänge für weichen Farbwechsel */
+/* Weiche Übergänge global */
 body,
 header,
 .flip-card-front,
@@ -34,26 +31,19 @@ header,
     transform 0.3s ease;
 }
 
-html[data-theme="dark"] body,
-html[data-theme="light"] body {
-  transition: background 1.2s cubic-bezier(0.65, 0.05, 0.36, 1);
-}
-
-/* =================================== */
-/* Sanfter globaler Farbwechsel        */
-/* =================================== */
-
+/* Sanfter Farbwechsel + Atmen */
 body {
   transition:
     background-color 1s ease-in-out,
     background 1s ease-in-out,
     color 0.8s ease-in-out,
     border-color 0.8s ease-in-out,
-    box-shadow 0.8s ease-in-out;
+    box-shadow 0.8s ease-in-out,
+    transform 0.6s ease-in-out;
 }
+html[data-theme="dark"] body { transform: scale(1.005); }
 
-/* Wenn Gradients aktiv sind, wirkt der Wechsel natürlicher
-   durch einen leichten Overlay-Glow während des Übergangs */
+/* Overlay für organisches Überblenden bei Gradients */
 body::before {
   content: "";
   position: fixed;
@@ -63,24 +53,13 @@ body::before {
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
-
 html[data-theme="dark"] body::before {
   background: radial-gradient(circle at 50% 20%, #232323 0%, #121212 80%);
   opacity: 1;
 }
-
 html[data-theme="light"] body::before {
   background: linear-gradient(135deg, #E2001A, #8c0010);
   opacity: 1;
-}
-
-html[data-theme="dark"] body,
-html[data-theme="light"] body {
-  transition: transform 0.6s ease-in-out, background 1s ease-in-out;
-}
-
-html[data-theme="dark"] body {
-  transform: scale(1.005);
 }
 
 /* =================================== */
@@ -88,13 +67,16 @@ html[data-theme="dark"] body {
 /* =================================== */
 
 .theme-toggle {
+  display: block;
+  margin: 15px auto 20px;
   padding: 8px 14px;
   border-radius: 25px;
   border: 2px solid rgba(255,255,255,0.6);
   background: transparent;
   color: #fff;
-  cursor: pointer;
   font-size: 1.1rem;
+  text-align: center;
+  cursor: pointer;
   transition:
     background 0.4s ease,
     color 0.4s ease,
@@ -102,52 +84,35 @@ html[data-theme="dark"] body {
     box-shadow 0.4s ease,
     transform 0.2s ease;
 }
-
 .theme-toggle:hover {
   background: rgba(255,255,255,0.15);
   transform: scale(1.05);
 }
-
 .theme-toggle:focus {
   outline: 3px solid #FFD600;
   outline-offset: 4px;
 }
-
-/* Glow-Effekt im Dunkelmodus */
 html[data-theme="dark"] .theme-toggle {
   border-color: rgba(255,255,255,0.8);
   box-shadow: 0 0 8px rgba(255,255,255,0.25);
 }
 
-.theme-toggle {
-  display: block;         /* Button nimmt volle Zeilenbreite ein → kann zentriert werden */
-  margin: 0 auto 15px;    /* oben 0, unten 15px Abstand, horizontal automatisch zentriert */
-  text-align: center;     /* Symbol & Text mittig ausgerichtet */
-}
-
-
-
 /* =================================== */
 /*  KARTEN (Flip-Card-Komponenten)     */
 /* =================================== */
 
-/* Rückseiten und Vorderseiten im Dunkelmodus */
 html[data-theme="dark"] .flip-card-front {
   background: #2b2b2b;
   color: #fff;
 }
-
 html[data-theme="dark"] .flip-card-back {
   background: #151515;
   color: #fff;
 }
-
-/* Links in Karten */
 html[data-theme="dark"] .card-link {
   background: rgba(255,255,255,0.15);
   border-color: rgba(255,255,255,0.35);
 }
-
 html[data-theme="dark"] .card-link:hover,
 html[data-theme="dark"] .card-link:focus {
   background: rgba(255,255,255,0.3);
@@ -157,35 +122,28 @@ html[data-theme="dark"] .card-link:focus {
 /*  FOOTER & ZUG-ANPASSUNGEN           */
 /* =================================== */
 
-/* Text bleibt hell */
 html[data-theme="dark"] .page-footer {
   color: rgba(255,255,255,0.85);
 }
 
 /* Nachtbeleuchtung für Zugfenster */
+@keyframes glow {
+  0%   { opacity: 0.8; filter: drop-shadow(0 0 2px #FFD43B); }
+  100% { opacity: 1;   filter: drop-shadow(0 0 4px #FFEF9A); }
+}
 html[data-theme="dark"] .train .window {
   fill: #FFD43B;
   filter: drop-shadow(0 0 2px #FFD43B);
   animation: glow 3s ease-in-out infinite alternate;
 }
 
-/* sanftes Leuchten */
-@keyframes glow {
-  0%   { opacity: 0.8; filter: drop-shadow(0 0 2px #FFD43B); }
-  100% { opacity: 1;   filter: drop-shadow(0 0 4px #FFEF9A); }
-}
-
 /* Farbkorrektur der Wagen */
 html[data-theme="dark"] .train rect[fill="#004A9F"] {
-  fill: #339CFF;
-  stroke: #005BBB;
+  fill: #339CFF; stroke: #005BBB;
 }
-
 html[data-theme="dark"] .train rect[fill="#E2001A"] {
-  fill: #FF3350;
-  stroke: #A00012;
+  fill: #FF3350; stroke: #A00012;
 }
-
 html[data-theme="dark"] .train rect[fill="#111"],
 html[data-theme="dark"] .train rect[fill="#333"] {
   fill: #222;
@@ -195,14 +153,11 @@ html[data-theme="dark"] .train rect[fill="#333"] {
 /*  RESPONSIVE & HINTERGRUNDVARIANTEN  */
 /* =================================== */
 
-/* leicht andere Tiefenwirkung auf mittleren Bildschirmen */
 @media (max-width: 1024px) {
   html[data-theme="dark"] body {
     background: radial-gradient(circle at 50% 25%, #252525 0%, #111 85%);
   }
 }
-
-/* sehr dunkle, kontrastärmere Variante auf kleinen Geräten */
 @media (max-width: 600px) {
   html[data-theme="dark"] body {
     background: radial-gradient(circle at 50% 30%, #1e1e1e 0%, #0f0f0f 90%);
