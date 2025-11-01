@@ -188,6 +188,51 @@ caption {
   summary { font-size: 1.1rem; }
   p { font-size: 0.95rem; }
 }
+
+/* summary-Block: mehr Innenabstand, besseres Verhalten des Pfeils */
+summary {
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 500;
+  list-style: none;
+  text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  padding-right: 30px; /* Platz für den Pfeil */
+  position: relative;
+}
+
+summary::after {
+  content: "▼";
+  position: absolute;
+  right: 10px; /* fester Abstand vom Rand */
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: fit-content;
+  transition: transform 0.3s ease;
+}
+
+/* Schriftgrößen angleichen */
+details p, details ol, details ul {
+  font-size: 1rem; /* gleiche Basisgröße für alle Elemente */
+  line-height: 1.6;
+}
+
+/* Listen leicht einrücken für bessere Balance */
+details ol, details ul {
+  margin-left: 25px;
+}
+
+/* Mobile Darstellung */
+@media (max-width: 768px) {
+  summary {
+    font-size: 1.1rem;
+    padding-right: 35px; /* noch etwas mehr Platz für den Pfeil */
+  }
+  details p, details ol, details ul {
+    font-size: 0.95rem; /* gleichmäßig verkleinert */
+  }
+}
+
 </style>
 </head>
 
