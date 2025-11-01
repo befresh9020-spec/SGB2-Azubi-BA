@@ -26,11 +26,12 @@ header,
 .page-footer,
 .theme-toggle {
   transition:
-    background-color 0.6s ease,
-    background 0.6s ease,
-    color 0.6s ease,
-    border-color 0.6s ease,
-    box-shadow 0.6s ease;
+    background-color 1s ease-in-out,
+    background 1s ease-in-out,
+    color 0.8s ease-in-out,
+    border-color 0.8s ease-in-out,
+    box-shadow 1s ease-in-out,
+    transform 0.3s ease;
 }
 
 /* =================================== */
