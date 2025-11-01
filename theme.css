@@ -34,6 +34,11 @@ header,
     transform 0.3s ease;
 }
 
+html[data-theme="dark"] body,
+html[data-theme="light"] body {
+  transition: background 1.2s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
 /* =================================== */
 /*  THEME-TOGGLE-BUTTON                */
 /* =================================== */
@@ -75,6 +80,8 @@ html[data-theme="dark"] .theme-toggle {
   margin: 0 auto 15px;    /* oben 0, unten 15px Abstand, horizontal automatisch zentriert */
   text-align: center;     /* Symbol & Text mittig ausgerichtet */
 }
+
+
 
 /* =================================== */
 /*  KARTEN (Flip-Card-Komponenten)     */
