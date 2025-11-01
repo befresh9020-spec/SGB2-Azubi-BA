@@ -2,6 +2,10 @@
 /*  GLOBALER LIGHT/DARK-MODUS-STIL     */
 /* =================================== */
 
+body {
+  background: linear-gradient(135deg, #E2001A, #8c0010);
+}
+
 /* Grundfarben */
 html[data-theme="light"] body {
   background: linear-gradient(135deg, #E2001A, #8c0010);
