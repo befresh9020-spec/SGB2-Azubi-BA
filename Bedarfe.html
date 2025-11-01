@@ -5,12 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SGB II – Bedarfe</title>
 
-<style>
+  <style>
 /* ===============================
    RESET & GRUNDLAYOUT
 =============================== */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: linear-gradient(135deg, #E2001A, #8c0010);
@@ -21,9 +29,7 @@ body {
   transition: background 0.6s ease, color 0.6s ease;
 }
 
-/* ===============================
-   DARK/LIGHT THEME
-=============================== */
+/* Dark Theme Hintergrund */
 html[data-theme="dark"] body {
   background: radial-gradient(circle at 50% 20%, #232323 0%, #121212 80%);
   color: #f5f5f5;
@@ -66,6 +72,7 @@ html[data-theme="dark"] body {
   box-shadow: 0 4px 15px rgba(255,255,255,0.2);
 }
 
+/* Theme-Toggle Button */
 .theme-toggle {
   padding: 8px 16px;
   border-radius: 25px;
@@ -76,20 +83,98 @@ html[data-theme="dark"] body {
   font-size: 1rem;
   transition: background 0.3s ease, transform 0.2s ease;
 }
+
 .theme-toggle:hover {
   background: rgba(255,255,255,0.15);
   transform: scale(1.05);
 }
+
 .theme-toggle:focus {
   outline: 3px solid #FFD600;
   outline-offset: 4px;
 }
+
 html[data-theme="dark"] .theme-toggle {
   border-color: rgba(255,255,255,0.8);
 }
 
 /* ===============================
-   INHALTSKARTEN & DETAILS
+   INHALTSVERZEICHNIS (TOC)
+=============================== */
+.toc {
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+  background: rgba(0,0,0,0.4);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: background 0.6s ease, border 0.6s ease, box-shadow 0.6s ease;
+}
+
+.toc h2 {
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.toc ul {
+  list-style: none;
+  text-align: center;
+}
+
+.toc li {
+  display: inline-block;
+  margin: 5px 10px;
+}
+
+.toc a {
+  color: #FFD;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+  font-size: 1rem;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.07);
+}
+
+.toc a:hover {
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+html[data-theme="dark"] .toc {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+}
+
+html[data-theme="dark"] .toc a {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.25);
+  color: #fff;
+}
+
+/* In Dark Mode Hover noch leichtes "Glühen" */
+html[data-theme="dark"] .toc a:hover {
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 0 10px rgba(255,255,255,0.12);
+}
+
+/* Mobile TOC: Links untereinander */
+@media (max-width: 768px) {
+  .toc li {
+    display: block;
+    margin: 8px 0;
+  }
+}
+
+/* ===============================
+   INHALT / KARTEN / DETAILS
 =============================== */
 .content {
   max-width: 900px;
@@ -109,7 +194,6 @@ html[data-theme="dark"] .content {
   backdrop-filter: blur(6px);
 }
 
-/* Details (Akkordeons) */
 details {
   background: rgba(0,0,0,0.4);
   padding: 15px 20px;
@@ -117,17 +201,30 @@ details {
   border-radius: 15px;
   border: 1px solid rgba(255,255,255,0.2);
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, border 0.3s ease;
 }
+
 details:hover {
   background: rgba(0,0,0,0.45);
 }
+
 html[data-theme="dark"] details {
   background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
 }
 
-/* Chevron */
+/* optional: offener Paragraph leicht betonen */
+details[open] {
+  background: rgba(255,255,255,0.07);
+}
+html[data-theme="dark"] details[open] {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ===============================
+   SUMMARY & CHEVRON
+=============================== */
 summary {
   cursor: pointer;
   font-size: 1.2rem;
@@ -137,65 +234,120 @@ summary {
   padding-right: 40px;
   position: relative;
 }
+
 summary::after {
-  content: "▸";
+  content: "▸"; /* geschlossen */
   position: absolute;
   right: 10px;
   top: 0;
   bottom: 0;
   margin: auto;
   height: fit-content;
-  font-size: 1.4em;
+  font-size: 1.4em; /* Chevron größer als Text */
   transition: transform 0.25s ease, content 0.25s ease;
-}
-details[open] summary::after {
-  content: "▾";
-  transform: translateY(1px);
-  font-size: 1.4em;
+  color: #fff;
 }
 
-/* Textformatierung */
-details p, details ol, details ul {
+details[open] summary::after {
+  content: "▾"; /* offen */
+  transform: translateY(1px);
+  font-size: 1.4em;
+  color: #fff;
+}
+
+html[data-theme="dark"] summary::after {
+  color: #fff;
+}
+
+/* ===============================
+   TEXTFORMATIERUNG
+=============================== */
+details p,
+details ol,
+details ul {
   font-size: 1rem;
   line-height: 1.6;
   margin-top: 12px;
 }
-details ol, details ul { margin-left: 25px; }
+
+details ol,
+details ul {
+  margin-left: 25px;
+}
+
 p {
   margin-bottom: 12px;
   padding-left: 10px;
   border-left: 2px solid rgba(255,255,255,0.2);
 }
 
-/* Tabelle */
-.table-container { overflow-x: auto; margin: 15px 0; }
+/* ===============================
+   TABELLE
+=============================== */
+.table-container {
+  overflow-x: auto;
+  margin: 15px 0;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
   background: rgba(255,255,255,0.05);
   border-radius: 10px;
   overflow: hidden;
+  color: #fff;
 }
-thead { background: rgba(255,255,255,0.12); }
-th, td {
+
+thead {
+  background: rgba(255,255,255,0.12);
+}
+
+th,
+td {
   padding: 10px 12px;
   text-align: left;
   border-bottom: 1px solid rgba(255,255,255,0.12);
 }
-tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
 caption {
   caption-side: top;
   text-align: left;
   font-weight: 700;
   margin-bottom: 8px;
+  color: #fff;
 }
 
-/* Mobile Anpassung */
+/* ===============================
+   MOBILE ANPASSUNG
+=============================== */
 @media (max-width: 768px) {
-  .header h1 { font-size: 1.8rem; }
-  .content { padding: 15px; font-size: 0.95rem; }
-  summary { font-size: 1.1rem; padding-right: 40px; }
-  details p, details ol, details ul { font-size: 0.95rem; }
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .content {
+    padding: 15px;
+    font-size: 0.95rem;
+  }
+
+  summary {
+    font-size: 1.1rem;
+    padding-right: 40px;
+  }
+
+  details p,
+  details ol,
+  details ul {
+    font-size: 0.95rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
 }
 </style>
 </head>
