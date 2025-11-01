@@ -484,5 +484,21 @@ offensichtlich nicht auf Zahlungsunfähigkeit der Mieterin oder des Mieters beru
   <div style="text-align:center; margin-top:20px;">
     <a href="index.html" class="back-button">⬅ Zurück zur Übersicht</a>
   </div>
+  
+  <!-- JavaScript: Öffnet beim Klick im TOC den passenden Paragraph -->
+<script>
+document.querySelectorAll('nav.toc a').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href').substring(1);
+    const target = document.getElementById(targetId);
+    if (target) {
+      target.open = true; // Akkordeon öffnen
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
 </body>
 </html>
