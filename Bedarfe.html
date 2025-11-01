@@ -6,7 +6,9 @@
 <title>SGB II – Bedarfe</title>
 
 <style>
-/* Reset und Grundlayout */
+/* -----------------------------------
+   RESET UND GRUNDLAYOUT
+----------------------------------- */
 * {
   margin: 0;
   padding: 0;
@@ -22,7 +24,9 @@ body {
   padding: 20px;
 }
 
-/* Kopfbereich */
+/* -----------------------------------
+   KOPFBEREICH
+----------------------------------- */
 .header {
   text-align: center;
   margin-bottom: 20px;
@@ -53,7 +57,9 @@ body {
   box-shadow: 0 4px 15px rgba(255,255,255,0.2);
 }
 
-/* Inhaltsverzeichnis */
+/* -----------------------------------
+   INHALTSVERZEICHNIS
+----------------------------------- */
 nav.toc {
   max-width: 900px;
   margin: 0 auto 30px auto;
@@ -92,7 +98,9 @@ nav.toc a:hover {
   background: rgba(255,255,255,0.15);
 }
 
-/* Inhalt (Akkordeons) */
+/* -----------------------------------
+   INHALT (AKKORDEONS)
+----------------------------------- */
 .content {
   max-width: 900px;
   margin: 0 auto 25px auto;
@@ -112,40 +120,61 @@ details:hover {
   background: rgba(0,0,0,0.45);
 }
 
+/* -----------------------------------
+   SUMMARY-BLOCK MIT CHEVRON
+----------------------------------- */
 summary {
   cursor: pointer;
   font-size: 1.2rem;
   font-weight: 500;
   list-style: none;
   text-shadow: 0 1px 5px rgba(0,0,0,0.3);
-}
-
-summary::marker {
-  display: none;
+  padding-right: 35px;
+  position: relative;
 }
 
 summary::after {
-  content: "▼";
-  float: right;
-  transition: transform 0.3s ease;
+  content: "▸"; /* geschlossener Zustand */
+  position: absolute;
+  right: 10px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: fit-content;
+  transition: transform 0.25s ease, content 0.25s ease;
 }
 
 details[open] summary::after {
-  transform: rotate(-180deg);
+  content: "▾"; /* geöffneter Zustand */
+  transform: translateY(1px);
 }
 
-details p, details ol, details ul, details table {
+/* -----------------------------------
+   TEXT UND LISTENFORMATIERUNG
+----------------------------------- */
+details p,
+details ol,
+details ul {
+  font-size: 1rem;
+  line-height: 1.6;
   margin-top: 12px;
 }
 
-/* Absatzformatierung */
+details ol,
+details ul {
+  margin-left: 25px;
+}
+
+/* Absatzmarkierung */
 p {
   margin-bottom: 12px;
   padding-left: 10px;
   border-left: 2px solid rgba(255,255,255,0.2);
 }
 
-/* Tabelle */
+/* -----------------------------------
+   TABELLEN
+----------------------------------- */
 .table-container {
   overflow-x: auto;
   margin: 15px 0;
@@ -182,57 +211,30 @@ caption {
   color: #fff;
 }
 
-/* Mobile Darstellung */
+/* -----------------------------------
+   MOBILE DARSTELLUNG
+----------------------------------- */
 @media (max-width: 768px) {
-  nav.toc li { display: block; margin: 8px 0; }
-  summary { font-size: 1.1rem; }
-  p { font-size: 0.95rem; }
-}
+  nav.toc li {
+    display: block;
+    margin: 8px 0;
+  }
 
-/* summary-Block: mehr Innenabstand, besseres Verhalten des Pfeils */
-summary {
-  cursor: pointer;
-  font-size: 1.2rem;
-  font-weight: 500;
-  list-style: none;
-  text-shadow: 0 1px 5px rgba(0,0,0,0.3);
-  padding-right: 30px; /* Platz für den Pfeil */
-  position: relative;
-}
-
-summary::after {
-  content: "▼";
-  position: absolute;
-  right: 10px; /* fester Abstand vom Rand */
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  height: fit-content;
-  transition: transform 0.3s ease;
-}
-
-/* Schriftgrößen angleichen */
-details p, details ol, details ul {
-  font-size: 1rem; /* gleiche Basisgröße für alle Elemente */
-  line-height: 1.6;
-}
-
-/* Listen leicht einrücken für bessere Balance */
-details ol, details ul {
-  margin-left: 25px;
-}
-
-/* Mobile Darstellung */
-@media (max-width: 768px) {
   summary {
     font-size: 1.1rem;
-    padding-right: 35px; /* noch etwas mehr Platz für den Pfeil */
+    padding-right: 40px; /* zusätzlicher Platz für Chevron */
   }
-  details p, details ol, details ul {
-    font-size: 0.95rem; /* gleichmäßig verkleinert */
+
+  details p,
+  details ol,
+  details ul {
+    font-size: 0.95rem;
+  }
+
+  p {
+    font-size: 0.95rem;
   }
 }
-
 </style>
 </head>
 
