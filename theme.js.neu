@@ -1,21 +1,18 @@
-// theme.js.neu
 document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.getElementById("themeToggle");
   if (!toggle) {
-    console.error('Theme-Toggle-Button mit id="themeToggle" nicht gefunden.');
+    console.error('Kein Button mit id="themeToggle" gefunden.');
     return;
   }
 
   const body = document.body;
 
-  // Gespeicherten Zustand anwenden (unabhängig vom System)
-  const savedTheme = localStorage.getItem("theme"); // "dark" | "light" | null
+  // gespeichertes Theme prüfen
+  const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
     body.classList.add("dark-mode");
     toggle.textContent = "☀️ Hellmodus";
   } else {
-    // Light ist Default
-    body.classList.remove("dark-mode");
     toggle.textContent = "🌙 Dunkelmodus";
   }
 
