@@ -304,6 +304,36 @@ body.dark-mode th, body.dark-mode td {
   details p, details ol, details ul { font-size: 0.95rem; }
 }
 
+  a.law-responsive {
+    display: inline-block;
+    background-color: rgba(179, 9, 32, 0.1);
+    color: #E2001A;
+    border: 1px solid rgba(179, 9, 32, 0.3);
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin: 4px 4px 4px 0;
+    text-decoration: none;
+    border-bottom: none;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+  }
+
+  a.law-responsive:hover {
+    background-color: rgba(179, 9, 32, 0.2);
+    transform: translateY(-1px);
+  }
+
+  body.dark-mode a.law-responsive {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ff9999;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+
+  body.dark-mode a.law-responsive:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #FFD580;
+  }
+
 /* -------------------- Mobile Listen-Einrückung -------------------- */
 p,
 ol,
@@ -315,3 +345,4 @@ ul {
 ol,
 ul { margin-left: 25px; }
 p { margin-bottom: 12px; }
+
