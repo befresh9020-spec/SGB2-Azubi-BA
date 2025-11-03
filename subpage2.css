@@ -346,3 +346,62 @@ ol,
 ul { margin-left: 25px; }
 p { margin-bottom: 12px; }
 
+/* ========================================================= */
+/*  AUDIO-SEITEN STYLING – Ergänzung zu sgbii-layout.css     */
+/* ========================================================= */
+
+/* ---------- Audio-Container ---------- */
+.content audio {
+  width: 100%;
+  display: none; /* wir zeigen den Standardplayer nicht */
+}
+
+/* ---------- Audio-Button ---------- */
+.audio-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 14px 22px;
+  border-radius: 50%;
+  background-color: #B30920;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+  box-shadow: 0 4px 10px rgba(179, 179, 179, 0.4);
+}
+
+.audio-btn:hover {
+  background-color: #660011;
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(102, 0, 17, 0.4);
+}
+
+/* ---------- Darkmode-Variante ---------- */
+body.dark-mode .audio-btn {
+  background-color: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #FFD580;
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+body.dark-mode .audio-btn:hover {
+  background-color: rgba(255,255,255,0.2);
+  transform: scale(1.1);
+}
+
+/* ---------- Optional: leichte Animation beim Wechsel ---------- */
+.audio-btn:active {
+  transform: scale(0.9);
+}
+
+/* ---------- Mobile Anpassung ---------- */
+@media (max-width: 768px) {
+  .audio-btn {
+    padding: 16px 24px;
+    font-size: 1.8rem;
+    margin-top: 12px;
+  }
+}
+
