@@ -24,8 +24,9 @@ body {
   line-height: 1.75;
   min-height: 100vh;
   padding: 20px;
-  transition: background 2s cubic-bezier(0.4, 0, 0.2, 1), color 1.6s ease;
+  transition: background-color 0.8s ease, color 0.6s ease;
 }
+
 
 /* -------------------- Darkmode Basis -------------------- */
 body.dark-mode {
@@ -38,6 +39,7 @@ body.dark-mode {
 /*  WEICHE ÜBERGÄNGE FÜR KOMPONENTEN   */
 /* =================================== */
 
+/* Vereinfachte & performantere Übergänge */
 body,
 .header,
 .content,
@@ -47,12 +49,10 @@ body,
 details,
 summary {
   transition:
-    background-color 1.8s ease-in-out,
-    background 1.8s ease-in-out,
-    color 1.5s ease-in-out,
-    border-color 1.5s ease-in-out,
-    box-shadow 1.8s ease-in-out,
-    transform 0.4s ease;
+    background-color 0.6s ease-in-out,
+    color 0.6s ease-in-out,
+    border-color 0.6s ease-in-out,
+    box-shadow 0.6s ease-in-out;
 }
 
 /* -------------------- Header -------------------- */
