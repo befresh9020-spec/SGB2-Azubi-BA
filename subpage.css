@@ -245,5 +245,42 @@ html[data-theme="dark"] .toc a {
     display: block;
     margin: 8px 0;
   }
+
+/* ===============================
+   SUMMARY & CHEVRON
+=============================== */
+summary {
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 500;
+  list-style: none;
+  text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  padding-right: 40px;
+  position: relative;
+}
+
+summary::after {
+  content: "▸"; /* geschlossen */
+  position: absolute;
+  right: 10px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: fit-content;
+  font-size: 1.4em; /* Chevron größer als Text */
+  transition: transform 0.25s ease, content 0.25s ease;
+  color: #fff;
+}
+
+details[open] summary::after {
+  content: "▾"; /* offen */
+  transform: translateY(1px);
+  font-size: 1.4em;
+  color: #fff;
+}
+
+html[data-theme="dark"] summary::after {
+  color: #fff;
+}
 }
   </style>
