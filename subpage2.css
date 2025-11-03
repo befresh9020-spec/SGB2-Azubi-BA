@@ -289,3 +289,16 @@ body.dark-mode th, body.dark-mode td {
   summary { font-size: 1.1rem; padding-right: 40px; }
   details p, details ol, details ul { font-size: 0.95rem; }
 }
+
+/* -------------------- Mobile Listen-Einrückung -------------------- */
+@media (max-width: 768px) {
+  details ol,
+  details ul {
+    margin-left: 15px;     /* weniger Einzug */
+    padding-left: 10px;    /* dafür etwas Innenabstand, damit Zahlen klar bleiben */
+  }
+
+  details li {
+    padding-left: 2px;     /* optischer Ausgleich */
+  }
+}
