@@ -176,5 +176,74 @@
       td:nth-of-type(2)::before { content: "Anhebung (Monate)"; }
       td:nth-of-type(3)::before { content: "Altersgrenze"; }
      }
-    }
+
+/* ===============================
+   INHALTSVERZEICHNIS (TOC)
+=============================== */
+.toc {
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+  background: rgba(0,0,0,0.4);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: background 0.6s ease, border 0.6s ease, box-shadow 0.6s ease;
+}
+
+.toc h2 {
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.toc ul {
+  list-style: none;
+  text-align: center;
+}
+
+.toc li {
+  display: inline-block;
+  margin: 5px 10px;
+}
+
+.toc a {
+  color: #FFD;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+  font-size: 1rem;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.07);
+}
+
+.toc a:hover {
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+html[data-theme="dark"] .toc {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+}
+
+html[data-theme="dark"] .toc a {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.25);
+  color: #fff;
+}
+
+
+/* Mobile TOC: Links untereinander */
+@media (max-width: 768px) {
+  .toc li {
+    display: block;
+    margin: 8px 0;
+  }
+}
   </style>
