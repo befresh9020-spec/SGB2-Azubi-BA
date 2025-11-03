@@ -242,4 +242,28 @@ body.dark-mode h2::after {
   body.dark-mode {
     background: linear-gradient(135deg, #1e1e1e, #0f0f0f);
   }
+
+/* Light ist Standard */
+body { background-color:#F9FBFC; color:#222; }
+/* Dark per Klasse */
+body.dark-mode { background:linear-gradient(135deg,#202020,#151515,#0e0e0e); color:#e6e6e6; }
+
+/* Content-Boxen */
+.content { background:#fff; color:#222; border:2px solid #B30920; }
+body.dark-mode .content { background:rgba(255,255,255,0.05); color:#e6e6e6; border:1px solid rgba(255,255,255,0.15); }
+
+/* Toggle-Button */
+.theme-toggle{ background:#B30920; color:#fff; border:none; padding:8px 14px; border-radius:25px; }
+.theme-toggle:hover{ background:#660011; }
+body.dark-mode .theme-toggle{ background:transparent; border:2px solid rgba(255,255,255,0.6); }
+body.dark-mode .theme-toggle:hover{ background:rgba(255,255,255,0.15); }
+
+/* Links als Akzent */
+a.law-responsive{ color:#E2001A; text-decoration:none; border-bottom:2px solid transparent; }
+a.law-responsive:hover{ color:#B30920; border-bottom-color:#B30920; }
+
+@media (max-width:768px){
+  .content{ padding:15px; font-size:0.95rem; }
+}
+
 }
