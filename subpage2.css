@@ -363,7 +363,7 @@ p { margin-bottom: 12px; }
 /*  AUDIO-BUTTON – CI-KONFORM & IMMER RUND                   */
 /* ========================================================= */
 .audio-btn {
-  display: inline-flex;                  /* zentriert Symbol exakt */
+  display: flex;                  /* zentriert Symbol exakt */
   align-items: center;
   justify-content: center;
   width: 70px;                           /* fester Durchmesser */
@@ -382,6 +382,8 @@ p { margin-bottom: 12px; }
     transform 0.25s ease,
     box-shadow 0.3s ease;
   margin-top: 18px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Hover-Effekt: leichtes Schweben */
