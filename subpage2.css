@@ -32,7 +32,6 @@ body {
 body.dark-mode {
   background: linear-gradient(135deg, #202020, #151515, #0e0e0e);
   color: #e6e6e6;
-  text-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
 }
 
 /* =================================== */
