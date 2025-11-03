@@ -199,6 +199,7 @@ body.dark-mode .content {
 h1, h2 {
   font-family: 'Merriweather', serif;
   letter-spacing: 0.5px;
+  transition: color 0.8s ease-in-out, text-shadow 0.8s ease-in-out;
 }
 
 h2 {
