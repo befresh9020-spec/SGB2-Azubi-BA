@@ -1,0 +1,26 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("themeToggle");
+  const body = document.body;
+
+  // Prüfen, ob ein gespeicherter Modus existiert
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    body.classList.add("dark-mode");
+    toggle.textContent = "☀️ Hellmodus";
+  } else {
+    toggle.textContent = "🌙 Dunkelmodus";
+  }
+
+  // Klick-Event zum Umschalten
+  toggle.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+
+    if (body.classList.contains("dark-mode")) {
+      toggle.textContent = "☀️ Hellmodus";
+      localStorage.setItem("theme", "dark");
+    } else {
+      toggle.textContent = "🌙 Dunkelmodus";
+      localStorage.setItem("theme", "light");
+    }
+  });
+});
