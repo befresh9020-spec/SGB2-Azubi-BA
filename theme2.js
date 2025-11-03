@@ -22,4 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
     toggle.textContent = isDark ? "☀️ Hellmodus" : "🌙 Dunkelmodus";
     localStorage.setItem("theme", isDark ? "dark" : "light");
   });
+  
+document.querySelectorAll('nav.toc a').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href').substring(1);
+    const target = document.getElementById(targetId);
+    if (target) {
+      target.open = true; // Akkordeon öffnen
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 });
+
