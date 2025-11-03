@@ -305,8 +305,13 @@ body.dark-mode th, body.dark-mode td {
 }
 
 /* -------------------- Mobile Listen-Einrückung -------------------- */
-details ol,
-details ul {
-  margin-left: 1.2em; /* proportionaler Einzug, skaliert mit Schriftgröße */
-  padding-left: 0.8em;
+p,
+ol,
+ul {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-top: 12px;
 }
+ol,
+ul { margin-left: 25px; }
+p { margin-bottom: 12px; }
