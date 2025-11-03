@@ -13,6 +13,10 @@ html {
   scroll-behavior: smooth;
 }
 
+:target {
+  scroll-margin-top: 80px;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #F9FBFC;
@@ -174,7 +178,7 @@ body.dark-mode .toc a {
 .content {
   max-width: 900px;
   margin: 0 auto 25px auto;
-  background: #FFFFFF;
+  background: linear-gradient(180deg, #ffffff, #f7f7f7);
   padding: 25px 30px;
   border-radius: 15px;
   border: 2px solid #B30920;
@@ -182,7 +186,7 @@ body.dark-mode .toc a {
   color: #222;
 }
 body.dark-mode .content {
-  background: rgba(255,255,255,0.05);
+  background: linear-gradient(180deg, #1b1b1b, #141414);
   border: 1px solid rgba(255,255,255,0.15);
   box-shadow: 0 8px 25px rgba(0,0,0,0.6);
   color: #e6e6e6;
@@ -191,6 +195,11 @@ body.dark-mode .content {
 /* =================================== */
 /*  TYPOGRAFIE: ÜBERSCHRIFTEN          */
 /* =================================== */
+
+h1, h2 {
+  font-family: 'Merriweather', serif;
+  letter-spacing: 0.5px;
+}
 
 h2 {
   font-weight: 400;
