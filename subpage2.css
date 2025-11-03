@@ -352,6 +352,7 @@ p { margin-bottom: 12px; }
 
 /* ---------- Audio-Container ---------- */
 .content audio {
+  text-align: center;
   width: 100%;
   display: none; /* wir zeigen den Standardplayer nicht */
 }
