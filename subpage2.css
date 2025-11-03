@@ -188,6 +188,20 @@ body.dark-mode .content {
   color: #e6e6e6;
 }
 
+/* =================================== */
+/*  TYPOGRAFIE: ÜBERSCHRIFTEN          */
+/* =================================== */
+
+h2 {
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  line-height: 1.4;
+  font-size: clamp(1.4rem, 3vw, 1.7rem);
+  margin-bottom: 15px;
+  text-align: center;
+  transition: color 1.5s ease-in-out;
+}
+
 /* -------------------- Paragraphenboxen -------------------- */
 details {
   background: #fff;
