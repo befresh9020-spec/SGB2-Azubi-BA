@@ -21,5 +21,5 @@ document.addEventListener("DOMContentLoaded", () => {
     const isDark = body.classList.toggle("dark-mode");
     toggle.textContent = isDark ? "☀️ Hellmodus" : "🌙 Dunkelmodus";
     localStorage.setItem("theme", isDark ? "dark" : "light");
-  });
+  }
 
