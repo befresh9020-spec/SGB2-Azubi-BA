@@ -1,16 +1,20 @@
+/* ========================================================= */
+/*  LIGHT / DARK THEME STYLES – SGB II Seitenlayout          */
+/* ========================================================= */
+
 /* =================================== */
-/*  GLOBALER LIGHT / DARK-MODUS-STIL   */
+/*  BASISSTILE                         */
 /* =================================== */
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #F9FBFC; /* ruhiger CI-Hintergrund */
   color: #222; /* angenehmes Dunkelgrau für Lesetext */
-  transition: background 2s cubic-bezier(0.4, 0, 0.2, 1), color 1.6s ease;
-  min-height: 100vh;
-  padding: 20px;
   line-height: 1.75;
   font-size: 1.05rem;
+  min-height: 100vh;
+  padding: 20px;
+  transition: background 2s cubic-bezier(0.4, 0, 0.2, 1), color 1.6s ease;
 }
 
 body.dark-mode {
@@ -21,8 +25,8 @@ body.dark-mode {
 /* Feiner Textschatten im Darkmode für bessere Lesbarkeit */
 body.dark-mode,
 body.dark-mode p,
-body.dark-mode h2,
-body.dark-mode h1 {
+body.dark-mode h1,
+body.dark-mode h2 {
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
 }
 
@@ -31,7 +35,7 @@ body.dark-mode h1 {
 /* =================================== */
 
 body,
-header,
+.header,
 .content,
 .page-footer,
 .theme-toggle {
@@ -44,18 +48,22 @@ header,
     transform 0.4s ease;
 }
 
+/* =================================== */
+/*  HEADER UND TITEL                   */
+/* =================================== */
+
 .header h1 {
-  color: #FFFFFF; /* Weiß für bessere Lesbarkeit im Hellmodus */
-  text-shadow: 0 2px 6px rgba(0,0,0,0.3); /* leicht beibehalten für Tiefe */
+  color: #FFFFFF; /* Weiß für klare Lesbarkeit auf Rot */
+  text-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 body.dark-mode .header h1 {
-  color: #f2f2f2; /* etwas weicheres Weiß im Darkmode */
+  color: #f2f2f2; /* sanfteres Weiß im Darkmode */
   text-shadow: 0 2px 12px rgba(0,0,0,0.6);
 }
 
 /* =================================== */
-/*  BUTTON: THEME-TOGGLE               */
+/*  THEME-TOGGLE BUTTON                */
 /* =================================== */
 
 .theme-toggle {
@@ -67,13 +75,12 @@ body.dark-mode .header h1 {
   color: #FFFFFF;
   border: none;
   font-size: 1.1rem;
-  text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .theme-toggle:hover {
-  background: #660011; /* Hover-Farbe */
+  background: #660011;
   transform: scale(1.05);
 }
 
@@ -112,16 +119,16 @@ body.dark-mode .content {
 }
 
 /* =================================== */
-/*  LINKS UND BUTTONS INHALT           */
+/*  INLINE-LINKS UND BUTTONS           */
 /* =================================== */
 
 a.law-responsive {
-  color: #E2001A; /* Akzentfarbe */
+  color: #E2001A;
   text-decoration: none;
   border-bottom: 2px solid transparent;
   padding-bottom: 1px;
-  transition: all 0.3s ease;
   font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 a.law-responsive:hover {
