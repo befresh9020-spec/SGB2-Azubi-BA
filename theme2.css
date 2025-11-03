@@ -252,3 +252,58 @@ body.dark-mode h2::after {
     background: linear-gradient(135deg, #1e1e1e, #0f0f0f);
   }
 }
+
+details {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  border: 2px solid #B30920;
+  box-shadow: 0 4px 10px rgba(179, 179, 179, 0.3);
+  transition: all 0.3s ease;
+}
+
+details:hover {
+  background: #fff8f8;
+}
+
+details[open] {
+  border-color: #E2001A;
+  background: #fffafa;
+}
+
+summary {
+  cursor: pointer;
+  font-size: 1.15rem;
+  font-weight: 500;
+  padding-right: 35px;
+  position: relative;
+  color: #B30920;
+}
+
+summary::after {
+  content: "▸";
+  position: absolute;
+  right: 10px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: fit-content;
+  font-size: 1.3em;
+  transition: transform 0.25s ease;
+}
+
+details[open] summary::after {
+  content: "▾";
+  transform: translateY(1px);
+}
+
+body.dark-mode details {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.15);
+  color: #e6e6e6;
+}
+
+body.dark-mode summary {
+  color: #fff;
+}
