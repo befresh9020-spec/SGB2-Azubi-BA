@@ -38,7 +38,10 @@ body,
 .header,
 .content,
 .page-footer,
-.theme-toggle {
+.theme-toggle,
+.toc,
+details,
+summary {
   transition:
     background-color 1.8s ease-in-out,
     background 1.8s ease-in-out,
