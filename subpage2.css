@@ -1,0 +1,272 @@
+/* ========================================================= */
+/*  SGB II – Seitenlayout mit Light/Dark-Theme               */
+/* ========================================================= */
+
+/* -------------------- Reset & Grundlayout -------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #F9FBFC;
+  color: #222;
+  line-height: 1.75;
+  min-height: 100vh;
+  padding: 20px;
+  transition:
+    background 1.8s ease-in-out,
+    color 1.5s ease-in-out;
+}
+
+/* -------------------- Darkmode Basis -------------------- */
+body.dark-mode {
+  background: linear-gradient(135deg, #202020, #151515, #0e0e0e);
+  color: #e6e6e6;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+}
+
+/* -------------------- Header -------------------- */
+.header {
+  text-align: center;
+  margin-bottom: 25px;
+  background-color: #E2001A;
+  color: #FFFFFF;
+  padding: 25px 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(179, 179, 179, 0.5);
+}
+
+.header h1 {
+  font-size: 2.2rem;
+  font-weight: 300;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* -------------------- Back-Button -------------------- */
+.back-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #B30920;
+  color: #FFFFFF;
+  text-decoration: none;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border: none;
+}
+.back-button:hover {
+  background: #660011;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 0, 17, 0.4);
+}
+
+/* -------------------- Theme-Toggle -------------------- */
+.theme-toggle {
+  display: block;
+  margin: 15px auto 20px;
+  padding: 8px 14px;
+  border-radius: 25px;
+  background: #B30920;
+  color: #FFFFFF;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.theme-toggle:hover {
+  background: #660011;
+  transform: scale(1.05);
+}
+body.dark-mode .theme-toggle {
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.6);
+  box-shadow: 0 0 8px rgba(255,255,255,0.25);
+  color: #fff;
+}
+body.dark-mode .theme-toggle:hover {
+  background: rgba(255,255,255,0.15);
+  color: #FFD580;
+}
+
+/* -------------------- Inhaltsverzeichnis -------------------- */
+.toc {
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+  background: rgba(0,0,0,0.4);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.toc h2 {
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 500;
+  color: #fff;
+}
+.toc ul {
+  list-style: none;
+  text-align: center;
+}
+.toc li {
+  display: inline-block;
+  margin: 5px 10px;
+}
+.toc a {
+  color: #FFD;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.07);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+}
+.toc a:hover {
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+body.dark-mode .toc {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+}
+body.dark-mode .toc a {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.25);
+  color: #fff;
+}
+
+/* Mobile: TOC-Links untereinander */
+@media (max-width: 768px) {
+  .toc li { display: block; margin: 8px 0; }
+}
+
+/* -------------------- Inhaltsbox -------------------- */
+.content {
+  max-width: 900px;
+  margin: 0 auto 25px auto;
+  background: #FFFFFF;
+  padding: 25px 30px;
+  border-radius: 15px;
+  border: 2px solid #B30920;
+  box-shadow: 0 6px 20px rgba(179, 179, 179, 0.4);
+  color: #222;
+}
+body.dark-mode .content {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+  color: #e6e6e6;
+}
+
+/* -------------------- Paragraphenboxen -------------------- */
+details {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease;
+}
+details:hover {
+  background: #fff8f8;
+}
+details[open] {
+  border-color: #E2001A;
+  background: #fffafa;
+}
+body.dark-mode details {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.1);
+}
+body.dark-mode details[open] {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Summary / Chevron */
+summary {
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 500;
+  list-style: none;
+  padding-right: 40px;
+  position: relative;
+  color: #B30920;
+}
+summary::after {
+  content: "▸";
+  position: absolute;
+  right: 10px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  font-size: 1.4em;
+  transition: transform 0.25s ease;
+}
+details[open] summary::after {
+  content: "▾";
+  transform: translateY(1px);
+}
+body.dark-mode summary { color: #fff; }
+
+/* -------------------- Textformatierung -------------------- */
+details p,
+details ol,
+details ul {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+details ol,
+details ul { margin-left: 25px; }
+p { margin-bottom: 12px; }
+
+/* -------------------- Tabelle -------------------- */
+.table-container { overflow-x: auto; margin: 20px 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  overflow: hidden;
+  color: #222;
+}
+thead { background: rgba(0,0,0,0.05); }
+th, td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+tbody tr:hover { background: rgba(0,0,0,0.02); }
+caption {
+  caption-side: top;
+  text-align: left;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+body.dark-mode table {
+  color: #eee;
+  background: rgba(255,255,255,0.05);
+}
+body.dark-mode thead { background: rgba(255,255,255,0.1); }
+body.dark-mode th, body.dark-mode td {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 768px) {
+  .header h1 { font-size: 1.8rem; }
+  .content { padding: 15px; font-size: 0.95rem; }
+  summary { font-size: 1.1rem; padding-right: 40px; }
+  details p, details ol, details ul { font-size: 0.95rem; }
+}
