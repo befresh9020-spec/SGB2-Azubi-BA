@@ -199,6 +199,7 @@ h1, h2 {
   font-family: 'Merriweather', serif;
   letter-spacing: 0.5px;
   transition: color 0.8s ease-in-out, text-shadow 0.8s ease-in-out;
+  color: #222;
 }
 
 h2 {
@@ -208,6 +209,11 @@ h2 {
   font-size: clamp(1.4rem, 3vw, 1.7rem);
   margin-bottom: 15px;
   text-align: center;
+}
+
+body.dark-mode h1,
+body.dark-mode h2 {
+  color: #e6e6e6;
 }
 
 /* -------------------- Paragraphenboxen -------------------- */
