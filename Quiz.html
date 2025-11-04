@@ -272,6 +272,39 @@ html[data-theme="dark"] #progress {
   background: linear-gradient(270deg, #f7d64b, #ff7a00, #E2001A);
 }
 
+/* ========================================
+   ZUG-ANIMATION FÜR DAS QUIZ
+======================================== */
+#train-container {
+  overflow: hidden;
+  height: 50px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.train {
+  position: absolute;
+  left: -150px;
+  bottom: 0;
+  opacity: 0;
+  animation: trainEnter 2.5s ease forwards;
+}
+
+@keyframes trainEnter {
+  0%   { transform: translateX(-150px); opacity: 0; }
+  60%  { opacity: 1; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+.train.exit {
+  animation: trainExit 2.5s ease forwards;
+}
+
+@keyframes trainExit {
+  0%   { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(150%); opacity: 0; }
+}
+
 </style>
 
 </head>
@@ -282,6 +315,55 @@ html[data-theme="dark"] #progress {
     <button id="themeToggle" class="theme-toggle" aria-pressed="false">🌙 / ☀️</button>
     <a href="index.html" class="back-button">Zurück</a>
   </div>
+
+<!-- Zug-Animation -->
+<div id="train-container">
+  <svg class="train" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+    <!-- Gleise -->
+    <rect x="0" y="32" width="120" height="2" fill="#666"/>
+    <rect x="0" y="34" width="120" height="1" fill="#444"/>
+
+    <!-- Rauch -->
+    <circle class="smoke" cx="15" cy="10" r="3" fill="rgba(255,255,255,0.8)">
+      <animate attributeName="cy" values="10;4;10" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="r"  values="2.5;3.5;2.5" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle class="smoke" cx="19" cy="9" r="2.5" fill="rgba(255,255,255,0.7)">
+      <animate attributeName="cy" values="9;3;9" dur="3s" begin="0.6s" repeatCount="indefinite"/>
+      <animate attributeName="r"  values="2;3;2" dur="3s" begin="0.6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.7;0.1;0.7" dur="3s" begin="0.6s" repeatCount="indefinite"/>
+    </circle>
+    <circle class="smoke" cx="23" cy="8" r="2" fill="rgba(255,255,255,0.6)">
+      <animate attributeName="cy" values="8;2;8" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="r"  values="1.5;3;1.5" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.6;0;0.6" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Lok -->
+    <rect x="13" y="14" width="4" height="6" fill="#111" stroke="#000" stroke-width="0.5"/>
+    <rect x="10" y="20" width="18" height="10" fill="#111" stroke="#000" stroke-width="1"/>
+    <rect class="window" x="18.5" y="15" width="3" height="3" fill="#d0d0d0" rx="0.5"/>
+
+    <!-- Fahrwerk -->
+    <rect x="9" y="30" width="20" height="2" fill="#333"/>
+    <circle cx="13" cy="32" r="2" fill="#000"/>
+    <circle cx="18" cy="32" r="2" fill="#222"/>
+    <circle cx="23" cy="32" r="2" fill="#000"/>
+
+    <!-- Waggons -->
+    <rect x="32" y="22" width="20" height="8" fill="#004A9F" stroke="#002A5F" stroke-width="0.8"/>
+    <rect class="window" x="37" y="23.5" width="3" height="3" fill="#d0d0d0" rx="0.5"/>
+    <circle cx="36" cy="32" r="2" fill="#000"/>
+    <circle cx="46" cy="32" r="2" fill="#000"/>
+
+    <rect x="56" y="22" width="20" height="8" fill="#E2001A" stroke="#A00012" stroke-width="0.8"/>
+    <rect class="window" x="61" y="23.5" width="3" height="3" fill="#d0d0d0" rx="0.5"/>
+    <circle cx="60" cy="32" r="2" fill="#000"/>
+    <circle cx="70" cy="32" r="2" fill="#000"/>
+  </svg>
+</div>
+
 
   <div class="content">
     <div class="progress-bar">
@@ -528,6 +610,14 @@ let score = 0;
    QUIZ-STEUERUNG
 ============================= */
 function startQuiz() {
+  // Zug fährt wieder ein, falls er vorher ausgefahren ist
+  const train = document.querySelector(".train");
+  if (train) {
+    train.classList.remove("exit");
+    train.style.display = "block";
+    train.style.animation = "trainEnter 2.5s ease forwards";
+  }
+
   shuffledQuestions = questions.sort(() => Math.random() - 0.5).slice(0, 5);
   currentIndex = 0;
   score = 0;
@@ -548,7 +638,7 @@ function showQuestion() {
     btn.addEventListener("click", () => selectAnswer(btn, ans.correct));
     answersEl.appendChild(btn);
   });
-  updateProgress(); // Fortschrittsanzeige aktualisieren
+  updateProgress();
 }
 
 function resetState() {
@@ -580,7 +670,8 @@ function showScore() {
   scoreEl.textContent = `Du hast ${score} von ${shuffledQuestions.length} Fragen richtig beantwortet.`;
   nextBtn.style.display = "none";
   restartBtn.style.display = "block";
-  updateProgress(true); // Fortschrittsbalken voll ausfüllen
+  updateProgress(true);
+  animateTrainExit(); // Zug fährt raus
 }
 
 restartBtn.addEventListener("click", startQuiz);
@@ -595,6 +686,19 @@ function updateProgress(finished = false) {
     ? 100
     : ((currentIndex + 1) / shuffledQuestions.length) * 100;
   progress.style.width = `${percent}%`;
+}
+
+/* =============================
+   ZUG-ANIMATION
+============================= */
+function animateTrainExit() {
+  const train = document.querySelector(".train");
+  if (train) {
+    train.classList.add("exit");
+    setTimeout(() => {
+      train.style.display = "none";
+    }, 2500); // entspricht der Animationsdauer
+  }
 }
 
 /* =============================
