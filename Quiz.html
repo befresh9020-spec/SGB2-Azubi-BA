@@ -266,8 +266,40 @@ html[data-theme="dark"] body {
   box-shadow: 0 0 12px rgba(255,107,107,0.4);
   }
   
+  .progress-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+#progress {
+  height: 100%;
+  width: 0;
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+#progress {
+  background: linear-gradient(270deg, #FFD600, #ff9900, #E2001A);
+  background-size: 300% 100%;
+  animation: progressFlow 3s ease infinite;
+  box-shadow: 0 0 12px rgba(255, 214, 0, 0.4);
+}
+@keyframes progressFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+html[data-theme="dark"] #progress {
+  background: linear-gradient(270deg, #f7d64b, #ff7a00, #E2001A);
+}
+  
 </style>
+
 </head>
+
 <body>
   <div class="header">
     <h1>Quiz - SGB II</h1>
@@ -276,6 +308,9 @@ html[data-theme="dark"] body {
   </div>
 
   <div class="content">
+    <div class="progress-bar">
+    <div id="progress"></div>
+    </div>
     <div id="quiz">
       <div id="question" class="quiz-question"></div>
       <div id="answers" class="quiz-answers"></div>
@@ -513,6 +548,9 @@ let shuffledQuestions = [];
 let currentIndex = 0;
 let score = 0;
 
+/* =============================
+   QUIZ-STEUERUNG
+============================= */
 function startQuiz() {
   shuffledQuestions = questions.sort(() => Math.random() - 0.5).slice(0, 5);
   currentIndex = 0;
@@ -534,6 +572,7 @@ function showQuestion() {
     btn.addEventListener("click", () => selectAnswer(btn, ans.correct));
     answersEl.appendChild(btn);
   });
+  updateProgress(); // Fortschrittsanzeige aktualisieren
 }
 
 function resetState() {
@@ -565,10 +604,22 @@ function showScore() {
   scoreEl.textContent = `Du hast ${score} von ${shuffledQuestions.length} Fragen richtig beantwortet.`;
   nextBtn.style.display = "none";
   restartBtn.style.display = "block";
+  updateProgress(true); // Fortschrittsbalken voll ausfüllen
 }
 
 restartBtn.addEventListener("click", startQuiz);
-startQuiz();
+
+/* =============================
+   PROGRESSBAR-FUNKTION
+============================= */
+function updateProgress(finished = false) {
+  const progress = document.getElementById("progress");
+  if (!progress) return;
+  const percent = finished
+    ? 100
+    : ((currentIndex + 1) / shuffledQuestions.length) * 100;
+  progress.style.width = `${percent}%`;
+}
 
 /* =============================
    THEME SWITCH (wie Startseite)
@@ -591,6 +642,12 @@ themeButton.addEventListener('click', () => {
   localStorage.setItem('theme', next);
   themeButton.setAttribute('aria-pressed', next === 'dark');
 });
+
+/* =============================
+   START DES QUIZZES
+============================= */
+startQuiz();
+
 </script>
 </body>
 </html>
