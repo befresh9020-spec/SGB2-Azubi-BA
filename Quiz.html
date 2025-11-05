@@ -6,377 +6,215 @@
 <title>Quiz – SGB II</title>
 
 <style>
-/* ========================================
-   BASIS-RESET & FUNDAMENT
-======================================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ========= Basis & Layout ========= */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:linear-gradient(135deg,#E2001A,#8c0010);
+  color:#fff;min-height:100vh;padding:20px;
+}
+html[data-theme="dark"] body{
+  background:linear-gradient(135deg,#121212,#1f1f1f);
+  color:#f5f5f5;
+}
+.header{
+  text-align:center;margin-bottom:20px;display:flex;flex-direction:column;align-items:center;gap:10px
+}
+.header h1{font-size:2rem;font-weight:300;text-shadow:0 2px 10px rgba(0,0,0,.3)}
+.theme-toggle{padding:8px 14px;border-radius:25px;border:2px solid rgba(255,255,255,.6);
+  background:transparent;color:#fff;cursor:pointer;font-size:1.1rem;
+  transition:background .3s ease,transform .2s ease}
+.theme-toggle:hover{background:rgba(255,255,255,.15);transform:scale(1.05)}
+.back-button{
+  display:inline-block;padding:8px 18px;background:rgba(255,255,255,.15);
+  border-radius:25px;color:#fff;text-decoration:none;font-size:.9rem;
+  border:1px solid rgba(255,255,255,.3);transition:.3s}
+.back-button:hover{background:rgba(255,255,255,.3);transform:translateY(-2px)}
+.content{
+  max-width:900px;margin:0 auto;background:rgba(0,0,0,.4);padding:20px;
+  border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,.3);
+  border:1px solid rgba(255,255,255,.2)
 }
 
-html {
-  scroll-behavior: smooth;
-  background-color: #121212;
+/* ========= Quiz ========= */
+.quiz-question{
+  font-size:1.3rem;text-align:center;margin-bottom:20px;color:#FFD600;
+  text-shadow:0 2px 8px rgba(0,0,0,.4)
+}
+.quiz-answers{display:grid;gap:12px}
+.quiz-answer{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  border-radius:12px;padding:14px 18px;color:white;cursor:pointer;
+  transition:all .25s ease;backdrop-filter:blur(4px)
+}
+.quiz-answer:hover{transform:translateY(-3px) scale(1.02);
+  background:rgba(255,255,255,.18);box-shadow:0 6px 15px rgba(255,255,255,.15)}
+.quiz-answer.correct{background:#3ddc97;color:#000;
+  box-shadow:0 0 12px rgba(61,220,151,.6)}
+.quiz-answer.wrong{background:#ff6b6b;box-shadow:0 0 12px rgba(255,107,107,.5)}
+.quiz-button{
+  display:block;margin:25px auto 0;padding:10px 20px;border-radius:25px;
+  background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);
+  color:#fff;cursor:pointer;transition:.3s
+}
+.quiz-button:hover{background:rgba(255,255,255,.4);transform:translateY(-2px)}
+.quiz-score{text-align:center;font-size:1.3rem;margin-top:20px;color:#FFD600}
+
+/* ========= Progressbar ========= */
+.progress-bar{width:100%;height:10px;background:rgba(255,255,255,.15);
+  border-radius:6px;overflow:hidden;margin-bottom:20px}
+#progress{height:100%;width:0;
+  background:linear-gradient(270deg,#FFD600,#ff9900,#E2001A);
+  background-size:300% 100%;animation:progressFlow 3s ease infinite;
+  transition:width .4s ease}
+@keyframes progressFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  min-height: 100vh;
-  padding: 20px;
-  color: white;
-  line-height: 1.6;
-  transition: background 0.6s ease, color 0.6s ease;
-  background: linear-gradient(135deg, #E2001A, #8c0010);
-}
-
-html[data-theme="dark"] body {
-  background: linear-gradient(135deg, #121212, #1f1f1f);
-  color: #f5f5f5;
-  background-attachment: fixed;
-}
-
-/* ========================================
-   HEADER & NAVIGATION
-======================================== */
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.header h1 {
-  font-size: 2.2rem;
-  font-weight: 300;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-.back-button {
-  display: inline-block;
-  padding: 10px 20px;
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-  text-decoration: none;
-  border-radius: 25px;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255,255,255,0.3);
-}
-.back-button:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-}
-
-/* ========================================
-   THEME-TOGGLE
-======================================== */
-.theme-toggle {
-  padding: 8px 14px;
-  border-radius: 25px;
-  border: 2px solid rgba(255,255,255,0.6);
-  background: transparent;
-  color: #fff;
-  cursor: pointer;
-  font-size: 1.1rem;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-.theme-toggle:hover {
-  background: rgba(255,255,255,0.15);
-  transform: scale(1.05);
-}
-.theme-toggle:focus {
-  outline: 3px solid #FFD600;
-  outline-offset: 4px;
-}
-html[data-theme="dark"] .theme-toggle {
-  border-color: rgba(255,255,255,0.8);
-}
-
-/* ========================================
-   QUIZ-CONTAINER
-======================================== */
-.content {
-  max-width: 900px;
-  margin: 0 auto 25px auto;
-  background: rgba(0,0,0,0.4);
-  padding: 20px 25px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  border: 1px solid rgba(255,255,255,0.2);
-  transition: background 0.4s ease, border 0.4s ease, box-shadow 0.4s ease;
-}
-
-html[data-theme="dark"] .content {
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.1);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.7);
-  backdrop-filter: blur(6px);
-}
-
-/* ========================================
-   QUIZ-INHALT: TYPOGRAFIE, ANTWORTEN, BUTTONS
-======================================== */
-.quiz-question {
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  color: #FFD600;
-  text-align: center;
-  margin-bottom: 25px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-}
-html[data-theme="dark"] .quiz-question {
-  color: #f7d64b;
-}
-
-.quiz-answers {
-  display: grid;
-  gap: 14px;
-}
-
-/* Kartenoptik für Antworten */
-.quiz-answer {
-  font-size: 1.05rem;
-  line-height: 1.4;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  padding: 14px 18px;
-  color: white;
-  text-align: left;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(4px);
-  transition: all 0.25s ease;
-}
-.quiz-answer:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.18);
-}
-
-/* Feedback-Animationen */
-@keyframes pulseCorrect {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-@keyframes shakeWrong {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-.quiz-answer.correct {
-  background: #3ddc97;
-  color: black;
-  box-shadow: 0 0 12px rgba(61,220,151,0.6);
-  animation: pulseCorrect 0.3s ease;
-}
-.quiz-answer.wrong {
-  background: #ff6b6b;
-  color: #fff;
-  box-shadow: 0 0 12px rgba(255,107,107,0.5);
-  animation: shakeWrong 0.3s ease;
-}
-
-/* Buttons (Weiter/Neustart) */
-.quiz-button {
-  display: block;
-  margin: 25px auto 0;
-  padding: 10px 20px;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.4);
-  border-radius: 25px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.quiz-button:hover {
-  background: rgba(255,255,255,0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255,255,255,0.2);
-}
-
-/* ========================================
-   ERGEBNIS & RESPONSIVE DESIGN
-======================================== */
-.quiz-score {
-  text-align: center;
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #FFD600;
-  text-shadow: 0 0 15px rgba(255, 214, 0, 0.5);
-  animation: fadeIn 0.8s ease;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@media (max-width: 768px) {
-  .header h1 { font-size: 1.8rem; }
-  .content { padding: 15px; font-size: 0.95rem; }
-  .quiz-question { font-size: 1.2rem; }
-}
-
-/* ========================================
-   SANFTER DARK-MODE HINTERGRUNDVERLAUF
-======================================== */
-html[data-theme="dark"] body {
-  background: radial-gradient(circle at 50% 20%, #232323 0%, #121212 80%);
-}
-@media (max-width: 1024px) {
-  html[data-theme="dark"] body {
-    background: radial-gradient(circle at 50% 25%, #252525 0%, #111 85%);
-  }
-}
-@media (max-width: 600px) {
-  html[data-theme="dark"] body {
-    background: radial-gradient(circle at 50% 30%, #1e1e1e 0%, #0f0f0f 90%);
-  }
-}
-
-.progress-bar {
-  width: 100%;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
-  overflow: hidden;
-  margin-bottom: 25px;
-}
-#progress {
-  height: 100%;
-  width: 0;
-  border-radius: 6px;
-  transition: width 0.4s ease;
-}
-
-#progress {
-  background: linear-gradient(270deg, #FFD600, #ff9900, #E2001A);
-  background-size: 300% 100%;
-  animation: progressFlow 3s ease infinite;
-  box-shadow: 0 0 12px rgba(255, 214, 0, 0.4);
-}
-@keyframes progressFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-html[data-theme="dark"] #progress {
-  background: linear-gradient(270deg, #f7d64b, #ff7a00, #E2001A);
-}
-
-/* ========================================
-   ZUG-ANIMATION FÜR DAS QUIZ
-======================================== */
+/* ========= Zug oberhalb der Fragen ========= */
 #train-container {
-  overflow: hidden;
-  height: 50px;
-  margin-bottom: 20px;
   position: relative;
+  width: 100%;
+  height: 80px;               /* Platz für den Zug */
+  overflow: visible;
+  margin-bottom: -10px;       /* leicht über den Fragen */
+  z-index: 5;
 }
 
 .train {
   position: absolute;
-  left: -150px;
   bottom: 0;
+  left: 50%;
+  transform: translateX(200%); /* Start: rechts außerhalb des Bildes */
   opacity: 0;
-  animation: trainEnter 2.5s ease forwards;
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+  pointer-events: none;
 }
 
+/* Einfahren von rechts in die Mitte */
 @keyframes trainEnter {
-  0%   { transform: translateX(-150px); opacity: 0; }
-  60%  { opacity: 1; }
-  100% { transform: translateX(0); opacity: 1; }
+  0%   { transform: translateX(200%); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { transform: translateX(-50%); opacity: 1; }
+  100% { transform: translateX(-50%); opacity: 1; } /* bleibt mittig stehen */
+}
+
+/* Rausfahren nach rechts */
+@keyframes trainExit {
+  0%   { transform: translateX(-50%); opacity: 1; }
+  100% { transform: translateX(200%); opacity: 0; }
+}
+
+.train.enter {
+  animation: trainEnter 3s ease forwards;
 }
 
 .train.exit {
-  animation: trainExit 2.5s ease forwards;
+  animation: trainExit 2s ease forwards;
 }
 
-@keyframes trainExit {
-  0%   { transform: translateX(0); opacity: 1; }
-  100% { transform: translateX(150%); opacity: 0; }
+/* Fenster-Glühen im Dunkelmodus */
+.window {
+  fill: #d0d0d0;
+  transition: fill 0.4s ease, filter 0.4s ease;
 }
+
+html[data-theme="dark"] .window {
+  fill: #FFD600;
+  filter: drop-shadow(0 0 4px rgba(255, 214, 0, 0.7));
+}
+
 
 </style>
-
 </head>
 
 <body>
   <div class="header">
     <h1>Quiz - SGB II</h1>
-    <button id="themeToggle" class="theme-toggle" aria-pressed="false">🌙 / ☀️</button>
+    <button id="themeToggle" class="theme-toggle">🌙 / ☀️</button>
     <a href="index.html" class="back-button">Zurück</a>
   </div>
 
-<!-- Zug-Animation -->
+<!-- Zug oberhalb der Fragen -->
 <div id="train-container">
-  <svg class="train" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+  <svg class="train" width="240" height="50" viewBox="0 0 240 50" aria-hidden="true">
+
     <!-- Gleise -->
-    <rect x="0" y="32" width="120" height="2" fill="#666"/>
-    <rect x="0" y="34" width="120" height="1" fill="#444"/>
+    <rect x="0" y="32" width="110" height="2" fill="#666"/>
+    <rect x="0" y="34" width="110" height="1" fill="#444"/>
 
     <!-- Rauch -->
     <circle class="smoke" cx="15" cy="10" r="3" fill="rgba(255,255,255,0.8)">
       <animate attributeName="cy" values="10;4;10" dur="2.5s" repeatCount="indefinite"/>
-      <animate attributeName="r"  values="2.5;3.5;2.5" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="2.5;3.5;2.5" dur="2.5s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite"/>
     </circle>
     <circle class="smoke" cx="19" cy="9" r="2.5" fill="rgba(255,255,255,0.7)">
       <animate attributeName="cy" values="9;3;9" dur="3s" begin="0.6s" repeatCount="indefinite"/>
-      <animate attributeName="r"  values="2;3;2" dur="3s" begin="0.6s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="2;3;2" dur="3s" begin="0.6s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0.7;0.1;0.7" dur="3s" begin="0.6s" repeatCount="indefinite"/>
     </circle>
     <circle class="smoke" cx="23" cy="8" r="2" fill="rgba(255,255,255,0.6)">
       <animate attributeName="cy" values="8;2;8" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
-      <animate attributeName="r"  values="1.5;3;1.5" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="1.5;3;1.5" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0.6;0;0.6" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
     </circle>
 
     <!-- Lok -->
     <rect x="13" y="14" width="4" height="6" fill="#111" stroke="#000" stroke-width="0.5"/>
     <rect x="10" y="20" width="18" height="10" fill="#111" stroke="#000" stroke-width="1"/>
-    <rect class="window" x="18.5" y="15" width="3" height="3" fill="#d0d0d0" rx="0.5"/>
-
-    <!-- Fahrwerk -->
+    <rect class="window" x="18.5" y="15" width="3" height="3" rx="0.5"/>
     <rect x="9" y="30" width="20" height="2" fill="#333"/>
     <circle cx="13" cy="32" r="2" fill="#000"/>
     <circle cx="18" cy="32" r="2" fill="#222"/>
     <circle cx="23" cy="32" r="2" fill="#000"/>
 
-    <!-- Waggons -->
+    <!-- Waggon 1 -->
     <rect x="32" y="22" width="20" height="8" fill="#004A9F" stroke="#002A5F" stroke-width="0.8"/>
-    <rect class="window" x="37" y="23.5" width="3" height="3" fill="#d0d0d0" rx="0.5"/>
+    <rect class="window" x="37" y="23.5" width="3" height="3" rx="0.5"/>
     <circle cx="36" cy="32" r="2" fill="#000"/>
     <circle cx="46" cy="32" r="2" fill="#000"/>
 
+    <!-- Waggon 2 -->
     <rect x="56" y="22" width="20" height="8" fill="#E2001A" stroke="#A00012" stroke-width="0.8"/>
-    <rect class="window" x="61" y="23.5" width="3" height="3" fill="#d0d0d0" rx="0.5"/>
+    <rect class="window" x="61" y="23.5" width="3" height="3" rx="0.5"/>
     <circle cx="60" cy="32" r="2" fill="#000"/>
     <circle cx="70" cy="32" r="2" fill="#000"/>
+
+    <!-- Waggon 3 -->
+    <rect x="80" y="22" width="20" height="8" fill="#FFD600" stroke="#b89400" stroke-width="0.8"/>
+    <rect class="window" x="85" y="23.5" width="3" height="3" rx="0.5"/>
+    <circle cx="84" cy="32" r="2" fill="#000"/>
+    <circle cx="94" cy="32" r="2" fill="#000"/>
+
   </svg>
 </div>
 
 
-  <div class="content">
-    <div class="progress-bar">
-    <div id="progress"></div>
-    </div>
-    <div id="quiz">
-      <div id="question" class="quiz-question"></div>
-      <div id="answers" class="quiz-answers"></div>
-      <button id="next-btn" class="quiz-button">Nächste Frage</button>
-      <div id="score" class="quiz-score"></div>
-      <button id="restart-btn" class="quiz-button" style="display:none;">Neue Runde</button>
-    </div>
+ <div class="progress-bar"><div id="progress"></div></div>
+  <div id="quiz">
+    <div id="question" class="quiz-question"></div>
+    <div id="answers" class="quiz-answers"></div>
+    <button id="next-btn" class="quiz-button">Nächste Frage</button>
+    <div id="score" class="quiz-score"></div>
+    <button id="restart-btn" class="quiz-button" style="display:none;">Neue Runde</button>
   </div>
+</div>
+
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+
+  const questionEl=document.getElementById("question");
+  const answersEl=document.getElementById("answers");
+  const nextBtn=document.getElementById("next-btn");
+  const restartBtn=document.getElementById("restart-btn");
+  const scoreEl=document.getElementById("score");
+
 
 <script>
 /* =============================
@@ -596,26 +434,19 @@ const questions = [
 ];
   
 
-const questionEl = document.getElementById("question");
-const answersEl = document.getElementById("answers");
-const nextBtn = document.getElementById("next-btn");
-const restartBtn = document.getElementById("restart-btn");
-const scoreEl = document.getElementById("score");
+ let shuffledQuestions=[],currentIndex=0,score=0;
 
-let shuffledQuestions = [];
-let currentIndex = 0;
-let score = 0;
-
-/* =============================
-   QUIZ-STEUERUNG
-============================= */
+    /* =============================
+     QUIZ-START
+  ============================= */
+  
 function startQuiz() {
-  // Zug fährt wieder ein, falls er vorher ausgefahren ist
   const train = document.querySelector(".train");
+
   if (train) {
-    train.classList.remove("exit");
-    train.style.display = "block";
-    train.style.animation = "trainEnter 2.5s ease forwards";
+    train.classList.remove("exit", "enter");
+    void train.getBoundingClientRect(); // Reflow erzwingen
+    train.classList.add("enter");
   }
 
   shuffledQuestions = questions.sort(() => Math.random() - 0.5).slice(0, 5);
@@ -627,106 +458,125 @@ function startQuiz() {
   showQuestion();
 }
 
-function showQuestion() {
-  resetState();
-  const current = shuffledQuestions[currentIndex];
-  questionEl.textContent = `Frage ${currentIndex + 1}: ${current.question}`;
-  current.answers.forEach(ans => {
-    const btn = document.createElement("button");
-    btn.textContent = ans.text;
-    btn.classList.add("quiz-answer");
-    btn.addEventListener("click", () => selectAnswer(btn, ans.correct));
-    answersEl.appendChild(btn);
-  });
-  updateProgress();
-}
 
-function resetState() {
-  nextBtn.style.display = "none";
-  while (answersEl.firstChild) answersEl.removeChild(answersEl.firstChild);
-}
 
-function selectAnswer(button, correct) {
-  const all = answersEl.children;
-  for (const btn of all) {
-    btn.disabled = true;
-    const a = shuffledQuestions[currentIndex].answers.find(x => x.text === btn.textContent);
-    if (a.correct) btn.classList.add("correct");
+  /* =============================
+     FRAGEN ANZEIGEN
+  ============================= */
+  function showQuestion() {
+    resetState();
+    const current = shuffledQuestions[currentIndex];
+    questionEl.textContent = `Frage ${currentIndex + 1}: ${current.question}`;
+    current.answers.forEach(ans => {
+      const btn = document.createElement("button");
+      btn.textContent = ans.text;
+      btn.classList.add("quiz-answer");
+      btn.addEventListener("click", () => selectAnswer(btn, ans.correct));
+      answersEl.appendChild(btn);
+    });
+    updateProgress();
   }
-  if (!correct) button.classList.add("wrong");
-  else score++;
-  nextBtn.style.display = "block";
-}
 
-nextBtn.addEventListener("click", () => {
-  currentIndex++;
-  if (currentIndex < shuffledQuestions.length) showQuestion();
-  else showScore();
-});
+  /* =============================
+     RESET FÜR NÄCHSTE FRAGE
+  ============================= */
+  function resetState() {
+    nextBtn.style.display = "none";
+    while (answersEl.firstChild) answersEl.removeChild(answersEl.firstChild);
+  }
 
-function showScore() {
-  resetState();
-  questionEl.textContent = "Ergebnis";
-  scoreEl.textContent = `Du hast ${score} von ${shuffledQuestions.length} Fragen richtig beantwortet.`;
-  nextBtn.style.display = "none";
-  restartBtn.style.display = "block";
-  updateProgress(true);
-  animateTrainExit(); // Zug fährt raus
-}
+  /* =============================
+     ANTWORTAUSWAHL
+  ============================= */
+  function selectAnswer(button, correct) {
+    const all = answersEl.children;
+    for (const btn of all) {
+      btn.disabled = true;
+      const a = shuffledQuestions[currentIndex].answers.find(x => x.text === btn.textContent);
+      if (a.correct) btn.classList.add("correct");
+    }
+    if (!correct) button.classList.add("wrong");
+    else score++;
+    nextBtn.style.display = "block";
+  }
 
-restartBtn.addEventListener("click", startQuiz);
+  /* =============================
+     NÄCHSTE FRAGE / ENDE
+  ============================= */
+  nextBtn.addEventListener("click", () => {
+    currentIndex++;
+    if (currentIndex < shuffledQuestions.length) showQuestion();
+    else showScore();
+  });
 
-/* =============================
-   PROGRESSBAR-FUNKTION
-============================= */
-function updateProgress(finished = false) {
-  const progress = document.getElementById("progress");
-  if (!progress) return;
-  const percent = finished
-    ? 100
-    : ((currentIndex + 1) / shuffledQuestions.length) * 100;
-  progress.style.width = `${percent}%`;
-}
+  /* =============================
+     ERGEBNIS
+  ============================= */
+  function showScore() {
+    resetState();
+    questionEl.textContent = "Ergebnis";
+    scoreEl.textContent = `Du hast ${score} von ${shuffledQuestions.length} Fragen richtig beantwortet.`;
+    nextBtn.style.display = "none";
+    restartBtn.style.display = "block";
+    updateProgress(true);
+    animateTrainExit();
+  }
 
-/* =============================
-   ZUG-ANIMATION
-============================= */
+  restartBtn.addEventListener("click", startQuiz);
+
+  /* =============================
+     PROGRESSBAR-FUNKTION
+  ============================= */
+  function updateProgress(finished = false) {
+    const progress = document.getElementById("progress");
+    if (!progress) return;
+    const percent = finished
+      ? 100
+      : ((currentIndex + 1) / shuffledQuestions.length) * 100;
+    progress.style.width = `${percent}%`;
+  }
+
+  /* =============================
+     ZUG-ANIMATION
+  ============================= */
+
 function animateTrainExit() {
   const train = document.querySelector(".train");
   if (train) {
+    train.classList.remove("enter");
+    void train.getBoundingClientRect(); // Reflow
     train.classList.add("exit");
-    setTimeout(() => {
-      train.style.display = "none";
-    }, 2500); // entspricht der Animationsdauer
   }
 }
 
-/* =============================
-   THEME SWITCH (wie Startseite)
-============================= */
-const themeButton = document.getElementById('themeToggle');
-const saved = localStorage.getItem('theme');
 
-if (saved === 'dark' || saved === 'light') {
-  document.documentElement.setAttribute('data-theme', saved);
-  themeButton.setAttribute('aria-pressed', saved === 'dark');
-}
+  /* =============================
+     THEME SWITCH (Dark/Light)
+  ============================= */
+  const themeButton = document.getElementById("themeToggle");
+  const saved = localStorage.getItem("theme");
 
-themeButton.addEventListener('click', () => {
-  const current = document.documentElement.getAttribute('data-theme');
-  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const effective = current ?? (systemDark ? 'dark' : 'light');
-  const next = effective === 'dark' ? 'light' : 'dark';
+  if (saved === "dark" || saved === "light") {
+    document.documentElement.setAttribute("data-theme", saved);
+    themeButton.setAttribute("aria-pressed", saved === "dark");
+  }
 
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-  themeButton.setAttribute('aria-pressed', next === 'dark');
+  themeButton.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme");
+    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const effective = current ?? (systemDark ? "dark" : "light");
+    const next = effective === "dark" ? "light" : "dark";
+
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+    themeButton.setAttribute("aria-pressed", next === "dark");
+  });
+
+  /* =============================
+     QUIZ STARTEN
+  ============================= */
+  startQuiz();
 });
-
-/* =============================
-   START DES QUIZZES
-============================= */
-startQuiz();
 
 </script>
 </body>
