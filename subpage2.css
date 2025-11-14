@@ -126,11 +126,9 @@ body.dark-mode .theme-toggle:hover {
   margin: 15px 0 25px;
 }
 
-/* Wichtig: Theme-Toggle nicht mehr automatisch mittig */
-.theme-toggle {
-  margin: 0;               /* überschreibt margin: auto */
+.button-row .theme-toggle {
+  margin: 0;
 }
-
 
 /* -------------------- Inhaltsverzeichnis -------------------- */
 .toc {
