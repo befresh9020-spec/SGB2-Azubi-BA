@@ -118,6 +118,20 @@ body.dark-mode .theme-toggle:hover {
   color: #FFD580;
 }
 
+.button-row {
+  display: flex;
+  justify-content: center;  /* Buttons gemeinsam zentriert */
+  align-items: center;
+  gap: 15px;                /* Platz zwischen den Buttons */
+  margin: 15px 0 25px;
+}
+
+/* Wichtig: Theme-Toggle nicht mehr automatisch mittig */
+.theme-toggle {
+  margin: 0;               /* überschreibt margin: auto */
+}
+
+
 /* -------------------- Inhaltsverzeichnis -------------------- */
 .toc {
   max-width: 900px;
@@ -348,6 +362,31 @@ body.dark-mode th, body.dark-mode td {
     color: #FFD580;
   }
 
+.aufgabe-block {
+  margin: 15px 0;
+  padding: 10px 14px;
+  background: rgba(179, 9, 32, 0.05);
+  border-left: 4px solid #B30920;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.aufgabe-label {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #B30920;
+}
+
+body.dark-mode .aufgabe-block {
+  background: rgba(255,255,255,0.08);
+  border-left-color: #FFD580;
+}
+
+body.dark-mode .aufgabe-label {
+  color: #FFD580;
+}
+
+
 /* -------------------- Mobile Listen-Einrückung -------------------- */
 p,
 ol,
@@ -433,5 +472,183 @@ body.dark-mode .audio-btn:hover {
     height: 80px;
     font-size: 2rem;
     margin-top: 15px;
+  }
+}
+
+/* ========================================================= */
+/*  SACHVERHALTS-BOXEN                                        */
+/* ========================================================= */
+
+.case-box {
+  margin-bottom: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.15);
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(179, 179, 179, 0.25);
+}
+
+body.dark-mode .case-box {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+}
+
+/* Kopfbereich – Button als Ganzes */
+.case-toggle {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgb(221,227,232);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.case-toggle:hover {
+  background: rgba(179,9,32,0.1);
+}
+
+body.dark-mode .case-toggle {
+  background: rgba(255,255,255,0.08);
+}
+
+body.dark-mode .case-toggle:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* Kopfzeile mit Titel links und Punkten rechts */
+.case-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.case-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #B30920;
+}
+
+body.dark-mode .case-title {
+  color: #FFD580;
+}
+
+.case-points {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  color: #333;
+}
+
+body.dark-mode .case-points {
+  color: #e6e6e6;
+}
+
+/* Inhalt */
+.case-content {
+  padding: 18px 22px;
+  background: #fff;
+  line-height: 1.7;
+}
+
+body.dark-mode .case-content {
+  background: rgba(255,255,255,0.05);
+}
+
+/* Mobile Anpassungen */
+@media (max-width: 768px) {
+  .case-title { font-size: 1rem; }
+  .case-points { font-size: 0.85rem; }
+  .case-content { padding: 15px; }
+}
+
+/* ========================================================= */
+/*   LÖSUNGS-TABELLEN                                        */
+/* ========================================================= */
+
+.solution-box {
+  margin-top: 30px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 2px solid #B30920;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+body.dark-mode .solution-box {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.solution-hint {
+  background: #000;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.solution-box h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  color: #B30920;
+}
+
+body.dark-mode .solution-box h3 {
+  color: #FFD580;
+}
+
+/* Tabellen-Design */
+.solution-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.solution-table td {
+  border: 1px solid #ccc;
+  padding: 12px 14px;
+  vertical-align: top;
+}
+
+.solution-law {
+  width: 28%;
+  font-weight: 600;
+  background: rgba(179,9,32,0.05);
+}
+
+.solution-text {
+  width: 72%;
+  line-height: 1.55;
+}
+
+body.dark-mode .solution-table td {
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+}
+
+body.dark-mode .solution-law {
+  background: rgba(255,255,255,0.12);
+}
+
+@media (max-width: 700px) {
+  .solution-law {
+    width: 100%;
+    display: block;
+  }
+  .solution-text {
+    display: block;
+    width: 100%;
+  }
+  .solution-table tr {
+    display: block;
+    margin-bottom: 12px;
+  }
+  .solution-table td {
+    border-width: 1px 0;
   }
 }
