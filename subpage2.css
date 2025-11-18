@@ -700,3 +700,105 @@ body.dark-mode .solution-law {
     margin: 40px 0 40px;  
 }
 }
+/* ========================= */
+/*  VTG-Badges (Vertiefungsgrade) */
+/* ========================= */
+
+.vtg-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  margin-right: 6px;              /* Abstand zum Text */
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: default;
+  position: relative;
+  line-height: 1;
+}
+
+/* explizit als Prefix-Badge genutzt (vor dem Text) */
+.vtg-prefix {
+  margin-left: 0;
+}
+
+/* Farbcode für VTG I / VTG II (II brauchst du ggf. später) */
+.vtg-chip.vtg-1 {
+  background: rgba(179, 9, 32, 0.08);
+  color: #B30920;
+  border: 1px solid rgba(179, 9, 32, 0.4);
+}
+
+.vtg-chip.vtg-2 {
+  background: rgba(61, 70, 87, 0.08);
+  color: #3D4657;
+  border: 1px solid rgba(61, 70, 87, 0.4);
+}
+
+/* Tooltip via data-vtg-info */
+.vtg-chip::after {
+  content: attr(data-vtg-info);
+  position: absolute;
+  left: 50%;
+  bottom: 125%;
+  transform: translateX(-50%) translateY(4px);
+  background: #000;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 6px 8px;
+  border-radius: 6px;
+  white-space: normal;
+  max-width: 260px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 20;
+}
+
+/* kleiner Pfeil am Tooltip */
+.vtg-chip::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 115%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #000 transparent transparent transparent;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+/* Hover-Effekt: Tooltip anzeigen */
+.vtg-chip:hover::after,
+.vtg-chip:hover::before {
+  opacity: 1;
+}
+
+/* Darkmode-Anpassungen */
+body.dark-mode .vtg-chip.vtg-1 {
+  background: rgba(255, 213, 128, 0.12);
+  color: #FFD580;
+  border-color: rgba(255, 213, 128, 0.7);
+}
+
+body.dark-mode .vtg-chip.vtg-2 {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  border-color: rgba(255,255,255,0.5);
+}
+
+body.dark-mode .vtg-chip::after {
+  background: rgba(0,0,0,0.9);
+}
+
+@media (max-width: 480px) {
+  /* optional: Tooltips auf sehr kleinen Screens ausblenden */
+  .vtg-chip::before,
+  .vtg-chip::after {
+    display: none;
+  }
+}
