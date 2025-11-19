@@ -209,17 +209,44 @@ html[data-theme="dark"] .card-link:focus {
 }
 
 /* =================================== */
-/* LOGO – nur Vorderseite: Rot + Rand   */
+/* LOGO – Vorderseite: roter Kreis mit Regenbogenrand */
 /* =================================== */
 
 .flip-card-front .logo {
-  width: 70px;
-  height: 70px;
-  background-color: #E2001A;
+  position: relative;
+  width: 77px;              /* etwas größer, damit der Rand Platz hat */
+  height: 77px;
   border-radius: 50%;
-  border: 3px solid #111; /* dezenter schwarzer Rand */
+  background: conic-gradient(
+    #ff0000 0deg,
+    #ff8000 45deg,
+    #ffff00 90deg,
+    #80ff00 135deg,
+    #00ff00 180deg,
+    #00ff80 225deg,
+    #00ffff 270deg,
+    #0080ff 315deg,
+    #0000ff 360deg,
+    #8000ff 405deg,
+    #ff00ff 450deg,
+    #ff0080 495deg,
+    #ff0000 540deg
+  );
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Innerer roter Kreis */
+.flip-card-front .logo::after {
+  content: "";
+  width: 70px;              /* hier die eigentliche „rote Kugel“ */
+  height: 70px;
+  border-radius: 50%;
+  background-color: #E2001A;
+}
+
 
 /* Rückseite: kein Logo */
 .flip-card-back .logo {
