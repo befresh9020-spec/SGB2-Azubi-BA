@@ -38,11 +38,20 @@ body,
   border-radius:25px;color:#fff;text-decoration:none;font-size:.9rem;
   border:1px solid rgba(255,255,255,.3);transition:.3s}
 .back-button:hover{background:rgba(255,255,255,.3);transform:translateY(-2px)}
-.content{
-  max-width:900px;margin:0 auto;background:rgba(0,0,0,.4);padding:20px;
-  border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,.3);
-  border:1px solid rgba(255,255,255,.2)
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  /* Hintergrund leicht anpassen, um Tiefe zu geben */
+  background: rgba(0, 0, 0, 0.5); /* etwas dunkler */
+  padding: 30px; /* mehr Polsterung für mehr Luft */
+  border-radius: 20px; /* etwas runder */
+  /* Starker, mehrstufiger Schatten für Tiefe */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 
+              inset 0 0 15px rgba(0, 0, 0, 0.4); /* Innerer Schatten */
+  border: 3px solid rgba(255, 255, 255, 0.3); /* Dickere, klare Kontur */
 }
+
 
 .content::after {
   content: '';
@@ -65,10 +74,29 @@ body,
 
 
 /* ========= Quiz ========= */
-.quiz-question{
-  font-size:1.3rem;text-align:center;margin-bottom:20px;color:#FFD600;
-  text-shadow:0 2px 8px rgba(0,0,0,.4)
+
+.quiz-question {
+  font-size: 1.6rem; /* Größer */
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #FFD600;
+  /* Hintergrund-Schild-Effekt */
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px 20px;
+  border-left: 5px solid #E2001A; /* Roter Akzent-Streifen */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  /* Animation für den Wechsel (siehe JS-Vorschlag unten) */
+  animation: fadeInQuestion 0.5s ease-out;
 }
+
+@keyframes fadeInQuestion {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .quiz-answers{display:grid;gap:12px}
 .quiz-answer{
   background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
