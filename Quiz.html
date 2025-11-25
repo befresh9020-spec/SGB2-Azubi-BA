@@ -208,6 +208,8 @@ html[data-theme="dark"] .content {
   backdrop-filter: blur(4px);
   position: relative;
   z-index: 1; /* über den Partikeln */
+  font-size:1rem;      /* bewusst setzen */
+  line-height:1.4;     /* bessere Lesbarkeit */
 }
 
 .quiz-answer:hover {
@@ -247,6 +249,19 @@ html[data-theme="dark"] .content {
   opacity: 0.7;
   transform: none !important;
   box-shadow: none;
+}
+
+/* Mobile-Optimierung: Verhältnis Frage / Antworten */
+@media (max-width: 480px) {
+  .quiz-question {
+    font-size: 1.3rem;    /* statt 1.6rem -> etwas kleiner */
+    padding: 12px 14px;   /* etwas kompakter */
+  }
+
+  .quiz-answer {
+    font-size: 1.05rem;   /* leicht größer als Standard */
+    padding: 12px 16px;   /* mehr Platz links/rechts für den Finger */
+  }
 }
 
 .quiz-button {
