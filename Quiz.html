@@ -158,13 +158,13 @@ html[data-theme="dark"] .content {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 
   /* Ausgangszustand für Animation */
-  opacity: 0;
-  transform: translateY(-10px);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* diese Klasse wird im JS bei jeder Frage neu gesetzt */
 .quiz-question.visible {
-  animation: fadeInQuestion 0.5s ease-out;
+  animation: fadeInQuestion 0.5s ease-out forwards; /* hier forwards ergänzt */
 }
 
 @keyframes fadeInQuestion {
