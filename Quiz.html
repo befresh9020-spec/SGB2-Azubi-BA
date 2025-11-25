@@ -7,51 +7,105 @@
 
 <style>
 /* ========= Basis & Layout ========= */
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  background:linear-gradient(135deg,#E2001A,#8c0010);
-  color:#fff;min-height:100vh;padding:20px;
-}
-html[data-theme="dark"] body{
-  background:linear-gradient(135deg,#121212,#1f1f1f);
-  color:#f5f5f5;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* weicher Übergang für Theme-Wechsel */
+html,
+body {
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #E2001A, #8c0010);
+  color: #fff;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+html[data-theme="dark"] body {
+  background: linear-gradient(135deg, #121212, #1f1f1f);
+  color: #f5f5f5;
+}
+
+/* zusätzliche Transition für Karten / Buttons */
 body,
 .content,
 .quiz-answer,
-.quiz-button{
-  transition:background .35s ease, color .35s ease, box-shadow .35s ease, border-color .35s ease;
+.quiz-button {
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
 }
 
-.header{
-  text-align:center;margin-bottom:20px;display:flex;flex-direction:column;align-items:center;gap:10px
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
-.header h1{font-size:2rem;font-weight:300;text-shadow:0 2px 10px rgba(0,0,0,.3)}
-.theme-toggle{padding:8px 14px;border-radius:25px;border:2px solid rgba(255,255,255,.6);
-  background:transparent;color:#fff;cursor:pointer;font-size:1.1rem;
-  transition:background .3s ease,transform .2s ease}
-.theme-toggle:hover{background:rgba(255,255,255,.15);transform:scale(1.05)}
-.back-button{
-  display:inline-block;padding:8px 18px;background:rgba(255,255,255,.15);
-  border-radius:25px;color:#fff;text-decoration:none;font-size:.9rem;
-  border:1px solid rgba(255,255,255,.3);transition:.3s}
-.back-button:hover{background:rgba(255,255,255,.3);transform:translateY(-2px)}
 
+.header h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+}
+
+.theme-toggle {
+  padding: 8px 14px;
+  border-radius: 25px;
+  border: 2px solid rgba(255, 255, 255, .6);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background .3s ease, transform .2s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, .15);
+  transform: scale(1.05);
+}
+
+.back-button {
+  display: inline-block;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, .15);
+  border-radius: 25px;
+  color: #fff;
+  text-decoration: none;
+  font-size: .9rem;
+  border: 1px solid rgba(255, 255, 255, .3);
+  transition: .3s;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, .3);
+  transform: translateY(-2px);
+}
+
+/* ========= Content-Karte + Partikel ========= */
 .content {
-  max-width: 900px;
-  margin: 0 auto;
-  /* Hintergrund leicht anpassen, um Tiefe zu geben */
-  background: rgba(0, 0, 0, 0.5); /* etwas dunkler */
-  padding: 30px; /* mehr Polsterung für mehr Luft */
-  border-radius: 20px; /* etwas runder */
-  /* Starker, mehrstufiger Schatten für Tiefe */
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 
-              inset 0 0 15px rgba(0, 0, 0, 0.4); /* Innerer Schatten */
-  border: 3px solid rgba(255, 255, 255, 0.3); /* Dickere, klare Kontur */
+  position: relative;              /* wichtig für ::after */
+  overflow: hidden;                /* Partikel bleiben im Rahmen */
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.6),
+    inset 0 0 15px rgba(0, 0, 0, 0.4);
+  border: 3px solid rgba(255, 255, 255, 0.3);
 }
-
 
 .content::after {
   content: '';
@@ -60,113 +114,196 @@ body,
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(255,214,0,0.1) 1px, transparent 1px);
+  background: radial-gradient(circle, rgba(255, 214, 0, 0.1) 1px, transparent 1px);
   background-size: 50px 50px;
   animation: particle-float 20s linear infinite;
   pointer-events: none;
   opacity: 0.3;
+  z-index: 0;
 }
 
 @keyframes particle-float {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(50px, 50px); }
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(50px, 50px);
+  }
 }
 
+/* Dark-Variante der Karte, damit der Theme-Wechsel sichtbar ist */
+html[data-theme="dark"] .content {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.9),
+    inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
 
 /* ========= Quiz ========= */
 
 .quiz-question {
-  font-size: 1.6rem; /* Größer */
-  font-weight: 500;
-  text-align: center;
-  margin-bottom: 30px;
-  color: #FFD600;
-  /* Hintergrund-Schild-Effekt */
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 15px 20px;
-  border-left: 5px solid #E2001A; /* Roter Akzent-Streifen */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
-  /* Animation für den Wechsel (siehe JS-Vorschlag unten) */
-  animation: fadeInQuestion 0.5s ease-out;
+  font-size: 1.6rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #FFD600;
+
+  /* Schild-Effekt */
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px 20px;
+  border-left: 5px solid #E2001A;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+
+  /* Ausgangszustand für Animation */
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* diese Klasse wird im JS bei jeder Frage neu gesetzt */
+.quiz-question.visible {
+  animation: fadeInQuestion 0.5s ease-out;
 }
 
 @keyframes fadeInQuestion {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.quiz-answers{display:grid;gap:12px}
-.quiz-answer{
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
-  border-radius:12px;padding:14px 18px;color:white;cursor:pointer;
-  transition:all .25s ease;backdrop-filter:blur(4px)
-}
-.quiz-answer:hover{transform:translateY(-3px) scale(1.02);
-  background:rgba(255,255,255,.18);box-shadow:0 6px 15px rgba(255,255,255,.15)}
-  
-.quiz-answer.correct{
-  background:#3ddc97;
-  color:#000;
-  box-shadow:0 0 12px rgba(61,220,151,.6);
-  animation:correctPulse .3s ease;
+.quiz-answers {
+  display: grid;
+  gap: 12px;
 }
 
-.quiz-answer.wrong{
-  background:#ff6b6b;
-  box-shadow:0 0 12px rgba(255,107,107,.5);
-  animation:wrongShake .25s ease;
+/* Auf größeren Bildschirmen zwei Spalten */
+@media (min-width: 700px) {
+  .quiz-answers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
-@keyframes correctPulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.03);}
-  100%{transform:scale(1);}
+.quiz-answer {
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .15);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: white;
+  cursor: pointer;
+  transition: all .25s ease;
+  backdrop-filter: blur(4px);
+  position: relative;
+  z-index: 1; /* über den Partikeln */
 }
 
-@keyframes wrongShake{
-  0%,100%{transform:translateX(0);}
-  25%{transform:translateX(-4px);}
-  50%{transform:translateX(4px);}
-  75%{transform:translateX(-2px);}
+.quiz-answer:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: rgba(255, 255, 255, .18);
+  box-shadow: 0 6px 15px rgba(255, 255, 255, .15);
 }
 
-.quiz-answer:disabled{
-  cursor:default;
-  opacity:0.7;
-  transform:none !important;
-  box-shadow:none;
+.quiz-answer.correct {
+  background: #3ddc97;
+  color: #000;
+  box-shadow: 0 0 12px rgba(61, 220, 151, .6);
+  animation: correctPulse .3s ease;
 }
 
-.quiz-button{
-  display:block;margin:25px auto 0;padding:10px 20px;border-radius:25px;
-  background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);
-  color:#fff;cursor:pointer;transition:.3s
+.quiz-answer.wrong {
+  background: #ff6b6b;
+  box-shadow: 0 0 12px rgba(255, 107, 107, .5);
+  animation: wrongShake .25s ease;
 }
-.quiz-button:hover{background:rgba(255,255,255,.4);transform:translateY(-2px)}
-.quiz-score{text-align:center;font-size:1.3rem;margin-top:20px;color:#FFD600}
+
+@keyframes correctPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes wrongShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+}
+
+.quiz-answer:disabled {
+  cursor: default;
+  opacity: 0.7;
+  transform: none !important;
+  box-shadow: none;
+}
+
+.quiz-button {
+  display: block;
+  margin: 25px auto 0;
+  padding: 10px 20px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, .2);
+  border: 1px solid rgba(255, 255, 255, .4);
+  color: #fff;
+  cursor: pointer;
+  transition: .3s;
+  position: relative;
+  z-index: 1;
+}
+
+.quiz-button:hover {
+  background: rgba(255, 255, 255, .4);
+  transform: translateY(-2px);
+}
+
+.quiz-score {
+  text-align: center;
+  font-size: 1.3rem;
+  margin-top: 20px;
+  color: #FFD600;
+  position: relative;
+  z-index: 1;
+}
 
 /* ========= Progressbar ========= */
-.progress-bar{width:100%;height:10px;background:rgba(255,255,255,.15);
-  border-radius:6px;overflow:hidden;margin-bottom:20px}
-#progress{height:100%;width:0;
-  background:linear-gradient(270deg,#FFD600,#ff9900,#E2001A);
-  background-size:300% 100%;animation:progressFlow 3s ease infinite;
-  transition:width .4s ease}
-@keyframes progressFlow{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, .15);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+#progress {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(270deg, #FFD600, #ff9900, #E2001A);
+  background-size: 300% 100%;
+  animation: progressFlow 3s ease infinite;
+  transition: width .4s ease;
+}
+
+@keyframes progressFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* ========= Zug oberhalb der Fragen ========= */
 #train-container {
   position: relative;
   width: 100%;
-  height: 80px;               /* Platz für den Zug */
+  height: 80px;        /* Platz für den Zug */
   overflow: visible;
-  margin-bottom: -10px;       /* leicht über den Fragen */
+  margin-bottom: -10px; /* leicht über den Fragen */
   z-index: 5;
 }
 
@@ -214,9 +351,9 @@ html[data-theme="dark"] .window {
   fill: #FFD600;
   filter: drop-shadow(0 0 4px rgba(255, 214, 0, 0.7));
 }
-
-
 </style>
+
+
 </head>
 
 <body>
@@ -226,9 +363,10 @@ html[data-theme="dark"] .window {
     <a href="index.html" class="back-button">Zurück</a>
   </div>
 
-<!-- Zug oberhalb der Fragen -->
-<div id="train-container">
-  <svg class="train" width="240" height="50" viewBox="0 0 240 50" aria-hidden="true">
+  <div class="content">
+    <!-- Zug oberhalb der Fragen -->
+    <div id="train-container">
+      <svg class="train" width="240" height="50" viewBox="0 0 240 50" aria-hidden="true">
 
     <!-- Gleise -->
     <rect x="0" y="32" width="110" height="2" fill="#666"/>
@@ -282,15 +420,18 @@ html[data-theme="dark"] .window {
 </div>
 
 
- <div class="progress-bar"><div id="progress"></div></div>
-  <div id="quiz">
-    <div id="question" class="quiz-question"></div>
-    <div id="answers" class="quiz-answers"></div>
-    <button id="next-btn" class="quiz-button">Nächste Frage</button>
-    <div id="score" class="quiz-score"></div>
-    <button id="restart-btn" class="quiz-button" style="display:none;">Neue Runde</button>
+    <div class="progress-bar">
+      <div id="progress"></div>
+    </div>
+
+    <div id="quiz">
+      <div id="question" class="quiz-question"></div>
+      <div id="answers" class="quiz-answers"></div>
+      <button id="next-btn" class="quiz-button">Nächste Frage</button>
+      <div id="score" class="quiz-score"></div>
+      <button id="restart-btn" class="quiz-button" style="display:none;">Neue Runde</button>
+    </div>
   </div>
-</div>
 
 
 <script>
@@ -548,19 +689,26 @@ function startQuiz() {
   /* =============================
      FRAGEN ANZEIGEN
   ============================= */
-  function showQuestion() {
-    resetState();
-    const current = shuffledQuestions[currentIndex];
-    questionEl.textContent = `Frage ${currentIndex + 1}: ${current.question}`;
-    current.answers.forEach(ans => {
-      const btn = document.createElement("button");
-      btn.textContent = ans.text;
-      btn.classList.add("quiz-answer");
-      btn.addEventListener("click", () => selectAnswer(btn, ans.correct));
-      answersEl.appendChild(btn);
-    });
-    updateProgress();
-  }
+function showQuestion() {
+  resetState();
+  const current = shuffledQuestions[currentIndex];
+
+  // Animation für die Frage neu triggern
+  questionEl.classList.remove("visible");
+  void questionEl.offsetWidth; // Reflow erzwingen, damit die Animation neu startet
+  questionEl.textContent = `Frage ${currentIndex + 1}: ${current.question}`;
+  questionEl.classList.add("visible");
+
+  current.answers.forEach(ans => {
+    const btn = document.createElement("button");
+    btn.textContent = ans.text;
+    btn.classList.add("quiz-answer");
+    btn.addEventListener("click", () => selectAnswer(btn, ans.correct));
+    answersEl.appendChild(btn);
+  });
+
+  updateProgress();
+}
 
   /* =============================
      RESET FÜR NÄCHSTE FRAGE
