@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="de">
 <head>
@@ -13,6 +14,60 @@
   box-sizing: border-box;
 }
 
+/* Farb- und Layout-Variablen */
+
+:root {
+  /* LIGHT MODE – Standardwerte */
+
+  /* Hintergründe */
+  --color-bg: #f4f4f4;             /* Seitenhintergrund hell */
+  --color-card-bg: #ffffff;        /* Quiz-Karte weiß */
+
+  /* Text */
+  --color-text: #222222;           /* normaler Text dunkel */
+  --color-text-muted: #555555;     /* abgeschwächter Text */
+
+  /* Akzente (Corporate bleibt gleich) */
+  --color-accent-red: #E2001A;
+  --color-accent-red-dark: #b00016;
+  --color-accent-yellow: #FFD600;
+
+  /* Antworten (heller Stil) */
+  --color-answer-bg: #f9f9f9;
+  --color-answer-bg-hover: #f0f0f0;
+  --color-answer-border: #cccccc;
+
+  /* Richtig/Falsch (helle Varianten) */
+  --color-correct-bg: #b8e6c0;     /* satteres Grün */
+  --color-correct-border: #28a745;
+  --color-wrong-bg: #f3b0b8;       /* satteres Rot/Pink */
+  --color-wrong-border: #c0392b;
+
+  /* Progressbar-Hintergrund (hellneutral) */
+  --color-progress-bg: #e0e0e0;
+}
+
+/* DARK MODE – überschreibt die Variablen nur im Dark-Theme */
+html[data-theme="dark"] {
+  --color-bg: #111111;
+  --color-card-bg: rgba(20, 20, 20, 0.95);
+
+  --color-text: #f5f5f5;
+  --color-text-muted: #cccccc;
+
+  --color-answer-bg: #222222;
+  --color-answer-bg-hover: #2a2a2a;
+  --color-answer-border: #333333;
+
+  --color-correct-bg: #145A32;
+  --color-correct-border: #27AE60;
+  --color-wrong-bg: #7B241C;
+  --color-wrong-border: #C0392B;
+
+  --color-progress-bg: #2a2a2a;
+}
+
+
 /* weicher Übergang für Theme-Wechsel */
 html,
 body {
@@ -21,16 +76,20 @@ body {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, #E2001A, #8c0010);
-  color: #fff;
+  background: var(--color-bg);
+  color: var(--color-text);
   min-height: 100vh;
   padding: 20px;
 }
 
-html[data-theme="dark"] body {
-  background: linear-gradient(135deg, #121212, #1f1f1f);
-  color: #f5f5f5;
+/* Verspielter Hintergrund NUR im Light-Mode */
+html[data-theme="light"] body {
+  background:
+    radial-gradient(circle at top left, rgba(226, 0, 26, 0.21), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(255, 214, 0, 0.21), transparent 55%),
+    var(--color-bg);
 }
+
 
 /* zusätzliche Transition für Karten / Buttons */
 body,
@@ -44,6 +103,7 @@ body,
     border-color 0.35s ease;
 }
 
+/* ========= Header ========= */
 .header {
   text-align: center;
   margin-bottom: 20px;
@@ -56,39 +116,53 @@ body,
 .header h1 {
   font-size: 2rem;
   font-weight: 300;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+  background: linear-gradient(135deg, var(--color-accent-red), #8c0010);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, .4);
 }
+
+html[data-theme="dark"] .header h1 {
+  background: linear-gradient(135deg, #ffffff, var(--color-accent-yellow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, .8);
+}
+
 
 .theme-toggle {
   padding: 8px 14px;
   border-radius: 25px;
   border: 2px solid rgba(255, 255, 255, .6);
   background: transparent;
-  color: #fff;
+  color: var(--color-text);
   cursor: pointer;
   font-size: 1.1rem;
-  transition: background .3s ease, transform .2s ease;
+  transition: background .3s ease, transform .2s ease, box-shadow .2s ease;
 }
 
 .theme-toggle:hover {
-  background: rgba(255, 255, 255, .15);
+  background: rgba(255, 255, 255, .12);
   transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .4);
 }
 
 .back-button {
   display: inline-block;
   padding: 8px 18px;
-  background: rgba(255, 255, 255, .15);
+  background: rgba(255, 255, 255, .06);
   border-radius: 25px;
-  color: #fff;
+  color: var(--color-text);
   text-decoration: none;
   font-size: .9rem;
-  border: 1px solid rgba(255, 255, 255, .3);
+  border: 1px solid rgba(255, 255, 255, .25);
   transition: .3s;
 }
 
 .back-button:hover {
-  background: rgba(255, 255, 255, .3);
+  background: rgba(255, 255, 255, .12);
   transform: translateY(-2px);
 }
 
@@ -98,13 +172,11 @@ body,
   overflow: hidden;                /* Partikel bleiben im Rahmen */
   max-width: 900px;
   margin: 0 auto;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--color-card-bg);
   padding: 30px;
   border-radius: 20px;
-  box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.6),
-    inset 0 0 15px rgba(0, 0, 0, 0.4);
-  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .content::after {
@@ -118,9 +190,24 @@ body,
   background-size: 50px 50px;
   animation: particle-float 20s linear infinite;
   pointer-events: none;
-  opacity: 0.3;
+  opacity: 0.15; /* reduziert für weniger „Flimmern“ */
   z-index: 0;
 }
+
+/* Light-Mode: Content-Karte mit leichtem Rot-Touch */
+html[data-theme="light"] .content {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(226, 0, 26, 0.25);
+  box-shadow:
+    0 18px 45px rgba(226, 0, 26, 0.18),
+    0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="light"] .content::after {
+  opacity: 0.22;
+  background: radial-gradient(circle, rgba(226, 0, 26, 0.14) 1px, transparent 1px);
+}
+
 
 @keyframes particle-float {
   0% {
@@ -131,15 +218,6 @@ body,
   }
 }
 
-/* Dark-Variante der Karte, damit der Theme-Wechsel sichtbar ist */
-html[data-theme="dark"] .content {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.9),
-    inset 0 0 10px rgba(255, 255, 255, 0.06);
-}
-
 /* ========= Quiz ========= */
 
 .quiz-question {
@@ -147,24 +225,28 @@ html[data-theme="dark"] .content {
   font-weight: 500;
   text-align: center;
   margin-bottom: 30px;
-  color: #FFD600;
+  color: var(--color-text);
 
-  /* Schild-Effekt */
-  background: rgba(255, 255, 255, 0.1);
+  /* „Schild“-Effekt, aber ruhiger */
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 10px;
   padding: 15px 20px;
-  border-left: 5px solid #E2001A;
+  border-left: 5px solid var(--color-accent-red);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 
-  /* Ausgangszustand für Animation */
   opacity: 1;
   transform: translateY(0);
 }
 
+.quiz-question .question-index {
+  color: var(--color-accent-yellow);
+  font-weight: 600;
+}
+
 /* diese Klasse wird im JS bei jeder Frage neu gesetzt */
 .quiz-question.visible {
-  animation: fadeInQuestion 0.5s ease-out forwards; /* hier forwards ergänzt */
+  animation: fadeInQuestion 0.5s ease-out forwards;
 }
 
 @keyframes fadeInQuestion {
@@ -181,122 +263,171 @@ html[data-theme="dark"] .content {
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* dein Normalzustand */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   }
 }
 
 .quiz-answers {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
-/* Auf größeren Bildschirmen zwei Spalten */
-@media (min-width: 700px) {
+/* Auf größeren Bildschirmen zwei Spalten (optional) */
+@media (min-width: 900px) {
   .quiz-answers {
+    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 .quiz-answer {
-  background: rgba(255, 255, 255, .08);
-  border: 1px solid rgba(255, 255, 255, .15);
+  background: var(--color-answer-bg);
+  border: 1px solid var(--color-answer-border);
   border-radius: 12px;
   padding: 14px 18px;
-  color: white;
+  color: var(--color-text);
   cursor: pointer;
-  transition: all .25s ease;
+  transition: all .2s ease;
   backdrop-filter: blur(4px);
   position: relative;
-  z-index: 1; /* über den Partikeln */
-  font-size:1rem;      /* bewusst setzen */
-  line-height:1.4;     /* bessere Lesbarkeit */
+  z-index: 1;
+  font-size: 1rem;
+  line-height: 1.4;
+  text-align: left;
 }
 
 .quiz-answer:hover {
-  transform: translateY(-3px) scale(1.02);
-  background: rgba(255, 255, 255, .18);
-  box-shadow: 0 6px 15px rgba(255, 255, 255, .15);
+  transform: translateY(-2px);
+  background: var(--color-answer-bg-hover);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .4);
 }
 
 .quiz-answer.correct {
-  background: #3ddc97;
-  color: #000;
-  box-shadow: 0 0 12px rgba(61, 220, 151, .6);
-  animation: correctPulse .3s ease;
+  background: var(--color-correct-bg);
+  border-color: var(--color-correct-border);
+  box-shadow: 0 0 12px rgba(39, 174, 96, .6);
+}
+
+.quiz-answer.correct::after {
+  content: " ✔";
+  font-weight: bold;
+  margin-left: 8px;
 }
 
 .quiz-answer.wrong {
-  background: #ff6b6b;
-  box-shadow: 0 0 12px rgba(255, 107, 107, .5);
-  animation: wrongShake .25s ease;
+  background: var(--color-wrong-bg);
+  border-color: var(--color-wrong-border);
+  box-shadow: 0 0 12px rgba(192, 57, 43, .5);
 }
 
-@keyframes correctPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.03); }
-  100% { transform: scale(1); }
-}
-
-@keyframes wrongShake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  50% { transform: translateX(4px); }
-  75% { transform: translateX(-2px); }
+.quiz-answer.wrong::after {
+  content: " ✘";
+  font-weight: bold;
+  margin-left: 8px;
 }
 
 .quiz-answer:disabled {
   cursor: default;
-  opacity: 0.7;
+  opacity: 0.9;
   transform: none !important;
   box-shadow: none;
 }
 
-/* Mobile-Optimierung: Verhältnis Frage / Antworten */
+/* Mobile-Optimierung */
 @media (max-width: 480px) {
   .quiz-question {
-    font-size: 1.3rem;    /* statt 1.6rem -> etwas kleiner */
-    padding: 12px 14px;   /* etwas kompakter */
+    font-size: 1.3rem;
+    padding: 12px 14px;
   }
 
   .quiz-answer {
-    font-size: 1.05rem;   /* leicht größer als Standard */
-    padding: 12px 16px;   /* mehr Platz links/rechts für den Finger */
+    font-size: 1rem;
+    padding: 12px 16px;
   }
 }
 
 .quiz-button {
   display: block;
   margin: 25px auto 0;
-  padding: 10px 20px;
+  padding: 10px 22px;
   border-radius: 25px;
-  background: rgba(255, 255, 255, .2);
-  border: 1px solid rgba(255, 255, 255, .4);
+  background: var(--color-accent-red);
+  border: none;
   color: #fff;
+  font-weight: 500;
   cursor: pointer;
-  transition: .3s;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
   position: relative;
   z-index: 1;
 }
 
+html[data-theme="light"] .quiz-button {
+  background: linear-gradient(135deg, var(--color-accent-red), #ff6b81);
+}
+
+html[data-theme="dark"] .quiz-button {
+  background: var(--color-accent-red);
+}
+
+html[data-theme="dark"] .quiz-answer.correct,
+html[data-theme="dark"] .quiz-answer.wrong {
+  color: #ffffff;
+}
+
+
 .quiz-button:hover {
-  background: rgba(255, 255, 255, .4);
-  transform: translateY(-2px);
+  background: var(--color-accent-red-dark);
+  box-shadow: 0 6px 16px rgba(226, 0, 26, .4);
+  transform: translateY(-1px);
 }
 
 .quiz-score {
   text-align: center;
   font-size: 1.3rem;
   margin-top: 20px;
-  color: #FFD600;
   position: relative;
   z-index: 1;
+  color: var(--color-text);
 }
+
+/* Light: Score etwas „rotiger“ */
+html[data-theme="light"] .quiz-score {
+  color: var(--color-accent-red);
+}
+
+/* Dark: Score eher gelblich, damit er leuchtet */
+html[data-theme="dark"] .quiz-score {
+  color: var(--color-accent-yellow);
+}
+
+.quiz-explanation {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 4px solid var(--color-accent-yellow);
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  display: none; /* wird per JS auf block gesetzt */
+}
+
+.quiz-explanation p {
+  margin-bottom: 6px;
+}
+
+.quiz-explanation p:last-child {
+  margin-bottom: 0;
+}
+
+
 
 /* ========= Progressbar ========= */
 .progress-bar {
   width: 100%;
   height: 10px;
-  background: rgba(255, 255, 255, .15);
+  background: var(--color-progress-bg);
   border-radius: 6px;
   overflow: hidden;
   margin-bottom: 20px;
@@ -307,8 +438,8 @@ html[data-theme="dark"] .content {
 #progress {
   height: 100%;
   width: 0;
-  background: linear-gradient(270deg, #FFD600, #ff9900, #E2001A);
-  background-size: 300% 100%;
+  background: linear-gradient(90deg, var(--color-accent-yellow), var(--color-accent-red));
+  background-size: 200% 100%;
   animation: progressFlow 3s ease infinite;
   transition: width .4s ease;
 }
@@ -370,9 +501,10 @@ html[data-theme="dark"] .content {
 }
 
 html[data-theme="dark"] .window {
-  fill: #FFD600;
+  fill: var(--color-accent-yellow);
   filter: drop-shadow(0 0 4px rgba(255, 214, 0, 0.7));
 }
+
 </style>
 
 
@@ -388,57 +520,64 @@ html[data-theme="dark"] .window {
   <div class="content">
     <!-- Zug oberhalb der Fragen -->
     <div id="train-container">
-      <svg class="train" width="240" height="50" viewBox="0 0 110 50" aria-hidden="true">
+     <svg class="train" width="260" height="50" viewBox="0 0 260 50" aria-hidden="true">
 
-    <!-- Gleise -->
-    <rect x="0" y="32" width="110" height="2" fill="#666"/>
-    <rect x="0" y="34" width="110" height="1" fill="#444"/>
+  <!-- Gleise -->
+  <rect x="0" y="36" width="260" height="2" fill="#666"/>
+  <rect x="0" y="38" width="260" height="1" fill="#444"/>
 
-    <!-- Rauch -->
-    <circle class="smoke" cx="15" cy="10" r="3" fill="rgba(255,255,255,0.8)">
-      <animate attributeName="cy" values="10;4;10" dur="2.5s" repeatCount="indefinite"/>
-      <animate attributeName="r" values="2.5;3.5;2.5" dur="2.5s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite"/>
-    </circle>
-    <circle class="smoke" cx="19" cy="9" r="2.5" fill="rgba(255,255,255,0.7)">
-      <animate attributeName="cy" values="9;3;9" dur="3s" begin="0.6s" repeatCount="indefinite"/>
-      <animate attributeName="r" values="2;3;2" dur="3s" begin="0.6s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.7;0.1;0.7" dur="3s" begin="0.6s" repeatCount="indefinite"/>
-    </circle>
-    <circle class="smoke" cx="23" cy="8" r="2" fill="rgba(255,255,255,0.6)">
-      <animate attributeName="cy" values="8;2;8" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
-      <animate attributeName="r" values="1.5;3;1.5" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.6;0;0.6" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
-    </circle>
+  <!-- Räder / Fahrwerk (angedeutet) -->
+  <circle cx="55" cy="36" r="3" fill="#222"/>
+  <circle cx="105" cy="36" r="3" fill="#222"/>
+  <circle cx="155" cy="36" r="3" fill="#222"/>
+  <circle cx="205" cy="36" r="3" fill="#222"/>
 
-    <!-- Lok -->
-    <rect x="13" y="14" width="4" height="6" fill="#111" stroke="#000" stroke-width="0.5"/>
-    <rect x="10" y="20" width="18" height="10" fill="#111" stroke="#000" stroke-width="1"/>
-    <rect class="window" x="18.5" y="15" width="3" height="3" rx="0.5"/>
-    <rect x="9" y="30" width="20" height="2" fill="#333"/>
-    <circle cx="13" cy="32" r="2" fill="#000"/>
-    <circle cx="18" cy="32" r="2" fill="#222"/>
-    <circle cx="23" cy="32" r="2" fill="#000"/>
+  <!-- Zugkörper (Hauptkörper, etwas länger) -->
+  <rect x="28" y="18" width="210" height="14" rx="7"
+        fill="#f5f5f5" stroke="#cccccc" stroke-width="1"/>
 
-    <!-- Waggon 1 -->
-    <rect x="32" y="22" width="20" height="8" fill="#004A9F" stroke="#002A5F" stroke-width="0.8"/>
-    <rect class="window" x="37" y="23.5" width="3" height="3" rx="0.5"/>
-    <circle cx="36" cy="32" r="2" fill="#000"/>
-    <circle cx="46" cy="32" r="2" fill="#000"/>
+  <!-- Zugnase (ICE-Front, links) -->
+  <path d="M28 18 
+           Q12 23 18 32 
+           L28 32 
+           Z" 
+        fill="#f5f5f5" stroke="#cccccc" stroke-width="1"/>
 
-    <!-- Waggon 2 -->
-    <rect x="56" y="22" width="20" height="8" fill="#E2001A" stroke="#A00012" stroke-width="0.8"/>
-    <rect class="window" x="61" y="23.5" width="3" height="3" rx="0.5"/>
-    <circle cx="60" cy="32" r="2" fill="#000"/>
-    <circle cx="70" cy="32" r="2" fill="#000"/>
+  <!-- Zugheck (langes, abgerundetes Heck) -->
+  <path d="M238 18
+           Q255 22 252 27
+           Q249 32 238 32
+           Z"
+        fill="#f5f5f5" stroke="#cccccc" stroke-width="1"/>
 
-    <!-- Waggon 3 -->
-    <rect x="80" y="22" width="20" height="8" fill="#FFD600" stroke="#b89400" stroke-width="0.8"/>
-    <rect class="window" x="85" y="23.5" width="3" height="3" rx="0.5"/>
-    <circle cx="84" cy="32" r="2" fill="#000"/>
-    <circle cx="94" cy="32" r="2" fill="#000"/>
+  <!-- Roter ICE-Streifen, mit verlängert -->
+  <rect x="28" y="25" width="210" height="3" fill="#E2001A"/>
 
-  </svg>
+  <!-- Dach / Technik -->
+  <rect x="80" y="14" width="60" height="4" rx="2" fill="#d0d0d0"/>
+  <rect x="150" y="14" width="25" height="3" rx="1.5" fill="#b0b0b0"/>
+
+  <!-- Führerstand-Fenster -->
+  <rect class="window" x="32" y="20" width="10" height="6" rx="1"/>
+
+  <!-- Passagierfenster (leicht nach rechts gestreckt) -->
+  <rect class="window" x="50" y="20" width="10" height="5" rx="1"/>
+  <rect class="window" x="65" y="20" width="10" height="5" rx="1"/>
+  <rect class="window" x="80" y="20" width="10" height="5" rx="1"/>
+  <rect class="window" x="95" y="20" width="10" height="5" rx="1"/>
+  <rect class="window" x="110" y="20" width="10" height="5" rx="1"/>
+  <rect class="window" x="125" y="20" width="10" height="5" rx="1"/>
+  <rect class="window" x="140" y="20" width="10" height="5" rx="1"/>
+  <rect class="window" x="155" y="20" width="10" height="5" rx="1"/>
+  <rect class="window" x="170" y="20" width="10" height="5" rx="1"/>
+  <rect class="window" x="185" y="20" width="10" height="5" rx="1"/>
+  <rect class="window" x="200" y="20" width="10" height="5" rx="1"/>
+
+  <!-- Frontlicht (kleiner Akzent) -->
+  <circle cx="22" cy="27" r="2" fill="#FFD600"/>
+
+</svg>
+
 </div>
 
 
@@ -449,6 +588,7 @@ html[data-theme="dark"] .window {
     <div id="quiz">
       <div id="question" class="quiz-question"></div>
       <div id="answers" class="quiz-answers"></div>
+	  <div id="explanation" class="quiz-explanation"></div>
       <button id="next-btn" class="quiz-button">Nächste Frage</button>
       <div id="score" class="quiz-score"></div>
       <button id="restart-btn" class="quiz-button" style="display:none;">Neue Runde</button>
@@ -464,6 +604,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const nextBtn=document.getElementById("next-btn");
   const restartBtn=document.getElementById("restart-btn");
   const scoreEl=document.getElementById("score");
+  const explanationEl = document.getElementById("explanation");
 
 /* =============================
    QUIZ-FUNKTIONALITÄT
@@ -474,25 +615,37 @@ const questions = [
     {text: "Elterngeld", correct: false},
     {text: "Krankengeld", correct: false},
     {text: "Arbeitslosengeld", correct: false}
-  ]},
+  ],
+  reference: "§ 11a (1) Nr. 6 SGB II",
+  explanation: "Mutterschaftsgeld ist ein nicht zu berücksichtendes Einkommen und wird somit nicht auf das Bürgergeld angerechnet."
+  },
   {question: "Bei welcher Rente handelt es sich um ein privilegiertes Einkommen (also ein nicht zu berücksichtigendes Einkommen)?", answers: [
     {text: "Rente wegen Alters", correct: false},
     {text: "Renten nach dem Bundesentschädigungsgesetz", correct: true},
     {text: "Rente wegen voller Erwerbsminderung", correct: false},
     {text: "Rente wegen teilweiser Erwerbsminderung", correct: false}
-  ]},
+  ],
+  reference: "§ 11a (1) Nr. 3 SGB II",
+  explanation: "Eine Rente nach dem BEG ist ein nicht zu berücksichtendes Einkommen und wird somit nicht auf das Bürgergeld angerechnet."
+  },
   {question: "Wobei handelt es sich um ein privilegiertes Einkommen (also ein nicht zu berücksichtigendes Einkommen)?", answers: [
     {text: "Arbeitslosengeld bei Arbeitslosigkeit nach § 137 SGB III", correct: false},
     {text: "Berufsausbildungsbeihilfe nach § 56 SGB III", correct: false},
     {text: "Kurzarbeitergeld nach § 95 SGB III", correct: false},
     {text: "Einstiegsgeld nach § 16b SGB II", correct: true}
-  ]},
+  ],
+  reference: "§ 11a (1) Nr. 1 SGB II",
+  explanation: "Einstiegsgeld ist eine Leistung nach dem SGB II (nach diesem Buch) und somit ein nicht zu berücksichtendes Einkommen und wird somit nicht auf das Bürgergeld angerechnet."
+  },
   {question: "Kann man als nichterwerbsfähiger Leistungsberechtigter Bürgergeld erhalten?", answers: [
     {text: "Ja, wenn der nichterwerbsfähige Leistungsberechtigte keinen Anspruch auf Leistungen nach dem 4. Kapitel SGB XII hat", correct: true},
     {text: "Nein", correct: false},
     {text: "Ja, wenn der nichterwerbsfähige Leistungsberechtigte arbeitslos ist", correct: false},
     {text: "Ja, wenn der nichterwerbsfähige Leistungsberechtigte keinen Anspruch auf Leistungen nach dem 3. Kapitel SGB XII hat", correct: false}
-  ]},
+  ],
+  reference: "§ 19 (1) S. 1 SGB II",
+  explanation: "Nichterwerbsfähige Leistungsberechtigte, die mit erwerbsfähigen Leistungsberechtigten in einer Bedarfsgemeinschaft leben, erhalten Bürgergeld, soweit sie keinen Anspruch auf Leistungen nach dem Vierten Kapitel des Zwölften Buches haben."
+  },
   {question: "Eine Person erhält ein tägliches Arbeitslosengeld in Höhe von 39,17 Euro. Wie viel ist monatlich als Einkommen auf das Bürgergeld anzurechnen?", answers: [
     {text: "1175,10 Euro", correct: false},
     {text: "1075,10 Euro", correct: false},
@@ -534,19 +687,28 @@ const questions = [
     {text: "Ja, er ist über 15 Jahre alt und hat die Altersgrenze noch nicht erreicht, ist erwerbsfähig, hilfebedürftig und hat seinen gewöhnlichen Aufenthalt in Deutschland.", correct: false},
     {text: "Nein, er hat die Altersgrenze erreicht.", correct: true},
     {text: "Nein, er bezieht eine Rente.", correct: false}
-  ]},
+  ],
+  reference: "§ 7 (1) S. 1 Nr. 1 i.V.m. § 7a SGB II",
+  explanation: "Luigi hat die Altersgrenze mit seinen über 67 Jahren bereits erreicht."
+  },
  {question: "Was ist kein Ausschlussgrund nach § 7 Absatz 4 SGB II?", answers: [
     {text: "Bezug einer Altersrente", correct: false},
     {text: "Krankenhausaufenthalt über 6 Monate", correct: false},
     {text: "Inhaftierung", correct: false},
     {text: "Bezug von Arbeitslosengeld", correct: true}
-  ]},
+  ],
+  reference: "§ 7 (4) SGB II",
+  explanation: "Der Bezug von Arbeitslosengeld ist kein Ausschlussgrund. Man kann Arbeitslosengeld und Bürgergeld gleichzeitig beziehen (Aufstocker)."
+  },
  {question: "Was ist ein Ausschlussgrund nach § 7 Absatz 4 SGB II?", answers: [
     {text: "Krankenhausaufenthalt für 3 Monate", correct: false},
     {text: "Bezug einer Rente wegen Alters", correct: true},
     {text: "Bezug einer Rente wegen Erwerbsminderung", correct: false},
     {text: "Bezug von Arbeitslosengeld", correct: false}
-  ]},
+  ],
+  reference: "§ 7 (4) S. 1 SGB II",
+  explanation: "Leistungen nach diesem Buch erhält nicht, wer (...), Rente wegen Alters oder Knappschaftsausgleichsleistung oder ähnliche Leistungen öffentlich-rechtlicher Art bezieht."
+  },
  {question: "Eine Person, die Bürgergeld bezieht, erscheint zum 3. Mal nicht zu einem Meldetermin bei der Arbeitsvermittlung. Wie hoch ist die Leistungsminderung?", answers: [
     {text: "10 % des maßgebenden Regelbedarfs", correct: true},
     {text: "20 % des maßgebenden Regelbedarfs", correct: false},
@@ -576,7 +738,10 @@ const questions = [
     {text: "mehrtägige Klassenfahrten", correct: false},
     {text: "gemeinschaftliches Mittagessen", correct: false},
     {text: "Lernförderung", correct: false}
-  ]},
+  ],
+  reference: "§ 28 i.V.m. § 21 (6a) SGB II",
+  explanation: "Bei der Anschaffung/Ausleihe von Schulbüchern handelt es nicht um BuT-Leistungen, sondern um einen Mehrbedarf nach § 21 (6a) SGB II."
+  },
    {question: "Wie wird die Personengruppe Aufstocker definiert?", answers: [
     {text: "Personen, die zusätzlich zum Arbeitslosengeld aufstockend Bürgergeld beziehen.", correct: true},
     {text: "Personen, die zusätzlich zum Lohn / Gehalt Bürgergeld beziehen.", correct: false},
@@ -594,13 +759,19 @@ const questions = [
     {text: "Jobcenter", correct: true},
     {text: "Agentur für Arbeit und Jobcenter", correct: false},
     {text: "anderer Träger", correct: false}
-  ]},
+  ],
+  reference: "§ 16b SGB II",
+  explanation: "Beim Einstiegsgeld handelt es sich um eine Eingliederungsleistung, die nur im SGB II geregelt ist."
+  },
     {question: "Welcher Träger kann/ muss die Leistung Berufsausbildungsbeihilfe erbringen?", answers: [
     {text: "Agentur für Arbeit", correct: true},
     {text: "Jobcenter", correct: false},
     {text: "Agentur für Arbeit und Jobcenter", correct: false},
     {text: "anderer Träger", correct: false}
-  ]},
+  ],
+  reference: "§ 56 SGB III",
+  explanation: "Bei der Berufsausbildungsbeihilfe handelt es sich um eine Leistung, die nur im SGB III geregelt ist. Über § 16 SGB II gelangt man nicht zu dieser Leistung."
+  },
   {question: "Welcher Träger kann/ muss Leistungen aus dem Vermittlungsbudget erbringen?", answers: [
     {text: "Agentur für Arbeit", correct: false},
     {text: "Jobcenter", correct: false},
@@ -630,19 +801,28 @@ const questions = [
     {text: "ab 1. Dezember 2025 (Leistungen werden ab dem Folgemonat erbacht)", correct: false},
     {text: "ab 1. November 2025 (der Antrag wird auf den Ersten des Monats zurück)", correct: true},
     {text: "ab 17. November 2025 (Leistungen werden nur für volle Kalenderwochen erbracht)", correct: false}
-  ]},
+  ],
+  reference: "§ 37 (2) SGB II",
+  explanation: "Leistungen nach diesem Buch werden nicht für Zeiten vor der Antragstellung erbracht. Der Antrag auf Leistungen zur Sicherung des Lebensunterhalts wirkt auf den Ersten des Monats zurück."
+  },
   {question: "Eine alleinerziehende Mutter mit 1 Kind (4 Jahre alt) erhält den Mehrbedarf für Alleinerziehende. In welcher Höhe wird der Mehrbedarf anerkannt?", answers: [
     {text: "182,16 Euro", correct: false},
     {text: "357,00 Euro", correct: false},
     {text: "67,56 Euro", correct: false},
     {text: "202,68 Euro", correct: true}
-  ]},
+  ],
+  reference: "§ 21 (3) Nr. 1 SGB II",
+  explanation: "Es wird ein Kind betreut (unter 7 Jahre alt). Somit wird ein Mehrbedarf in Höhe von 36 % des maßgebenden Regelbedarfs anerkannt (36% x 563 Euro)."
+  },
   {question: "Eine alleinerziehende Mutter mit 1 Kind (11 Jahre alt) erhält den Mehrbedarf für Alleinerziehende. In welcher Höhe wird der Mehrbedarf anerkannt?", answers: [
     {text: "563,00 Euro", correct: false},
     {text: "357,00 Euro", correct: false},
     {text: "67,56 Euro", correct: true},
     {text: "202,68 Euro", correct: false}
-  ]},
+  ],
+  reference: "§ 21 (3) Nr. 2 SGB II",
+  explanation: "Es wird ein Kind betreut (über 7 Jahre alt). Somit wird ein Mehrbedarf in Höhe von 12 % des maßgebenden Regelbedarfs anerkannt (12% x 563 Euro)."
+  },
    {question: "Eine alleinerziehende Mutter mit 2 Kindern (12 und 14 Jahre alt) erhält den Mehrbedarf für Alleinerziehende. In welcher Höhe wird der Mehrbedarf anerkannt?", answers: [
     {text: "563,00 Euro", correct: false},
     {text: "135,12 Euro", correct: false},
@@ -697,7 +877,9 @@ function startQuiz() {
     train.classList.add("enter");
   }
 
-  shuffledQuestions = questions.sort(() => Math.random() - 0.5).slice(0, 5);
+  shuffledQuestions = [...questions]
+  .sort(() => Math.random() - 0.5)
+  .slice(0, 5);
   currentIndex = 0;
   score = 0;
   scoreEl.textContent = "";
@@ -718,6 +900,7 @@ function showQuestion() {
   // Animation für die Frage neu triggern
   questionEl.classList.remove("visible");
   void questionEl.offsetWidth; // Reflow erzwingen, damit die Animation neu startet
+
   questionEl.textContent = `Frage ${currentIndex + 1}: ${current.question}`;
   questionEl.classList.add("visible");
 
@@ -725,12 +908,21 @@ function showQuestion() {
     const btn = document.createElement("button");
     btn.textContent = ans.text;
     btn.classList.add("quiz-answer");
-    btn.addEventListener("click", () => selectAnswer(btn, ans.correct));
+
+    // HIER: korrekt-Info per data-Attribut setzen
+    if (ans.correct) {
+      btn.dataset.correct = "true";
+    }
+
+    // Nur noch einen Parameter übergeben
+    btn.addEventListener("click", () => selectAnswer(btn));
+
     answersEl.appendChild(btn);
   });
 
   updateProgress();
 }
+
 
   /* =============================
      RESET FÜR NÄCHSTE FRAGE
@@ -738,22 +930,54 @@ function showQuestion() {
   function resetState() {
     nextBtn.style.display = "none";
     while (answersEl.firstChild) answersEl.removeChild(answersEl.firstChild);
+	
+	 // NEU: Erklärungsblock leeren & verstecken
+  if (explanationEl) {
+    explanationEl.innerHTML = "";
+    explanationEl.style.display = "none";
+   }
   }
 
   /* =============================
      ANTWORTAUSWAHL
   ============================= */
-  function selectAnswer(button, correct) {
-    const all = answersEl.children;
-    for (const btn of all) {
-      btn.disabled = true;
-      const a = shuffledQuestions[currentIndex].answers.find(x => x.text === btn.textContent);
-      if (a.correct) btn.classList.add("correct");
+  function selectAnswer(button) {
+  const all = answersEl.children;
+
+  for (const btn of all) {
+    btn.disabled = true;
+
+    if (btn.dataset.correct === "true") {
+      btn.classList.add("correct");
     }
-    if (!correct) button.classList.add("wrong");
-    else score++;
-    nextBtn.style.display = "block";
   }
+
+  if (button.dataset.correct === "true") {
+    score++;
+  } else {
+    button.classList.add("wrong");
+  }
+
+  // NEU: Erklärung aus den Fragedaten anzeigen
+  const current = shuffledQuestions[currentIndex];
+  if (explanationEl && (current.reference || current.explanation)) {
+    let html = "";
+
+    if (current.reference) {
+      html += `<p><strong>Rechtsgrundlage:</strong> ${current.reference}</p>`;
+    }
+
+    if (current.explanation) {
+      html += `<p>${current.explanation}</p>`;
+    }
+
+    explanationEl.innerHTML = html;
+    explanationEl.style.display = "block";
+  }
+
+  nextBtn.style.display = "block";
+}
+
 
   /* =============================
      NÄCHSTE FRAGE / ENDE
@@ -775,6 +999,11 @@ function showQuestion() {
     restartBtn.style.display = "block";
     updateProgress(true);
     animateTrainExit();
+	
+	if (explanationEl) {
+	explanationEl.innerHTML = "";
+	explanationEl.style.display = "none";
+	}
   }
 
   restartBtn.addEventListener("click", startQuiz);
@@ -804,27 +1033,28 @@ function animateTrainExit() {
   }
 }
 
-
-  /* =============================
+ /* =============================
      THEME SWITCH (Dark/Light)
   ============================= */
   const themeButton = document.getElementById("themeToggle");
-  const saved = localStorage.getItem("theme");
 
-  if (saved === "dark" || saved === "light") {
-    document.documentElement.setAttribute("data-theme", saved);
-    themeButton.setAttribute("aria-pressed", saved === "dark");
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    themeButton.setAttribute("aria-pressed", theme === "dark");
   }
 
-  themeButton.addEventListener("click", () => {
-    const current = document.documentElement.getAttribute("data-theme");
-    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const effective = current ?? (systemDark ? "dark" : "light");
-    const next = effective === "dark" ? "light" : "dark";
+  // gespeichertes Theme oder Systempräferenz auslesen
+  const savedTheme = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("theme", next);
-    themeButton.setAttribute("aria-pressed", next === "dark");
+  const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+  applyTheme(initialTheme);
+
+  themeButton.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme") || "light";
+    const next = current === "dark" ? "light" : "dark";
+    applyTheme(next);
   });
 
   /* =============================
@@ -833,10 +1063,7 @@ function animateTrainExit() {
   startQuiz();
 });
 
+
 </script>
 </body>
 </html>
-
-
-
-
