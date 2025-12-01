@@ -651,13 +651,19 @@ const questions = [
     {text: "1075,10 Euro", correct: false},
     {text: "1145,10 Euro", correct: true},
     {text: "927,10 Euro", correct: false}
-  ]},
+  ],
+  reference: "§ 11, § 11a, § 11b SGB II, § 6 (1) Nr. 1 Bürgergeld-V",
+  explanation: "Das monatliche Arbeitslosengeld beträgt 1175,10 Euro (30 x 39,17 Euro). Abgesetzt wird die Versicherungspauschale in Höhe von 30,00 Euro. Rechnung: 1175,10 Euro - 30,00 Euro = 1145,10 Euro"
+  },
   {question: "Eine Person erhält ein tägliches Arbeitslosengeld in Höhe von 27,12 Euro. Wie viel ist monatlich als Einkommen auf das Bürgergeld anzurechnen?", answers: [
     {text: "813,60 Euro", correct: false},
     {text: "783,60 Euro", correct: true},
     {text: "713,60 Euro", correct: false},
     {text: "683,60 Euro", correct: false}
-  ]},
+  ],
+  reference: "§ 11, § 11a, § 11b SGB II, § 6 (1) Nr. 1 Bürgergeld-V",
+  explanation: "Das monatliche Arbeitslosengeld beträgt 813,60 Euro (30 x 27,12 Euro). Abgesetzt wird die Versicherungspauschale in Höhe von 30,00 Euro. Rechnung: 813,60 Euro - 30,00 Euro = 783,60 Euro"
+  },
  {question: "Ein Familienvater erzielt aus einer Beschäftigung einen Lohn in Höhe von 990,00 Euro netto (1300,00 Euro brutto). Wie hoch ist das anzurechnende Einkommen? Er werden keine weiteren Aufwendungen geltend gemacht.", answers: [
     {text: "960,00 Euro", correct: false},
     {text: "890,00 Euro", correct: false},
@@ -675,7 +681,10 @@ const questions = [
     {text: "177,00 Euro", correct: false},
     {text: "200,00 Euro", correct: false},
     {text: "207,00 Euro", correct: false}
-  ]},
+  ],
+  reference: "§ 11, § 11a, § 11b SGB II, § 2 (1) & § 6 (1) Nr. 1 Bürgergeld-V",
+  explanation: "Abgesetzt wird der Grundabsetzungsbetrag für Erwerbstätige in Höhe von 100,00 Euro. Zudem wird ein weiterer Freibetrag in Höhe von 40,00 Euro berücksichtigt (20% von 200,00 Euro). Rechnung: 300,00 Euro - 140,00 Euro = 160,00 Euro"
+ },
  {question: "Mario (38 Jahre alt, wohnt in Stuttgart) bezieht Arbeitslosengeld, das ihm zur Bestreitung seines Lebensunterhalts nicht ausreicht. Handelt es sich um einen erwerbsfähigen Leistungsberechtigten?", answers: [
     {text: "Nein, er hat seinen gewöhnlichen Aufenthalt nicht in Deutschland.", correct: false},
     {text: "Ja, er ist über 15 Jahre alt und hat die Altersgrenze noch nicht erreicht, ist erwerbsfähig, hilfebedürftig und hat seinen gewöhnlichen Aufenthalt in Deutschland.", correct: true},
@@ -783,7 +792,10 @@ const questions = [
     {text: "Jobcenter", correct: false},
     {text: "Agentur für Arbeit und Jobcenter", correct: false},
     {text: "anderer Träger", correct: false}
-  ]},
+  ],
+  reference: "§ 93 SGB III",
+  explanation: "Beim Gründungszuschuss handelt es sich um eine Leistung, die nur im SGB III geregelt ist. Über § 16 SGB II gelangt man nicht zu dieser Leistung."
+  },
   {question: "Welcher Träger kann/ muss die Leistung Eingliederungszuschuss erbringen?", answers: [
     {text: "Agentur für Arbeit", correct: false},
     {text: "Jobcenter", correct: false},
@@ -840,13 +852,19 @@ const questions = [
     {text: "506,00 Euro", correct: false},
     {text: "451,00 Euro", correct: false},
     {text: "357,00 Euro", correct: false}
-  ]},
+  ],
+  reference: "§ 20 (2) SGB II, Anlage zu § 28 SGB XII",
+  explanation: "Für eine alleinstehende Person wird ein Regelbedarf monatlich in Höhe der Regelbedarfsstufe 1 anerkannt (Stand: 2025/2026: 563,00 Euro)."
+  },
   {question: "Eine alleinstehende Person (30 Jahre alt) stellt einen Antrag auf Bürgergeld. Er zahlt für seine Wohnung eine Miete in Höhe von 400,00 Euro. Für Strom zahlt er 40,00 Euro im Monat. Welcher Gesamtbedarf wird berücksichtigt?", answers: [
     {text: "1003,00 Euro", correct: false},
     {text: "563,00 Euro", correct: false},
     {text: "963,00 Euro", correct: true},
     {text: "603,00 Euro", correct: false}
-  ]},
+  ],
+  reference: "§ 20 (2) SGB II, Anlage zu § 28 SGB XII, § 22 SGB II",
+  explanation: "Für eine alleinstehende Person wird ein Regelbedarf monatlich in Höhe der Regelbedarfsstufe 1 anerkannt (Stand: 2025/2026: 563,00 Euro). Die Miete wird in voller Höhe anerkannt, wenn diese angemessen ist. Die Kosten für (Haushalts-)Strom sind im Regelbedarf inbegriffen."
+  },
   {question: "Bei der Bewilligung von Bürgergeld handelt es sich um...", answers: [
     {text: "einen Verwaltungsakt mit Einmalwirkung.", correct: false},
     {text: "keinen Verwaltungsakt.", correct: false},
@@ -1067,3 +1085,4 @@ function animateTrainExit() {
 </script>
 </body>
 </html>
+
