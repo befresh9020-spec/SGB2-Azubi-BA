@@ -643,7 +643,7 @@ const questions = [
     {text: "Ja, wenn der nichterwerbsfähige Leistungsberechtigte arbeitslos ist", correct: false},
     {text: "Ja, wenn der nichterwerbsfähige Leistungsberechtigte keinen Anspruch auf Leistungen nach dem 3. Kapitel SGB XII hat", correct: false}
   ],
-  reference: "§ 19 (1) S. 1 SGB II",
+  reference: "§ 19 (1) S. 2 SGB II",
   explanation: "Nichterwerbsfähige Leistungsberechtigte, die mit erwerbsfähigen Leistungsberechtigten in einer Bedarfsgemeinschaft leben, erhalten Bürgergeld, soweit sie keinen Anspruch auf Leistungen nach dem Vierten Kapitel des Zwölften Buches haben."
   },
   {question: "Eine Person erhält ein tägliches Arbeitslosengeld in Höhe von 39,17 Euro. Wie viel ist monatlich als Einkommen auf das Bürgergeld anzurechnen?", answers: [
@@ -669,7 +669,10 @@ const questions = [
     {text: "890,00 Euro", correct: false},
     {text: "612,00 Euro", correct: false},
     {text: "632,00 Euro", correct: true}
-  ]},
+  ],
+ reference: "§ 11, § 11a, § 11b SGB II, § 2 (1) & § 6 (1) Nr. 1 Bürgergeld-V",
+  explanation: "Abgesetzt wird der Grundabsetzungsbetrag für Erwerbstätige in Höhe von 100,00 Euro (keine Vergleichsberechnung notwendig). Zudem wird ein weiterer Freibetrag in Höhe von 258,00 Euro berücksichtigt (20% von 420,00 Euro, 30 % von 480,00 Euro, 10 % von 300,00 Euro). Rechnung: 990,00 - 358,00 Euro = 632,00 Euro"
+ },
  {question: "Eine alleinerziehende Mutter erzielt aus einer Beschäftigung einen Lohn in Höhe von 1150,00 Euro netto (1600,00 Euro brutto). Wie hoch ist das anzurechnende Einkommen? Für die Kfz-Haftpflichtversicherung fallen monatlich 40,00 Euro an.", answers: [
     {text: "802,00 Euro", correct: false},
     {text: "772,00 Euro", correct: true},
@@ -1085,4 +1088,5 @@ function animateTrainExit() {
 </script>
 </body>
 </html>
+
 
