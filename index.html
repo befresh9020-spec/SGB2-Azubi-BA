@@ -19,6 +19,24 @@
 
 </header>
 
+<!-- 🔍 Dezente Paragraphen-Suche -->
+<section class="search-bar">
+  <form id="paragraphSearchForm" class="search-form">
+    <label for="paragraphInput">Paragraph im SGB II suchen</label>
+
+    <div class="search-row">
+      <input
+        id="paragraphInput"
+        type="text"
+        autocomplete="off"
+        placeholder="§§-Suche…"
+      >
+      <button type="submit">🔍</button>
+    </div>
+
+    <p id="searchError" class="search-error" aria-live="polite"></p>
+  </form>
+</section>
 
 <main class="container">
 
@@ -439,11 +457,109 @@ themeButton.addEventListener('click', () => {
   localStorage.setItem('theme', next);
   themeButton.setAttribute('aria-pressed', next === 'dark');
 });
+
+// ----------------- 🔍 Paragraphen-Suche -----------------
+
+    // Zuordnung: "7" → "Berechtigte.html#§7" usw.
+    const paragraphIndex = {
+      // Leistungsberechtigte
+      "7":  "Berechtigte.html#§7",
+      "7a": "Berechtigte.html#§7a",
+      "37": "Berechtigte.html#§37",
+      "38": "Berechtigte.html#§38",
+
+      // Bedarfe
+      "19": "Bedarfe.html#§19",
+      "20": "Bedarfe.html#§20",
+      "21": "Bedarfe.html#§21",
+      "22": "Bedarfe.html#§22",
+      "23": "Bedarfe.html#§23",
+      "72": "Bedarfe.html#§72",
+
+      // Vermögen
+      "12": "VM.html#§12",
+
+      // Einkommen
+      "11":  "EK.html#§11",
+      "11a": "EK.html#§11a",
+      "11b": "EK.html#§11b",
+
+      // Hilfebedürftigkeit
+      "9": "Hilfebeduerftigkeit.html#§9",
+
+      // Leistungsminderungen
+      "31":  "Minderung.html#§31",
+      "31a": "Minderung.html#§31a",
+      "31b": "Minderung.html#§31b",
+      "32":  "Minderung.html#§32",
+
+      // Bildung und Teilhabe
+      "28": "BuT.html#§28",
+
+	      // AGP
+      "1": "AGP1.html#§1",
+      "2": "AGP1.html#§2",
+      "6": "AGP1.html#§6",
+      "44b": "AGP1.html#§44b",
+      "6d": "AGP1.html#§6d",
+      "6a": "AGP1.html#§6a",
+	  "18a": "AGP1.html#§18a",
+      "7b": "AGP1.html#§7b",
+      "13": "AGP1.html#§13",
+	  "56": "AGP1.html#§56",
+      "59": "AGP1.html#§59",
+      "3": "AGP2.html#§3",
+	  "4": "AGP2.html#§4",
+	  "36": "AGP2.html#§36",
+	  "5": "AGP2.html#§5",
+	  "12a": "AGP2.html#§12a",
+	  "14": "AGP2.html#§14",
+	  "15": "AGP2.html#§15",
+	  "15a": "AGP2.html#§15a",
+	  "16": "AGP2.html#§16"		
+    };
+
+    function normalizeParagraphInput(raw) {
+      return raw
+        .toLowerCase()
+        .replace(/§/g, '')      // "§ 7" → " 7"
+        .replace(/\s+/g, '')    // " 7 a" → "7a"
+        .replace(/abs\..*/g, ''); // "7 abs. 1" → "7"
+    }
+
+    const searchForm  = document.getElementById('paragraphSearchForm');
+    const searchInput = document.getElementById('paragraphInput');
+    const searchError = document.getElementById('searchError');
+
+    if (searchForm && searchInput && searchError) {
+      searchForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        searchError.textContent = '';
+
+        const key = normalizeParagraphInput(searchInput.value);
+
+        if (!key) {
+          searchError.textContent = 'Bitte einen Paragraphen eingeben, z.B. 7 oder 31b.';
+          return;
+        }
+
+        const target = paragraphIndex[key];
+
+        if (!target) {
+          searchError.textContent = 'Diesen Paragraphen habe ich hier (noch) nicht hinterlegt.';
+          return;
+        }
+
+        window.location.href = target;
+      });
+    }
+	
 </script>
 
 </body>
 
 </html>
+
 
 
 
