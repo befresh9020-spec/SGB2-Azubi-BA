@@ -401,3 +401,49 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   header h1 { font-size: 2rem; }
   article.flip-card { height: 280px; }
 }
+
+.search-bar {
+  max-width: 480px;
+  margin: 1.5rem auto 1.5rem;
+}
+
+/* Mobile: untereinander, alles schön breit */
+.search-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.search-row input,
+.search-row button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Desktop: kompakt, zentriert */
+@media (min-width: 768px) {
+  .search-row {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .search-row input {
+    width: 8ch;         /* Platz für ca. 8 Zeichen */
+    flex: 0 0 auto;
+    text-align: center; /* sieht bei kurzen Eingaben gut aus */
+  }
+
+  .search-row button {
+    width: auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
+.search-form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  text-align: center;   /* neu */
+}
