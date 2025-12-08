@@ -421,6 +421,18 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   padding: 0.5rem 0.75rem;
 }
 
+.search-row button {
+  -webkit-appearance: none;
+  appearance: none;
+
+  background-color: #ffffff;     /* oder dein Wunsch-Farbcode */
+  color: #000000;
+  border: 1px solid #dddddd;
+  border-radius: 999px;
+  font: inherit;
+  cursor: pointer;
+}
+
 /* Desktop: kompakt, zentriert */
 @media (min-width: 768px) {
   .search-row {
