@@ -802,3 +802,39 @@ body.dark-mode .vtg-chip::after {
     display: none;
   }
 }
+
+/* Spezielles Layout für die Matrix-Lösung zu SV 3 */
+.solution-table-matrix th,
+.solution-table-matrix td {
+  text-align: center;
+}
+
+.solution-table-matrix td:first-child {
+  text-align: left;
+}
+
+/* Auf kleinen Screens: Kartenlayout für diese Tabelle wieder abschalten */
+@media (max-width: 700px) {
+  .solution-table-matrix tr {
+    display: table-row;   /* wieder normale Zeile */
+    margin-bottom: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .solution-table-matrix td {
+    display: table-cell;  /* Zellen nebeneinander */
+    width: auto;
+    border-width: 1px;
+    padding: 6px 4px;
+    font-size: 0.8rem;    /* etwas kompakter für Handy */
+  }
+
+  .solution-table-matrix thead tr {
+    display: table-row;
+  }
+
+  .solution-table-matrix thead th {
+    font-size: 0.8rem;
+  }
+}
