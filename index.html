@@ -555,12 +555,25 @@ themeButton.addEventListener('click', () => {
         window.location.href = target;
       });
     }
+
+	  // Service Worker Registrierung (gilt für alle Seiten im Scope)
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+      .then(reg => {
+        console.log("Service Worker registriert:", reg.scope);
+      })
+      .catch(err => {
+        console.error("Service Worker Registrierung fehlgeschlagen:", err);
+      });
+  }
+
 	
 </script>
 
 </body>
 
 </html>
+
 
 
 
