@@ -1,19 +1,19 @@
 {
   "name": "SGB II lernen",
   "short_name": "SGB II",
-  "description": "Gesetzestexte und Lernhilfen für Auszubildende der BA.",
+  "description": "Gesetzestexte und Lernhilfen für Auszubildende der BA",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#E2001A",
   "theme_color": "#B30920",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "icon-192.PNG",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "icon-512.PNG",
       "sizes": "512x512",
       "type": "image/png"
     }
