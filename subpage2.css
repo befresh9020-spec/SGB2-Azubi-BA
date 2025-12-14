@@ -840,35 +840,35 @@ body.dark-mode .vtg-chip::after {
 }
 
 /* =============================== */
-/* Nicht ausbildungsrelevant      */
+/* Nicht ausbildungsrelevant      */
 /* =============================== */
 
 .not-relevant {
-  font-size: 0.9rem;
-  color: #777;
-  font-style: italic;
-  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #777;
+  font-style: italic;
+  margin-top: 8px;
 }
 
 .not-relevant-label {
-  display: inline-block;
-  margin-left: 0.3rem;
-  padding: 0.05rem 0.4rem;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: #f1f1f1;
-  color: #777;
+  display: inline-block;
+  margin-left: 0.3rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #f1f1f1;
+  color: #777;
 }
 
 /* Dark Mode */
 body.dark-mode .not-relevant {
-  color: #9a9a9a;
+  color: #9a9a9a;
 }
 
 body.dark-mode .not-relevant-label {
-  background: #343434;
-  color: #b0b0b0;
+  background: #343434;
+  color: #b0b0b0;
 }
 
