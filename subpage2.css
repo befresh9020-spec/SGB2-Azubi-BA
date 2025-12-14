@@ -844,31 +844,32 @@ body.dark-mode .vtg-chip::after {
 /* =============================== */
 
 .not-relevant {
-  font-size: 0.9rem;
-  color: #777;
-  font-style: italic;
-  margin-top: 8px;
+  margin-top: 10px;
+  opacity: 0.78;          /* wirkt „sekundär“, aber bleibt lesbar */
+  font-style: normal;     /* kein Kursiv-Bruch */
+  color: inherit;         /* passt sich Light/Dark automatisch an */
 }
 
 .not-relevant-label {
   display: inline-block;
-  margin-left: 0.3rem;
-  padding: 0.05rem 0.4rem;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: #f1f1f1;
-  color: #777;
-}
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.55rem;
 
-/* Dark Mode */
-body.dark-mode .not-relevant {
-  color: #9a9a9a;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+
+  text-transform: none;   /* kein ALL CAPS */
+  letter-spacing: 0;      /* ruhiger */
+  line-height: 1.2;
+
+  background: rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.08);
+  color: inherit;
 }
 
 body.dark-mode .not-relevant-label {
-  background: #343434;
-  color: #b0b0b0;
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.12);
 }
 
