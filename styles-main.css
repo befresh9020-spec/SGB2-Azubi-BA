@@ -144,7 +144,11 @@ article.flip-card {
   header h1 { font-size: 2rem; }
 
   article.flip-card {
-    height: 250px;                     /* genug Platz für Rückseite */
+    height: 240px;                     /* genug Platz für Rückseite */
+  }
+  
+  .flip-card-front {
+    padding: 8px 16px 18px;  /* oben knapper, unten etwas mehr */
   }
 
   .flip-card-back {
