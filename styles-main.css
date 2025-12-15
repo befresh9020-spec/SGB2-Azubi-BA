@@ -120,6 +120,17 @@ article.flip-card {
   article.flip-card {
     height: 380px;   /* oder 400px, wenn du noch mehr Luft brauchst */
   }
+
+  /* weniger Innenabstand für beide Seiten */
+  .flip-card-front,
+  .flip-card-back {
+    padding: 18px;   /* statt 25px */
+  }
+
+  /* Vorderseite: nach oben rücken, wirkt kompakter */
+  .flip-card-front {
+    justify-content: flex-start;
+  }
 }
 
 .flip-card-inner {
