@@ -512,7 +512,7 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   }
 
   .search-row input {
-    width: 14ch;         /* Platz für ca. 14 Zeichen */
+    width: 16ch;         /* Platz für ca. 16Zeichen */
     flex: 0 0 auto;
     text-align: center; /* sieht bei kurzen Eingaben gut aus */
   }
