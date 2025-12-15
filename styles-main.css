@@ -485,7 +485,7 @@ html[data-theme="dark"] .train rect[fill="#333"] {
 
 .search-row input,
 .search-row button {
-  width: 100%;
+  width: 75%;
   box-sizing: border-box;
   padding: 0.5rem 0.75rem;
 }
@@ -511,7 +511,7 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   }
 
   .search-row input {
-    width: 8ch;         /* Platz für ca. 8 Zeichen */
+    width: 10ch;         /* Platz für ca. 10 Zeichen */
     flex: 0 0 auto;
     text-align: center; /* sieht bei kurzen Eingaben gut aus */
   }
