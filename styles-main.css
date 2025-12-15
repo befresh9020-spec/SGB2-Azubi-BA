@@ -149,7 +149,6 @@ article.flip-card {
 
   .flip-card-front {
     padding: 10px 16px 14px;           /* Front kompakter */
-    justify-content: flex-start;       /* Inhalt nach oben */
   }
 
   .flip-card-back {
