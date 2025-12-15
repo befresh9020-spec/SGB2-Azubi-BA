@@ -104,11 +104,20 @@ main {
 }
 
 article.flip-card {
-  height: 320px;
   perspective: 1000px;
   cursor: pointer;
   outline: none;
   transition: transform 0.2s ease;
+}
+
+article.flip-card {
+  height: 320px;               /* Standard (Desktop / breite Screens) */
+}
+
+@media (max-width: 600px) {
+  article.flip-card {
+    height: 380px;            /* mehr Höhe für Mobile, damit nichts rausfliegt */
+  }
 }
 
 .flip-card-inner {
