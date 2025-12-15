@@ -249,23 +249,6 @@ article.flip-card {
   box-shadow: none;      /* spart optisch „Höhe“ */
 }
 
-/* wenn viele Links: 2 Spalten (spart massiv Höhe) */
-@media (min-width: 520px){
-  .flip-card-back--compact .card-links{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: stretch;
-  }
-  .flip-card-back--compact .card-link{
-    max-width: none;
-    width: 100%;
-    margin: 0;          /* falls du margin auto nutzt */
-  }
-}
-
-
-
-
 /* =================================== */
 /* DARK MODE                           */
 /* =================================== */
