@@ -110,13 +110,15 @@ article.flip-card {
   transition: transform 0.2s ease;
 }
 
+/* Standardhöhe (Desktop / breit) */
 article.flip-card {
-  height: 320px;               /* Standard (Desktop / breite Screens) */
+  height: 320px;
 }
 
-@media (max-width: 600px) {
+/* Mobile: höher, damit die Buttons reinpassen */
+@media (max-width: 768px) {
   article.flip-card {
-    height: 380px;            /* mehr Höhe für Mobile, damit nichts rausfliegt */
+    height: 380px;   /* oder 400px, wenn du noch mehr Luft brauchst */
   }
 }
 
@@ -485,7 +487,7 @@ html[data-theme="dark"] .train rect[fill="#333"] {
 
 @media (max-width: 768px) {
   header h1 { font-size: 2rem; }
-  article.flip-card { height: 280px; }
+  article.flip-card { height: 380px; }  /* oder 400px, wenn du mehr Platz willst */
 }
 
 .search-bar {
