@@ -219,6 +219,32 @@ article.flip-card {
   box-shadow: none; /* optional: spart optisch “Höhe” */
 }
 
+.flip-card-back--compact .card-links{
+  gap: 10px;
+}
+
+.flip-card-back--compact .card-link{
+  padding: 0.55rem 1rem;
+  font-size: 0.88rem;
+  max-width: 280px;
+  box-shadow: none;      /* spart optisch „Höhe“ */
+}
+
+/* wenn viele Links: 2 Spalten (spart massiv Höhe) */
+@media (min-width: 520px){
+  .flip-card-back--compact .card-links{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+  .flip-card-back--compact .card-link{
+    max-width: none;
+    width: 100%;
+    margin: 0;          /* falls du margin auto nutzt */
+  }
+}
+
+
 
 
 /* =================================== */
