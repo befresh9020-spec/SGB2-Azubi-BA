@@ -481,6 +481,7 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  align-items: center;
 }
 
 .search-row input,
@@ -511,7 +512,7 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   }
 
   .search-row input {
-    width: 10ch;         /* Platz für ca. 10 Zeichen */
+    width: 14ch;         /* Platz für ca. 14 Zeichen */
     flex: 0 0 auto;
     text-align: center; /* sieht bei kurzen Eingaben gut aus */
   }
