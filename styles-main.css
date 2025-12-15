@@ -144,7 +144,7 @@ article.flip-card {
   header h1 { font-size: 2rem; }
 
   article.flip-card {
-    height: 320px;                     /* genug Platz für Rückseite */
+    height: 300px;                     /* genug Platz für Rückseite */
   }
 
   .flip-card-front {
