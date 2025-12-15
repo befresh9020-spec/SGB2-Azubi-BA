@@ -205,8 +205,9 @@ article.flip-card {
   box-shadow: 0 4px 10px rgba(0,0,0,0.35);
 }
 
-/* Fokus gut sichtbar, aber nicht übertrieben */
-.card-link:focus-visible {
+.card-link:hover,
+.card-link:focus {
+  background: rgba(0,0,0,0.45);
   outline: 3px solid #FFD600;
   outline-offset: 3px;
 }
