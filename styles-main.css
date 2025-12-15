@@ -108,29 +108,7 @@ article.flip-card {
   cursor: pointer;
   outline: none;
   transition: transform 0.2s ease;
-}
-
-/* Standardhöhe (Desktop / breit) */
-article.flip-card {
-  height: 320px;
-}
-
-/* Mobile: höher, damit die Buttons reinpassen */
-@media (max-width: 768px) {
-  article.flip-card {
-    height: 380px;   /* oder 400px, wenn du noch mehr Luft brauchst */
-  }
-
-  /* weniger Innenabstand für beide Seiten */
-  .flip-card-back {
-    padding: 18px;   /* statt 25px */
-  }
-
-  /* Vorderseite: nach oben rücken, wirkt kompakter */
-  .flip-card-front {
-    padding: 10px 16px 14px;
-    justify-content: flex-start;
-  }
+  height: 320px;                 /* Standardhöhe (Desktop/breit) */
 }
 
 .flip-card-inner {
@@ -158,15 +136,25 @@ article.flip-card {
   transition: background 0.4s ease, color 0.4s ease;
 }
 
-/* Vorderseite: schön zentriert */
-.flip-card-front {
-  justify-content: center;
-}
+.flip-card-front { justify-content: center; }
+.flip-card-back  { justify-content: center; gap: 12px; }
 
-/* Rückseite: Inhalt von oben nach unten + etwas Abstand */
-.flip-card-back {
-  justify-content: center;
-  gap: 12px;
+/* Mobile-Anpassungen NACH den Basisregeln */
+@media (max-width: 768px) {
+  header h1 { font-size: 2rem; }
+
+  article.flip-card {
+    height: 380px;                     /* genug Platz für Rückseite */
+  }
+
+  .flip-card-front {
+    padding: 10px 16px 14px;           /* Front kompakter */
+    justify-content: flex-start;       /* Inhalt nach oben */
+  }
+
+  .flip-card-back {
+    padding: 18px;                     /* Rückseite etwas kompakter */
+  }
 }
 
 /* =================================== */
