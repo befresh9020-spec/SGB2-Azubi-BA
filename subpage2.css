@@ -844,7 +844,23 @@ body.dark-mode .vtg-chip::after {
 /* =============================== */
 
 .not-relevant {
-  margin-top: 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+
+  margin: 10px 0 0;
+  padding: 0;
+  text-indent: 0;
+}
+
+.nr-key {
+  min-width: 3.5ch;              /* reserviert Platz für (4a), (10), (31b) */
+  text-align: right;
+  opacity: 0.75;
+  font-variant-numeric: tabular-nums;
+}
+
+.not-relevant {
   opacity: 0.78;          /* wirkt „sekundär“, aber bleibt lesbar */
   font-style: normal;     /* kein Kursiv-Bruch */
   color: inherit;         /* passt sich Light/Dark automatisch an */
