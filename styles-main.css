@@ -165,7 +165,7 @@ article.flip-card {
 
 /* Rückseite: Inhalt von oben nach unten + etwas Abstand */
 .flip-card-back {
-  justify-content: flex-start;
+  justify-content: center;
   gap: 12px;
 }
 
