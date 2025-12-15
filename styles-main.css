@@ -194,16 +194,6 @@ article.flip-card {
 }
 
 /* Hover- / Aktiv-Effekt */
-.card-link:hover {
-  background: rgba(0,0,0,0.45);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-}
-
-.card-link:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
-}
 
 .card-link:hover,
 .card-link:focus {
