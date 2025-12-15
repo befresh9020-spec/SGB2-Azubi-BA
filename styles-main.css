@@ -129,6 +129,7 @@ article.flip-card {
 
   /* Vorderseite: nach oben rücken, wirkt kompakter */
   .flip-card-front {
+    padding: 10px 16px 14px;
     justify-content: flex-start;
   }
 }
