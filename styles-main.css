@@ -122,7 +122,6 @@ article.flip-card {
   }
 
   /* weniger Innenabstand für beide Seiten */
-  .flip-card-front,
   .flip-card-back {
     padding: 18px;   /* statt 25px */
   }
