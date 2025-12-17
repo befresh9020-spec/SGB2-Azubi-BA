@@ -20,6 +20,11 @@
   </button>
   
   </div>
+  
+  <div class="pod-embed" data-src="https://open.spotify.com/embed/episode/3INN8JUvYG1dIY1eNUWXSt?utm_source=oembed">
+  <button class="pod-embed__btn" type="button">▶ Folge auf der Seite laden</button>
+  <small class="pod-embed__hint">Beim Laden werden Daten an Spotify übertragen.</small>
+</div>
 
   <div class="content">
     <h2>Intro</h2>
@@ -49,7 +54,7 @@
           const otherBtn = a.nextElementSibling;
           if (otherBtn) otherBtn.textContent = "▶";
         }
-      });
+      });   
 
       if (audio.paused) {
         audio.play();
@@ -63,7 +68,21 @@
       audio.onended = () => {
         btn.textContent = "▶";
       };
-    }
+      
+      document.querySelectorAll(".pod-embed").forEach(box => {
+    box.querySelector("button").addEventListener("click", () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = box.dataset.src;
+      iframe.width = "100%";
+      iframe.height = "152";
+      iframe.loading = "lazy";
+      iframe.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
+      iframe.style.border = "0";
+      iframe.style.borderRadius = "12px";
+      box.replaceWith(iframe);
+    });
+  });
+ }
   </script>
 </body>
 </html>
