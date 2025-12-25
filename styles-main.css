@@ -562,8 +562,15 @@ controls{
   gap: .75rem;
   align-items: center;
   margin: 1.5rem auto;
-  width: 75%;
+  width: 100%;
 }
+
+.select-wrap{
+  width: 75%;
+  margin: 0 auto;
+  position: relative;
+}
+
 
 .input-like{
   -webkit-appearance: none;
