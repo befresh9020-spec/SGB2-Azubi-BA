@@ -122,6 +122,12 @@ main {
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
 
+@media (max-width: 768px){
+  main{
+    grid-template-columns: 1fr;
+  }
+}
+
 article.flip-card {
   perspective: 1000px;
   cursor: pointer;
