@@ -40,6 +40,23 @@
   </form>
 </section>
 
+<!-- Drop-Down-Menü/Filter -->
+
+<div class="controls">
+  <label class="visually-hidden" for="topicFilter">Thema auswählen</label>
+  <select id="topicFilter" class="input-like">
+    <option value="all">Alle Themen</option>
+    <option value="Berechtigte">Berechtigte</option>
+    <option value="Bedarfe">Bedarfe</option>
+    <option value="Vermögen">Vermögen</option>
+    <option value="Einkommen">Einkommen</option>
+    <option value="Leistungsminderungen">Leistungsminderungen</option>
+    <option value="AGP">AGP</option>
+    <option value="Quiz">Quiz</option>
+    <option value="News">News</option>
+  </select>
+</div>
+
 <main class="container">
 
     <!-- Karte 1 -->
@@ -599,6 +616,38 @@ themeButton.addEventListener('click', () => {
         console.error("Service Worker Registrierung fehlgeschlagen:", err);
       });
   }
+
+        // Drop-Down-Filter
+
+document.addEventListener('DOMContentLoaded', () => {
+  const select = document.getElementById('topicFilter');
+  const cards  = Array.from(document.querySelectorAll('article.flip-card[data-topic]'));
+
+  if (!select) {
+    console.warn('topicFilter nicht gefunden');
+    return;
+  }
+  if (cards.length === 0) {
+    console.warn('Keine Kacheln mit data-topic gefunden');
+    return;
+  }
+
+  const norm = (s) => (s ?? '').toString().trim().toLowerCase();
+
+  function applyFilter() {
+    const value = norm(select.value);
+
+    cards.forEach(card => {
+      const topic = norm(card.dataset.topic);
+      const match = (value === 'all') || (topic === value);
+      card.classList.toggle('is-hidden', !match);
+    });
+  }
+
+  select.addEventListener('change', applyFilter);
+  applyFilter();
+});
+			}
 
 	
 </script>
