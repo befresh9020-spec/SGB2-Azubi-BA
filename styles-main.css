@@ -555,7 +555,7 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   text-align: center;   /* neu */
 }
 
-controls{
+.controls{
   display: flex;
   flex-direction: column;
   justify-content: center;
