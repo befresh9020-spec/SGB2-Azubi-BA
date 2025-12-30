@@ -4,7 +4,7 @@ const CACHE_NAME = "sgb2-lernen-cache-v1";
 // Dateien, die direkt beim Installieren gecacht werden sollen:
 const PRECACHE_URLS = [
   "index.html",
-  "styles.main.css"
+  "styles.main.css",
   "Quiz.html",
   "Berechtigte.html",
   "Berechtigte_SV.html",
@@ -23,8 +23,8 @@ const PRECACHE_URLS = [
   "BAM.html",
   "Minderung.html",
   "Minderung_SV.html",
-  "subpage2.css"
-  "theme3.js"
+  "subpage2.css",
+  "theme3.js",
   "AGP1.html",
   "AGP2.html",
   "AGP_SV.html",
