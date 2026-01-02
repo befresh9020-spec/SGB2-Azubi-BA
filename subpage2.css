@@ -262,20 +262,29 @@ summary {
   position: relative;
   color: #B30920;
 }
+
 summary::after {
   content: "▸";
   position: absolute;
-  right: 10px;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  font-size: 1.4em;
-  transition: transform 0.25s ease;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%) scale(1.25); /* größer */
+  transform-origin: center;
+  font-size: 1.6em;                         /* zusätzlich größer */
+  transition: transform 0.22s ease;
 }
+
 details[open] summary::after {
-  content: "▾";
-  transform: translateY(1px);
+  transform: translateY(-50%) rotate(90deg) scale(1.25);
 }
+
+summary:hover::after { transform: translateY(-50%) scale(1.35); }
+details[open] summary:hover::after { transform: translateY(-50%) rotate(90deg) scale(1.35); }
+	
+	/* Browser-Default-Marker ausblenden (sonst ggf. doppeltes Chevron) */
+summary::-webkit-details-marker { display: none; }
+summary::marker { content: ""; }
+
 body.dark-mode summary { color: #fff; }
 
 /* -------------------- Textformatierung -------------------- */
@@ -909,5 +918,81 @@ body.dark-mode .vtg-chip::after {
 body.dark-mode .not-relevant-label {
   background: rgba(255,255,255,0.08);
   border-color: rgba(255,255,255,0.12);
+}
+
+/* Einträge in der Liste */
+.bookmark-list{
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 18px 0;
+}
+
+.bookmark-item{
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 10px;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+  background: rgba(0,0,0,0.02);
+}
+
+body.dark-mode .bookmark-item{
+  border-color: rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+}
+
+.bookmark-item__title{
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.bookmark-item__actions{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bm-action{
+  border: 1px solid rgba(0,0,0,0.15);
+  background: transparent;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+}
+body.dark-mode .bm-action{
+  border-color: rgba(255,255,255,0.2);
+  color: inherit;
+}
+
+/* Dezenter Button-Link zum Volltext */
+.law-btn {
+  display: inline-block;
+  margin: 0.4rem 0 0.9rem;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  text-decoration: none;
+
+  color: inherit;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 6px;
+
+  opacity: 0.85;
+}
+
+.law-btn:hover {
+  opacity: 1;
+}
+
+.law-btn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.ext-icon {
+  margin-left: 0.35rem;
+  font-size: 0.95em;
+  opacity: 0.9;
 }
 
