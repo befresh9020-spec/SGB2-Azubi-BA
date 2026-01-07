@@ -120,6 +120,7 @@ main {
   display: grid;
   gap: 25px;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  justify-items: center;
 }
 
 @media (max-width: 768px){
@@ -134,6 +135,8 @@ article.flip-card {
   outline: none;
   transition: transform 0.2s ease;
   height: 320px;                 /* Standardhöhe (Desktop/breit) */
+  width: 100%;        /* füllt die Grid-Spalte aus */
+  max-width: 380px;   /* aber nie breiter als 380px */
 }
 
 .flip-card-inner {
