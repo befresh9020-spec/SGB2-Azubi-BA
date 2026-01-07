@@ -46,7 +46,8 @@ body,
 .theme-toggle,
 .toc,
 details,
-summary {
+summary,
+.law-meta {
   transition:
     background-color 0.8s ease-in-out,
     color 0.8s ease-in-out,
