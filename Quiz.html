@@ -544,6 +544,17 @@ html[data-theme="dark"] .quiz-explanation{
   background: linear-gradient(180deg, rgba(20,20,20,.70), rgba(10,10,10,.55));
 }
 
+.score-highlight {
+  font-size: 2.5rem;
+  font-weight: 800;
+  display: block;
+  margin: 10px 0;
+  color: var(--color-accent-red);
+}
+html[data-theme="dark"] .score-highlight {
+  color: var(--color-accent-yellow);
+}
+
 
 
 /* ========= Progressbar ========= */
@@ -1161,8 +1172,8 @@ const questions = [
   ============================= */
   function showScore() {
     resetState();
-    questionEl.textContent = "Ergebnis";
-    scoreEl.textContent = `Du hast ${score} von ${shuffledQuestions.length} Fragen richtig beantwortet.`;
+    questionEl.textContent = "Quiz beendet";
+    scoreEl.innerHTML = `Du hast <span class="score-highlight">${score} von ${shuffledQuestions.length}</span> Fragen richtig beantwortet.`;
     nextBtn.style.display = "none";
     restartBtn.style.display = "block";
 
