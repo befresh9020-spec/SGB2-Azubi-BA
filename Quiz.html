@@ -69,6 +69,20 @@ html[data-theme="dark"] {
   --color-progress-bg: #2a2a2a;
 }
 
+  /* Elevation / Glow */
+  --shadow-card: 0 18px 50px rgba(0,0,0,.12);
+  --shadow-card-strong: 0 22px 65px rgba(0,0,0,.18);
+  --ring: 0 0 0 1px rgba(255,255,255,.10) inset;
+  --ring-strong: 0 0 0 1px rgba(255,255,255,.18) inset;
+
+  /* Blur / Glass */
+  --glass: rgba(255,255,255,.72);
+  --glass-dark: rgba(20,20,20,.78);
+
+  /* Subtle highlight */
+  --highlight: radial-gradient(1200px circle at 20% 10%, rgba(255,214,0,.18), transparent 45%),
+               radial-gradient(900px circle at 85% 25%, rgba(226,0,26,.15), transparent 50%);
+
 
 /* weicher Übergang für Theme-Wechsel */
 html,
@@ -84,12 +98,10 @@ body {
   padding: 20px;
 }
 
-/* Verspielter Hintergrund NUR im Light-Mode */
-html[data-theme="light"] body {
-  background:
-    radial-gradient(circle at top left, rgba(226, 0, 26, 0.21), transparent 55%),
-    radial-gradient(circle at bottom right, rgba(255, 214, 0, 0.21), transparent 55%),
-    var(--color-bg);
+html[data-theme="light"] .content::after {
+  opacity: 0.12; /* deutlich ruhiger */
+  background: radial-gradient(800px circle at 20% 10%, rgba(226,0,26,.12), transparent 55%),
+              radial-gradient(700px circle at 85% 25%, rgba(255,214,0,.12), transparent 60%);
 }
 
 
@@ -169,31 +181,53 @@ html[data-theme="dark"] .header h1 {
 }
 
 /* ========= Content-Karte + Partikel ========= */
-.content {
-  position: relative;              /* wichtig für ::after */
-  overflow: hidden;                /* Partikel bleiben im Rahmen */
+
+.content{
+  position: relative;
+  overflow: hidden;
   max-width: 900px;
   margin: 0 auto;
+  padding: 28px;
+  border-radius: 22px;
+
   background: var(--color-card-bg);
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255,255,255,.10);
 }
 
-.content::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 214, 0, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: particle-float 20s linear infinite;
-  pointer-events: none;
-  opacity: 0.15; /* reduziert für weniger „Flimmern“ */
-  z-index: 0;
+.content::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: 22px;
+  pointer-events:none;
+  z-index:0;
+  box-shadow: var(--ring);
+}
+
+html[data-theme="light"] .content{
+  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.86));
+  box-shadow: 0 18px 60px rgba(226,0,26,.10), 0 10px 25px rgba(0,0,0,.08);
+  border: 1px solid rgba(226,0,26,.18);
+}
+
+html[data-theme="dark"] .content{
+  background: linear-gradient(180deg, var(--glass-dark), rgba(10,10,10,.70));
+  box-shadow: var(--shadow-card-strong);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.content::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  pointer-events:none;
+  z-index:0;
+
+  /* ruhiger: nur leichte Highlights statt dichter Punkte */
+  background: var(--highlight);
+  opacity: .9;
+  filter: blur(0px);
 }
 
 /* Light-Mode: Content-Karte mit leichtem Rot-Touch */
@@ -222,26 +256,35 @@ html[data-theme="light"] .content::after {
 
 /* ========= Quiz ========= */
 
-.quiz-question {
+.quiz-question{
   font-size: 1.6rem;
   font-weight: 500;
   text-align: center;
   margin-bottom: 30px;
   color: var(--color-text);
 
-  /* „Schild“-Effekt, aber ruhiger */
+  line-height: 1.35;
+
+  /* Umbrüche: weniger aggressiv als "anywhere" */
+  overflow-wrap: break-word;
+  word-break: normal;
+
+  /* Silbentrennung (Desktop ok); Mobile schalten wir gleich runter */
+  hyphens: auto;
+  -webkit-hyphens: auto;
+
+  /* „Schild“-Effekt */
   background: rgba(255, 255, 255, 0.03);
   border-radius: 10px;
   padding: 15px 20px;
   border-left: 5px solid var(--color-accent-red);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 
-  opacity: 1;
-  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+  text-shadow: none;
 }
 
-.quiz-question .question-index {
+/* optional: „Frage X:“ optisch hervorheben (siehe JS-Anpassung unten) */
+.quiz-question .question-index{
   color: var(--color-accent-yellow);
   font-weight: 600;
 }
@@ -283,33 +326,67 @@ html[data-theme="light"] .content::after {
   }
 }
 
-.quiz-answer {
-  background: var(--color-answer-bg);
-  border: 1px solid var(--color-answer-border);
-  border-radius: 12px;
-  padding: 14px 18px;
+.quiz-answer{
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px;
+  padding: 14px 16px;
   color: var(--color-text);
   cursor: pointer;
-  transition: all .2s ease;
-  backdrop-filter: blur(4px);
   position: relative;
   z-index: 1;
-  font-size: 1rem;
-  line-height: 1.4;
   text-align: left;
+
+  box-shadow: 0 8px 18px rgba(0,0,0,.10);
+  transform: translateY(0);
+  transition: transform .12s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+  overflow: hidden;
 }
 
-.quiz-answer:hover {
+html[data-theme="light"] .quiz-answer:not(.correct):not(.wrong){
+  background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(245,245,245,.92));
+  border-color: rgba(0,0,0,.08);
+}
+
+.quiz-answer::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 45%);
+  transform: translate3d(-12%, -12%, 0);
+  opacity:.7;
+  pointer-events:none;
+}
+
+.quiz-answer:hover{
   transform: translateY(-2px);
-  background: var(--color-answer-bg-hover);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, .4);
+  box-shadow: 0 14px 26px rgba(0,0,0,.18);
+  border-color: rgba(255,214,0,.35);
 }
 
-.quiz-answer.correct {
-  background: var(--color-correct-bg);
-  border-color: var(--color-correct-border);
-  box-shadow: 0 0 12px rgba(39, 174, 96, .6);
+.quiz-answer:active{
+  transform: translateY(0);
+  box-shadow: 0 8px 18px rgba(0,0,0,.14);
 }
+
+.quiz-answer:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255,214,0,.35), 0 14px 26px rgba(0,0,0,.18);
+  border-color: rgba(255,214,0,.55);
+}
+
+.quiz-answer:disabled{
+  cursor: default;
+  opacity: .92;
+  transform: none;
+}
+
+.quiz-answer.correct{
+  background: linear-gradient(180deg, rgba(39,174,96,.30), rgba(39,174,96,.18));
+  border-color: rgba(39,174,96,.75);
+  box-shadow: 0 0 0 3px rgba(39,174,96,.18), 0 14px 26px rgba(0,0,0,.18);
+}
+
 
 .quiz-answer.correct::after {
   content: " ✔";
@@ -317,10 +394,10 @@ html[data-theme="light"] .content::after {
   margin-left: 8px;
 }
 
-.quiz-answer.wrong {
-  background: var(--color-wrong-bg);
-  border-color: var(--color-wrong-border);
-  box-shadow: 0 0 12px rgba(192, 57, 43, .5);
+.quiz-answer.wrong{
+  background: linear-gradient(180deg, rgba(192,57,43,.30), rgba(192,57,43,.18));
+  border-color: rgba(192,57,43,.75);
+  box-shadow: 0 0 0 3px rgba(192,57,43,.16), 0 14px 26px rgba(0,0,0,.18);
 }
 
 .quiz-answer.wrong::after {
@@ -329,18 +406,16 @@ html[data-theme="light"] .content::after {
   margin-left: 8px;
 }
 
-.quiz-answer:disabled {
-  cursor: default;
-  opacity: 0.9;
-  transform: none !important;
-  box-shadow: none;
-}
+
 
 /* Mobile-Optimierung */
 @media (max-width: 480px) {
   .quiz-question {
     font-size: 1.3rem;
     padding: 12px 14px;
+		 /* Mobile: Silbentrennung aus, um „nichterwerbsfä-higer“ usw. zu vermeiden */
+    hyphens: none;
+    -webkit-hyphens: none;
   }
 
   .quiz-answer {
@@ -403,24 +478,71 @@ html[data-theme="dark"] .quiz-score {
   color: var(--color-accent-yellow);
 }
 
-.quiz-explanation {
+.quiz-explanation{
   margin-top: 16px;
-  padding: 12px 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  display: none;
+	max-width: 72ch; /* angenehme Leselänge */
+  margin-left: auto;
+  margin-right: auto;
+
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 10px 22px rgba(0,0,0,.12);
+  color: var(--color-text);
+  line-height: 1.55;
+
+  transform: translateY(-6px);
+  opacity: 0;
+}
+
+.quiz-explanation.show{
+  display:block;
+  animation: explainIn .22s ease forwards;
+}
+
+@keyframes explainIn{
+  to{ transform: translateY(0); opacity: 1; }
+}
+
+.quiz-explanation .explain-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom: 10px;
+}
+
+.quiz-explanation .explain-icon{
+  width: 28px;
+  height: 28px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.04);
-  border-left: 4px solid var(--color-accent-yellow);
-  color: var(--color-text-muted);
-  font-size: 0.95rem;
-  line-height: 1.5;
-  display: none; /* wird per JS auf block gesetzt */
+  display:grid;
+  place-items:center;
+  background: rgba(255,214,0,.14);
+  box-shadow: 0 0 0 1px rgba(255,214,0,.20) inset;
+  flex: 0 0 auto;
 }
 
-.quiz-explanation p {
-  margin-bottom: 6px;
+.quiz-explanation .explain-title{
+  font-weight: 650;
+  letter-spacing: .2px;
 }
 
-.quiz-explanation p:last-child {
-  margin-bottom: 0;
+.quiz-explanation .ref-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: .85rem;
+  background: rgba(226,0,26,.10);
+  border: 1px solid rgba(226,0,26,.22);
+  color: var(--color-text);
+}
+
+html[data-theme="dark"] .quiz-explanation{
+  background: linear-gradient(180deg, rgba(20,20,20,.70), rgba(10,10,10,.55));
 }
 
 
@@ -446,65 +568,106 @@ html[data-theme="dark"] .quiz-score {
   transition: width .4s ease;
 }
 
+/* ===== UI-Progress Top (Stepper + Text) ===== */
+.progress-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.progress-text{
+  font-size: .95rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* ===== Token Stepper ===== */
+.stepper{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.stepper .token{
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 1px solid var(--color-answer-border);
+  background: rgba(255,255,255,.10);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+}
+
+/* aktueller Schritt: „lebendig“ */
+.stepper .token.active{
+  background: var(--color-accent-yellow);
+  border-color: var(--color-accent-yellow);
+  box-shadow: 0 0 12px rgba(255, 214, 0, .35);
+  animation: tokenPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes tokenPulse{
+  0%,100% { transform: scale(1); }
+  50%     { transform: scale(1.12); }
+}
+
+/* beantwortet: korrekt / falsch */
+.stepper .token.done.correct{
+  background: var(--color-correct-border);
+  border-color: var(--color-correct-border);
+  box-shadow: 0 0 10px rgba(39, 174, 96, .35);
+}
+
+.stepper .token.done.wrong{
+  background: var(--color-wrong-border);
+  border-color: var(--color-wrong-border);
+  box-shadow: 0 0 10px rgba(192, 57, 43, .30);
+}
+
+/* kleiner „Pop“ beim Setzen */
+.stepper .token.pop{
+  transform: scale(1.35);
+}
+
+/* ===== Progressbar: UI-Shine (neutral, verspielt) ===== */
+#progress{
+  position: relative;
+  overflow: hidden;
+}
+
+#progress::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -45%;
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  transform: skewX(-20deg);
+  animation: progressShine 1.8s ease-in-out infinite;
+  opacity: .85;
+  pointer-events: none;
+}
+
+@keyframes progressShine{
+  0%   { left: -45%; }
+  60%  { left: 115%; }
+  100% { left: 115%; }
+}
+
+/* Mobile: Text unter Stepper, wenn eng */
+@media (max-width: 480px){
+  .progress-top{
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 @keyframes progressFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}
-
-/* ========= Zug oberhalb der Fragen ========= */
-#train-container {
-  position: relative;
-  width: 100%;
-  height: 80px;        /* Platz für den Zug */
-  overflow: visible;
-  margin-bottom: -10px; /* leicht über den Fragen */
-  z-index: 5;
-}
-
-.train {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(200%); /* Start: rechts außerhalb des Bildes */
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  will-change: transform, opacity;
-  pointer-events: none;
-}
-
-/* Einfahren von rechts in die Mitte */
-@keyframes trainEnter {
-  0%   { transform: translateX(200%); opacity: 0; }
-  20%  { opacity: 1; }
-  80%  { transform: translateX(-50%); opacity: 1; }
-  100% { transform: translateX(-50%); opacity: 1; } /* bleibt mittig stehen */
-}
-
-/* Rausfahren nach rechts */
-@keyframes trainExit {
-  0%   { transform: translateX(-50%); opacity: 1; }
-  100% { transform: translateX(200%); opacity: 0; }
-}
-
-.train.enter {
-  animation: trainEnter 3s ease forwards;
-}
-
-.train.exit {
-  animation: trainExit 2s ease forwards;
-}
-
-/* Fenster-Glühen im Dunkelmodus */
-.window {
-  fill: #d0d0d0;
-  transition: fill 0.4s ease, filter 0.4s ease;
-}
-
-html[data-theme="dark"] .window {
-  fill: var(--color-accent-yellow);
-  filter: drop-shadow(0 0 4px rgba(255, 214, 0, 0.7));
 }
 
 </style>
@@ -519,73 +682,14 @@ html[data-theme="dark"] .window {
     <a href="index.html" class="back-button">Zurück</a>
   </div>
 
-  <div class="content">
-    <!-- Zug oberhalb der Fragen -->
-    <div id="train-container">
-     <svg class="train" width="260" height="50" viewBox="0 0 260 50" aria-hidden="true">
-
-  <!-- Gleise -->
-  <rect x="0" y="36" width="260" height="2" fill="#666"/>
-  <rect x="0" y="38" width="260" height="1" fill="#444"/>
-
-  <!-- Räder / Fahrwerk (angedeutet) -->
-  <circle cx="55" cy="36" r="3" fill="#222"/>
-  <circle cx="105" cy="36" r="3" fill="#222"/>
-  <circle cx="155" cy="36" r="3" fill="#222"/>
-  <circle cx="205" cy="36" r="3" fill="#222"/>
-
-  <!-- Zugkörper (Hauptkörper, etwas länger) -->
-  <rect x="28" y="18" width="210" height="14" rx="7"
-        fill="#f5f5f5" stroke="#cccccc" stroke-width="1"/>
-
-  <!-- Zugnase (ICE-Front, links) -->
-  <path d="M28 18 
-           Q12 23 18 32 
-           L28 32 
-           Z" 
-        fill="#f5f5f5" stroke="#cccccc" stroke-width="1"/>
-
-  <!-- Zugheck (langes, abgerundetes Heck) -->
-  <path d="M238 18
-           Q255 22 252 27
-           Q249 32 238 32
-           Z"
-        fill="#f5f5f5" stroke="#cccccc" stroke-width="1"/>
-
-  <!-- Roter ICE-Streifen, mit verlängert -->
-  <rect x="28" y="25" width="210" height="3" fill="#E2001A"/>
-
-  <!-- Dach / Technik -->
-  <rect x="80" y="14" width="60" height="4" rx="2" fill="#d0d0d0"/>
-  <rect x="150" y="14" width="25" height="3" rx="1.5" fill="#b0b0b0"/>
-
-  <!-- Führerstand-Fenster -->
-  <rect class="window" x="32" y="20" width="10" height="6" rx="1"/>
-
-  <!-- Passagierfenster (leicht nach rechts gestreckt) -->
-  <rect class="window" x="50" y="20" width="10" height="5" rx="1"/>
-  <rect class="window" x="65" y="20" width="10" height="5" rx="1"/>
-  <rect class="window" x="80" y="20" width="10" height="5" rx="1"/>
-  <rect class="window" x="95" y="20" width="10" height="5" rx="1"/>
-  <rect class="window" x="110" y="20" width="10" height="5" rx="1"/>
-  <rect class="window" x="125" y="20" width="10" height="5" rx="1"/>
-  <rect class="window" x="140" y="20" width="10" height="5" rx="1"/>
-  <rect class="window" x="155" y="20" width="10" height="5" rx="1"/>
-  <rect class="window" x="170" y="20" width="10" height="5" rx="1"/>
-  <rect class="window" x="185" y="20" width="10" height="5" rx="1"/>
-  <rect class="window" x="200" y="20" width="10" height="5" rx="1"/>
-
-  <!-- Frontlicht (kleiner Akzent) -->
-  <circle cx="22" cy="27" r="2" fill="#FFD600"/>
-
-</svg>
-
+   <div class="progress-top">
+  <div id="stepper" class="stepper" aria-hidden="true"></div>
+  <div id="progressText" class="progress-text" aria-live="polite"></div>
 </div>
 
-
-    <div class="progress-bar">
-      <div id="progress"></div>
-    </div>
+<div class="progress-bar">
+  <div id="progress"></div>
+</div>
 
     <div id="quiz">
       <div id="question" class="quiz-question"></div>
@@ -607,6 +711,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const restartBtn=document.getElementById("restart-btn");
   const scoreEl=document.getElementById("score");
   const explanationEl = document.getElementById("explanation");
+	const stepperEl = document.getElementById("stepper");
+const progressTextEl = document.getElementById("progressText");
 
 /* =============================
    QUIZ-FUNKTIONALITÄT
@@ -885,130 +991,170 @@ const questions = [
 ];
   
 
- let shuffledQuestions=[],currentIndex=0,score=0;
+ let shuffledQuestions = [];
+  let currentIndex = 0;
+  let score = 0;
 
-    /* =============================
-     QUIZ-START
+  // NEU: merken, ob Frage i richtig/falsch beantwortet wurde
+  let results = [];
+
+  /* =============================
+     UI-STEPPER FUNKTIONEN
   ============================= */
-  
-function startQuiz() {
-  const train = document.querySelector(".train");
-
-  if (train) {
-    train.classList.remove("exit", "enter");
-    void train.getBoundingClientRect(); // Reflow erzwingen
-    train.classList.add("enter");
+  function initStepper() {
+    if (!stepperEl) return;
+    stepperEl.innerHTML = "";
+    for (let i = 0; i < shuffledQuestions.length; i++) {
+      const t = document.createElement("span");
+      t.className = "token" + (i === 0 ? " active" : "");
+      stepperEl.appendChild(t);
+    }
   }
 
-  shuffledQuestions = [...questions]
-  .sort(() => Math.random() - 0.5)
-  .slice(0, 5);
-  currentIndex = 0;
-  score = 0;
-  scoreEl.textContent = "";
-  restartBtn.style.display = "none";
-  nextBtn.textContent = "Nächste Frage";
-  showQuestion();
-}
+  function updateStepper(popIndex = null) {
+    if (!stepperEl) return;
 
+    const tokens = [...stepperEl.children];
 
+    tokens.forEach((t, i) => {
+      t.classList.remove("active", "done", "correct", "wrong", "pop");
+
+      const answered = typeof results[i] === "boolean";
+      if (answered) {
+        t.classList.add("done");
+        t.classList.add(results[i] ? "correct" : "wrong");
+      } else if (i === currentIndex) {
+        t.classList.add("active");
+      }
+
+      if (popIndex === i) {
+        t.classList.add("pop");
+        setTimeout(() => t.classList.remove("pop"), 220);
+      }
+    });
+  }
+
+  /* =============================
+     QUIZ-START
+  ============================= */
+  function startQuiz() {
+    shuffledQuestions = [...questions]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 5);
+
+    currentIndex = 0;
+    score = 0;
+    results = [];
+
+    scoreEl.textContent = "";
+    restartBtn.style.display = "none";
+    nextBtn.textContent = "Nächste Frage";
+
+    initStepper();
+    updateStepper();
+
+    showQuestion();
+  }
 
   /* =============================
      FRAGEN ANZEIGEN
   ============================= */
-function showQuestion() {
-  resetState();
-  const current = shuffledQuestions[currentIndex];
+  function showQuestion() {
+    resetState();
+    const current = shuffledQuestions[currentIndex];
 
-  // Animation für die Frage neu triggern
-  questionEl.classList.remove("visible");
-  void questionEl.offsetWidth; // Reflow erzwingen, damit die Animation neu startet
+    // Animation für die Frage neu triggern
+    questionEl.classList.remove("visible");
+    void questionEl.offsetWidth;
 
-  questionEl.textContent = `Frage ${currentIndex + 1}: ${current.question}`;
-  questionEl.classList.add("visible");
+    questionEl.textContent = `Frage ${currentIndex + 1}: ${current.question}`;
+    questionEl.classList.add("visible");
 
-  current.answers.forEach(ans => {
-    const btn = document.createElement("button");
-    btn.textContent = ans.text;
-    btn.classList.add("quiz-answer");
+    current.answers.forEach(ans => {
+      const btn = document.createElement("button");
+      btn.textContent = ans.text;
+      btn.classList.add("quiz-answer");
 
-    // HIER: korrekt-Info per data-Attribut setzen
-    if (ans.correct) {
-      btn.dataset.correct = "true";
-    }
+      if (ans.correct) {
+        btn.dataset.correct = "true";
+      }
 
-    // Nur noch einen Parameter übergeben
-    btn.addEventListener("click", () => selectAnswer(btn));
+      btn.addEventListener("click", () => selectAnswer(btn));
+      answersEl.appendChild(btn);
+    });
 
-    answersEl.appendChild(btn);
-  });
-
-  updateProgress();
-}
-
+    updateProgress(false);
+    updateStepper();
+  }
 
   /* =============================
      RESET FÜR NÄCHSTE FRAGE
   ============================= */
-  function resetState() {
-    nextBtn.style.display = "none";
-    while (answersEl.firstChild) answersEl.removeChild(answersEl.firstChild);
-	
-	 // NEU: Erklärungsblock leeren & verstecken
+ function resetState() {
+  nextBtn.style.display = "none";
+  while (answersEl.firstChild) answersEl.removeChild(answersEl.firstChild);
+
   if (explanationEl) {
     explanationEl.innerHTML = "";
-    explanationEl.style.display = "none";
-   }
+    explanationEl.classList.remove("show");
+    explanationEl.style.display = ""; // wichtig: evtl. altes inline display entfernen
   }
+}
 
   /* =============================
      ANTWORTAUSWAHL
   ============================= */
   function selectAnswer(button) {
-  const all = answersEl.children;
+    const all = answersEl.children;
 
-  for (const btn of all) {
-    btn.disabled = true;
-
-    if (btn.dataset.correct === "true") {
-      btn.classList.add("correct");
-    }
-  }
-
-  if (button.dataset.correct === "true") {
-    score++;
-  } else {
-    button.classList.add("wrong");
-  }
-
-  // NEU: Erklärung aus den Fragedaten anzeigen
-  const current = shuffledQuestions[currentIndex];
-  if (explanationEl && (current.reference || current.explanation)) {
-    let html = "";
-
-    if (current.reference) {
-      html += `<p><strong>Rechtsgrundlage:</strong> ${current.reference}</p>`;
+    for (const btn of all) {
+      btn.disabled = true;
+      if (btn.dataset.correct === "true") {
+        btn.classList.add("correct");
+      }
     }
 
-    if (current.explanation) {
-      html += `<p>${current.explanation}</p>`;
+    const isCorrect = button.dataset.correct === "true";
+
+    if (isCorrect) {
+      score++;
+    } else {
+      button.classList.add("wrong");
     }
 
-    explanationEl.innerHTML = html;
-    explanationEl.style.display = "block";
+    // NEU: Ergebnis speichern + Stepper färben
+    results[currentIndex] = isCorrect;
+    updateStepper(currentIndex);
+
+    // Erklärung anzeigen (falls vorhanden)
+    const current = shuffledQuestions[currentIndex];
+    if (explanationEl && (current.reference || current.explanation)) {
+  let html = "";
+
+  if (current.reference) {
+    html += `<p><strong>Rechtsgrundlage:</strong> ${current.reference}</p>`;
+  }
+  if (current.explanation) {
+    html += `<p>${current.explanation}</p>`;
   }
 
-  nextBtn.style.display = "block";
+  explanationEl.innerHTML = html;
+  explanationEl.classList.add("show");
 }
 
+    nextBtn.style.display = "block";
+  }
 
   /* =============================
      NÄCHSTE FRAGE / ENDE
   ============================= */
   nextBtn.addEventListener("click", () => {
     currentIndex++;
-    if (currentIndex < shuffledQuestions.length) showQuestion();
-    else showScore();
+    if (currentIndex < shuffledQuestions.length) {
+      showQuestion();
+    } else {
+      showScore();
+    }
   });
 
   /* =============================
@@ -1020,13 +1166,15 @@ function showQuestion() {
     scoreEl.textContent = `Du hast ${score} von ${shuffledQuestions.length} Fragen richtig beantwortet.`;
     nextBtn.style.display = "none";
     restartBtn.style.display = "block";
+
     updateProgress(true);
-    animateTrainExit();
-	
-	if (explanationEl) {
-	explanationEl.innerHTML = "";
-	explanationEl.style.display = "none";
-	}
+    updateStepper();
+
+    if (explanationEl) {
+  explanationEl.innerHTML = "";
+  explanationEl.classList.remove("show");
+  explanationEl.style.display = ""; // statt "none"
+}
   }
 
   restartBtn.addEventListener("click", startQuiz);
@@ -1037,26 +1185,20 @@ function showQuestion() {
   function updateProgress(finished = false) {
     const progress = document.getElementById("progress");
     if (!progress) return;
-    const percent = finished
-      ? 100
-      : ((currentIndex + 1) / shuffledQuestions.length) * 100;
+
+    const total = shuffledQuestions.length || 1;
+    const percent = finished ? 100 : ((currentIndex + 1) / total) * 100;
     progress.style.width = `${percent}%`;
+
+    // NEU: Text
+    if (progressTextEl) {
+      progressTextEl.textContent = finished
+        ? `Abgeschlossen: ${score} / ${shuffledQuestions.length}`
+        : `Frage ${currentIndex + 1} von ${shuffledQuestions.length}`;
+    }
   }
 
   /* =============================
-     ZUG-ANIMATION
-  ============================= */
-
-function animateTrainExit() {
-  const train = document.querySelector(".train");
-  if (train) {
-    train.classList.remove("enter");
-    void train.getBoundingClientRect(); // Reflow
-    train.classList.add("exit");
-  }
-}
-
- /* =============================
      THEME SWITCH (Dark/Light)
   ============================= */
   const themeButton = document.getElementById("themeToggle");
@@ -1064,32 +1206,27 @@ function animateTrainExit() {
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
-    themeButton.setAttribute("aria-pressed", theme === "dark");
+    if (themeButton) themeButton.setAttribute("aria-pressed", theme === "dark");
   }
 
-  // gespeichertes Theme oder Systempräferenz auslesen
   const savedTheme = localStorage.getItem("theme");
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
   const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
   applyTheme(initialTheme);
 
-  themeButton.addEventListener("click", () => {
-    const current = document.documentElement.getAttribute("data-theme") || "light";
-    const next = current === "dark" ? "light" : "dark";
-    applyTheme(next);
-  });
+  if (themeButton) {
+    themeButton.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "light";
+      const next = current === "dark" ? "light" : "dark";
+      applyTheme(next);
+    });
+  }
 
   /* =============================
      QUIZ STARTEN
   ============================= */
   startQuiz();
 });
-
-
 </script>
 </body>
 </html>
-
-
-
