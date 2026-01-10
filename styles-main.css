@@ -110,6 +110,180 @@ html[data-theme="dark"] .theme-toggle {
   border-color: rgba(255,255,255,0.8);
 }
 
+/* ================================ */
+/* THEME SWITCH – FINAL             */
+/* ================================ */
+
+/* Screenreader-only */
+.sr-only{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Header als Referenz für absolute Position */
+header{
+  position: relative; /* falls nicht schon vorhanden */
+  padding-top: 10px;
+}
+
+/* Switch oben rechts im Header */
+header .theme-switch{
+  position: absolute;
+  top: 4px;
+  right: 10px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  min-height: 44px; /* Touch-Zielgröße */
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+header .theme-switch:hover{
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.65);
+  transform: translateY(-1px);
+}
+
+header .theme-switch:active{
+  transform: translateY(0) scale(0.98);
+}
+
+header .theme-switch:focus-visible{
+  outline: 3px solid #FFD600;
+  outline-offset: 4px;
+}
+
+/* Track + Thumb */
+header .switch-track{
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  position: relative;
+  flex: 0 0 auto;
+
+  background: rgba(0,0,0,0.28);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.28);
+}
+
+header .switch-thumb{
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+
+  position: absolute;
+  top: 2px;
+  left: 2px;
+
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+
+  transition: transform 0.18s ease;
+}
+
+/* Dark aktiv -> Thumb rechts */
+header .theme-switch[aria-pressed="true"] .switch-thumb{
+  transform: translateX(20px);
+}
+
+/* Symbole im Track (links Sonne, rechts Mond) */
+header .switch-track::before,
+header .switch-track::after{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  line-height: 1;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+header .switch-track::before{
+  content: "☀️";
+  left: 6px;
+}
+
+header .switch-track::after{
+  content: "🌙";
+  right: 6px;
+}
+
+/* aktives Symbol deutlicher */
+header .theme-switch[aria-pressed="false"] .switch-track::before{ opacity: 0.95; }
+header .theme-switch[aria-pressed="false"] .switch-track::after{ opacity: 0.45; }
+
+header .theme-switch[aria-pressed="true"] .switch-track::before{ opacity: 0.45; }
+header .theme-switch[aria-pressed="true"] .switch-track::after{ opacity: 0.95; }
+
+/* Dark Theme: Button-Fläche etwas angepasst */
+html[data-theme="dark"] header .theme-switch{
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.35);
+}
+
+html[data-theme="dark"] header .theme-switch:hover{
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.55);
+}
+
+/* Responsive: kompakter + Text ausblenden */
+@media (max-width: 768px){
+  header .theme-switch{
+    top: 8px;
+    right: 8px;
+    padding: 8px 10px;
+    gap: 8px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+    opacity: 0.92;
+  }
+
+  header h1{
+    margin-top: 36px; /* Platz für den Switch */
+  }
+
+  header .switch-track{
+    width: 40px;
+    height: 22px;
+  }
+
+  header .switch-thumb{
+    width: 18px;
+    height: 18px;
+  }
+
+  header .theme-switch[aria-pressed="true"] .switch-thumb{
+    transform: translateX(18px);
+  }
+
+  header .switch-text{
+    display: none !important;
+  }
+}
+
 /* =================================== */
 /* LAYOUT: Kartenraster                */
 /* =================================== */
