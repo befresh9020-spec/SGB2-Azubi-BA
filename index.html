@@ -14,12 +14,17 @@
     <h1>SGB II - Bürgergeld</h1>
     <p>Ein Überblick für Auszubildende der Bundesagentur für Arbeit zum Thema SGB II</p>
 	
-	<button id="themeToggle" class="theme-toggle" aria-pressed="false">
-    ☀️/🌙
-    <span class="sr-only">Modus</span>
-</button>
+	<button id="themeToggle" class="theme-switch" aria-pressed="false" type="button">
+  <span class="switch-track" aria-hidden="true">
+    <span class="switch-thumb"></span>
+  </span>
 
-</header>
+  <!-- optionaler Text (wird auf Mobile ausgeblendet) -->
+  <span class="switch-text" aria-hidden="true">Design</span>
+
+  <!-- nur für Screenreader -->
+  <span class="sr-only">Modus umschalten</span>
+</button>
 
 <!-- 🔍 Dezente Paragraphen-Suche -->
 <section class="search-bar">
