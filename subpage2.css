@@ -34,6 +34,27 @@ body.dark-mode {
   color: #e6e6e6;
 }
 
+/* Darkmode-Anpassung für den Header */
+body.dark-mode .header {
+  background-color: #1a1a1a; /* Ein sehr dunkles Grau oder Schwarz */
+  color: #e6e6e6;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8); /* Dunklerer, kräftigerer Schatten */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Optional: Den Back-Button im Header dezent anpassen */
+body.dark-mode .back-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e6e6e6;
+}
+
+body.dark-mode .back-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFD580;
+}
+
+
 /* =================================== */
 /*  WEICHE ÜBERGÄNGE FÜR KOMPONENTEN   */
 /* =================================== */
