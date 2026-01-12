@@ -649,6 +649,21 @@ body.dark-mode .media-nav a.is-active{
   }
 }
 
+/* ===== Video Wrapper (zentriert, nicht „wandfüllend“) ===== */
+.video-wrap{
+  width: 100%;
+  max-width: 900px;     /* Desktop-Breite begrenzen */
+  margin: 14px auto;    /* zentrieren */
+}
+
+.video-wrap iframe{
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Standard-Videoformat */
+  height: auto;         /* wichtig: keine feste Höhe */
+  border: 0;
+  border-radius: 12px;
+}
+
 /* ========================================================= */
 /*  SACHVERHALTS-BOXEN                                        */
 /* ========================================================= */
