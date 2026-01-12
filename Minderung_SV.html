@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#E2001A">
-
+	<meta name="theme-color" content="#E2001A">
     <title>Sachverhalte – Leistungsminderungen</title>
 
     <!-- Dein Subpage-CSS -->
     <link rel="stylesheet" href="subpage2.css">
-    <script src="theme3.js" defer></script>
 </head>
 
 <body>
@@ -33,17 +31,191 @@
 <!-- INHALTSBEREICH -->
 <!-- ===================================== -->
 
-  <div class="content">
+<div class="content">
 
-    <h2>Sachverhalte</h2>
-    <p>bald verfügbar</p>
+    <h2>Sachverhalte - in Kürze verfügbar</h2>
+    <p>Hier findest du die Übungsfälle und die dazugehörigen Lösungen.</p>
 
-  <div style="text-align:center; margin-top:20px;">
-    <a href="index.html" class="back-button">⬅ Zurück zur Übersicht</a>
-  </div>
+
+    <!-- ====================================================== -->
+    <!--                     SACHVERHALT 1                      -->
+    <!-- ====================================================== -->
+
+    <section class="case-box">
+        <button class="case-toggle" aria-expanded="false">
+            <div class="case-header">
+                <span class="case-title">Sachverhalt 1</span>
+                <span class="case-points">Leistungspunkte:</span>
+            </div>
+        </button>
+
+        <div class="case-content" hidden>
+            <!-- NEU: in <p> gepackt, damit der Text sauber läuft -->
+            <p>***</p>
+
+            <div class="aufgabe-block">
+                <span class="aufgabe-label">Aufgabe</span>
+                ***
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ======================== -->
+    <!-- LÖSUNG 1 -->
+    <!-- ======================== -->
+
+    <section class="solution-box">
+        <button class="case-toggle" aria-expanded="false">
+            <div class="case-header">
+                <span class="case-title">Lösung zu Sachverhalt 1</span>
+                <span class="case-points">Auflösung anzeigen</span>
+            </div>
+        </button>
+
+        <div class="case-content" hidden>
+
+            <div class="solution-hint">
+                Alle nicht näher bezeichneten §§ beziehen sich auf das SGB II.
+            </div>
+
+            <div class="table-container">
+                <table class="solution-table">
+                    <tbody>
+                        <tr>
+                            <td class="solution-law">§§§</td>
+                            <td class="solution-text">***
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="solution-law">–</td>
+                            <td class="solution-text">
+                                <p>***</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="solution-law">***</td>
+                            <td class="solution-text">
+                               ***
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <!-- ====================================================== -->
+    <!--                     SACHVERHALT 2                      -->
+    <!-- ====================================================== -->
+
+    <section class="case-box">
+        <button class="case-toggle" aria-expanded="false">
+            <div class="case-header">
+                <span class="case-title">Sachverhalt 2</span>
+                <span class="case-points">Leistungspunkte:</span>
+            </div>
+        </button>
+
+        <div class="case-content" hidden>
+            <p>***</p>
+            
+            <p>***</p>
+
+            <div class="aufgabe-block">
+                <span class="aufgabe-label">Aufgabe</span>
+                Prüfen und begründen Sie,...
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ======================== -->
+    <!-- LÖSUNG 2 -->
+    <!-- ======================== -->
+
+    <section class="solution-box">
+        <button class="case-toggle" aria-expanded="false">
+            <div class="case-header">
+                <span class="case-title">Lösung zu Sachverhalt 2</span>
+                <span class="case-points">Auflösung anzeigen</span>
+            </div>
+        </button>
+
+        <div class="case-content" hidden>
+
+            <div class="solution-hint">
+                Alle nicht näher bezeichneten §§ beziehen sich auf das SGB II.
+            </div>
+
+            <div class="table-container">
+                <table class="solution-table">
+                    <tbody>
+                        <tr>
+                            <td class="solution-law">§</td>
+                            <td class="solution-text">
+															***
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="solution-law">–</td>
+                            <td class="solution-text">
+															<p>***</p>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="solution-law">§</td>
+                            <td class="solution-text">
+                                <p>***</p>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+
+</div><!-- content -->
+
+
+<!-- ===================================== -->
+<!-- FOOTER -->
+<!-- ===================================== -->
+
+<footer class="page-footer">
+    Stand: 2025
+</footer>
+
+
+<!-- ===================================== -->
+<!-- SCRIPT (Dark Mode + Box Toggle) -->
+<!-- ===================================== -->
+
+<script>
+    // Theme Toggle
+    const btn = document.getElementById("themeToggle");
+    btn.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+    });
+
+    // Öffnen/Schließen der Boxen
+    document.querySelectorAll('.case-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', !expanded);
+
+            const content = btn.nextElementSibling;
+            content.hidden = expanded;
+        });
+    });
+</script>
+
 </body>
 </html>
-
-
-
-
