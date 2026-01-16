@@ -2,6 +2,46 @@
 /*   SGB II – Seitenlayout mit Light/Dark-Theme               */
 /* ========================================================= */
 
+:root{
+  /* Hintergrund (Light) – Burgundy Night */
+  --page-bg: radial-gradient(circle at 30% 0%, #7f1d1d 0%, #2a0f17 55%, #0b0f1a 100%);
+  --page-text: #f6f3f5;
+
+  /* Flächen */
+  --surface: rgba(255,255,255,0.92);
+  --surface-2: rgba(255,255,255,0.85);
+  --surface-text: #1f2937;
+
+  /* Akzent (Weinrot statt grell) */
+  --accent: #7a1f2b;        /* primärer Weinrot-Ton */
+  --accent-2: #5a1420;      /* dunkler für Hover */
+  --accent-soft: rgba(122,31,43,0.10);
+
+  /* Rahmen/Schatten */
+  --border: rgba(0,0,0,0.14);
+  --shadow: 0 10px 30px rgba(0,0,0,0.25);
+
+  /* Fokus (Tastatur) */
+  --focus: rgba(245, 158, 11, 0.55); /* warmes Amber */
+}
+
+/* Darkmode Tokens */
+body.dark-mode{
+  --page-bg: radial-gradient(circle at 30% 0%, #2a0f17 0%, #0b0f1a 55%, #060812 100%);
+  --page-text: #f3f4f6;
+
+  --surface: rgba(255,255,255,0.06);
+  --surface-2: rgba(255,255,255,0.06);
+  --surface-text: #f3f4f6;
+
+  --border: rgba(255,255,255,0.14);
+  --shadow: 0 10px 30px rgba(0,0,0,0.55);
+
+  --accent: #f3c2c8;        /* helles Rosé als Akzent im Darkmode */
+  --accent-2: #ffd7a3;      /* warmes Highlight für Hover */
+  --accent-soft: rgba(255,255,255,0.08);
+}
+
 /* -------------------- Reset & Grundlayout -------------------- */
 * {
   margin: 0;
@@ -19,8 +59,8 @@ html {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #F9FBFC;
-  color: #222;
+  background: var(--page-bg);
+  color: var(--page-text);
   line-height: 1.75;
   min-height: 100vh;
   padding: 20px;
@@ -28,19 +68,9 @@ body {
 }
 
 
-/* -------------------- Darkmode Basis -------------------- */
-body.dark-mode {
-  background: linear-gradient(135deg, #202020, #151515, #0e0e0e);
-  color: #e6e6e6;
-}
 
-/* Darkmode-Anpassung für den Header */
-body.dark-mode .header {
-  background-color: #1a1a1a; /* Ein sehr dunkles Grau oder Schwarz */
-  color: #e6e6e6;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8); /* Dunklerer, kräftigerer Schatten */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
+
+/* -------------------- Darkmode Basis -------------------- */
 
 /* Optional: Den Back-Button im Header dezent anpassen */
 body.dark-mode .back-button {
@@ -76,15 +106,25 @@ summary,
     box-shadow 0.8s ease-in-out;
 }
 
+.header .law-meta{
+  color: rgba(255,255,255,0.85);
+}
+body.dark-mode .header .law-meta{
+  color: rgba(255,255,255,0.78);
+}
+
 /* -------------------- Header -------------------- */
 .header {
   text-align: center;
   margin-bottom: 25px;
-  background-color: #E2001A;
-  color: #FFFFFF;
+  background: rgba(255,255,255,0.10);
+color: var(--page-text);
+border: 1px solid rgba(255,255,255,0.18);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+box-shadow: var(--shadow);
   padding: 25px 15px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(179, 179, 179, 0.5);
 }
 
 .header h1 {
@@ -94,12 +134,15 @@ summary,
   text-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
+.header h1, .header h2 { color: var(--page-text); }
+
+
 /* -------------------- Back-Button -------------------- */
 .back-button {
   display: inline-block;
   padding: 10px 20px;
-  background: #B30920;
-  color: #FFFFFF;
+  background: var(--accent);
+  color: #fff;
   text-decoration: none;
   border-radius: 25px;
   font-size: 0.9rem;
@@ -107,7 +150,7 @@ summary,
   border: none;
 }
 .back-button:hover {
-  background: #660011;
+  background: var(--accent-2);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(102, 0, 17, 0.4);
 }
@@ -118,15 +161,15 @@ summary,
   margin: 15px auto 20px;
   padding: 8px 14px;
   border-radius: 25px;
-  background: #B30920;
-  color: #FFFFFF;
+  background: var(--accent);
+  color: #fff;
   border: none;
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 .theme-toggle:hover {
-  background: #660011;
+  background: var(--accent-2);
   transform: scale(1.05);
 }
 body.dark-mode .theme-toggle {
@@ -156,18 +199,18 @@ body.dark-mode .theme-toggle:hover {
 .toc {
   max-width: 900px;
   margin: 0 auto 30px auto;
-  background: rgb(221, 227, 232);
+  background: var(--surface);
+border: 1px solid var(--border);
+box-shadow: var(--shadow);
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  border: 1px solid rgba(255,255,255,0.2);
 }
 .toc h2 {
   font-size: 1.4rem;
   text-align: center;
   margin-bottom: 15px;
   font-weight: 500;
-  color: #B30920;
+  color: var(--accent);
 }
 .toc ul {
   list-style: none;
@@ -191,11 +234,7 @@ body.dark-mode .theme-toggle:hover {
   background: rgba(255,255,255,0.18);
   box-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
-body.dark-mode .toc {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-}
+
 body.dark-mode .toc a {
   background: rgba(255,255,255,0.07);
   border-color: rgba(255,255,255,0.25);
@@ -211,18 +250,12 @@ body.dark-mode .toc a {
 .content {
   max-width: 900px;
   margin: 0 auto 25px auto;
-  background: linear-gradient(180deg, #ffffff, #f7f7f7);
   padding: 25px 30px;
   border-radius: 15px;
-  border: 2px solid #B30920;
-  box-shadow: 0 6px 20px rgba(179, 179, 179, 0.4);
-  color: #222;
-}
-body.dark-mode .content {
-  background: linear-gradient(180deg, #1b1b1b, #141414);
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-  color: #e6e6e6;
+	background: linear-gradient(180deg, var(--surface), var(--surface-2));
+border: 1px solid var(--border);
+box-shadow: var(--shadow);
+color: var(--surface-text);
 }
 
 /* =================================== */
@@ -233,7 +266,7 @@ h1, h2 {
   font-family: 'Merriweather', serif;
   letter-spacing: 0.5px;
   transition: color 0.8s ease-in-out, text-shadow 0.8s ease-in-out;
-  color: #222;
+  color: var(--surface-text);
 }
 
 h2 {
@@ -252,25 +285,26 @@ body.dark-mode h2 {
 
 /* -------------------- Paragraphenboxen -------------------- */
 details {
-  background: #fff;
+  background: var(--surface);
+  border: 1px solid var(--border);
   padding: 20px;
   margin-bottom: 15px;
   border-radius: 12px;
-  border: 1px solid #ccc;
   transition: all 0.3s ease;
 }
-details:hover {
-  background: #fff8f8;
+
+details:hover{
+  background: rgba(122,31,43,0.05);
 }
-details[open] {
-  border-color: #E2001A;
-  background: #fffafa;
+details[open]{
+  border-color: rgba(122,31,43,0.45);
+  background: rgba(122,31,43,0.06);
 }
-body.dark-mode details {
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.1);
+body.dark-mode details:hover{
+  background: rgba(255,255,255,0.07);
 }
-body.dark-mode details[open] {
+body.dark-mode details[open]{
+  border-color: rgba(255,255,255,0.18);
   background: rgba(255,255,255,0.08);
 }
 
@@ -282,7 +316,7 @@ summary {
   list-style: none;
   padding-right: 40px;
   position: relative;
-  color: #B30920;
+	color: var(--accent);
 }
 
 summary::after {
@@ -307,7 +341,7 @@ details[open] summary:hover::after { transform: translateY(-50%) rotate(90deg) s
 summary::-webkit-details-marker { display: none; }
 summary::marker { content: ""; }
 
-body.dark-mode summary { color: #fff; }
+body.dark-mode summary { color: var(--accent); }
 
 /* -------------------- Textformatierung -------------------- */
 details p,
@@ -509,8 +543,9 @@ body.dark-mode .audio-btn:hover {
 .pod-embed{
   padding: 14px;
   border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: rgba(0,0,0,0.03);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 .pod-embed__btn{
   width: 100%;
@@ -521,10 +556,6 @@ body.dark-mode .audio-btn:hover {
   font: inherit;
 }
 .pod-embed__hint{ display:block; margin-top:8px; opacity:0.75; }
-body.dark-mode .pod-embed{
-  border-color: rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.06);
-}
 
 /* ================================ */
 /*  Navigation Audio/Video – Glass  */
@@ -538,10 +569,9 @@ body.dark-mode .pod-embed{
   padding: 10px;
   border-radius: 16px;
 
-  /* Glasfläche */
-  background: rgba(255,255,255,0.78);
-  border: 1px solid rgba(0,0,0,0.12);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.10);
+  background: var(--surface);
+border: 1px solid var(--border);
+box-shadow: var(--shadow);
 
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -608,13 +638,6 @@ body.dark-mode .pod-embed{
     0 16px 30px rgba(179, 9, 32, 0.18);
 }
 
-/* Darkmode – Glas auf dunkel */
-body.dark-mode .media-nav{
-  background: rgba(20,20,20,0.45);
-  border-color: rgba(255,255,255,0.14);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.45);
-}
-
 body.dark-mode .media-nav a{
   background: rgba(255,255,255,0.08);
   border-color: rgba(255,255,255,0.16);
@@ -668,19 +691,13 @@ body.dark-mode .media-nav a.is-active{
 /*  SACHVERHALTS-BOXEN                                        */
 /* ========================================================= */
 
-.case-box {
+.case-box{
   margin-bottom: 20px;
   border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.15);
   overflow: hidden;
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(179, 179, 179, 0.25);
-}
-
-body.dark-mode .case-box {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 
 /* Kopfbereich – Button als Ganzes */
@@ -737,7 +754,7 @@ body.dark-mode .case-points {
 /* Inhalt */
 .case-content {
   padding: 18px 22px;
-  background: #fff;
+  background: transparent;
   line-height: 1.7;
 }
 
@@ -756,18 +773,13 @@ body.dark-mode .case-content {
 /*   LÖSUNGS-TABELLEN                                        */
 /* ========================================================= */
 
-.solution-box {
+.solution-box{
   margin: 30px 0 35px;
-  padding: 20px;
-  background: #ffffff;
+  padding: 3px;
   border-radius: 12px;
-  border: 2px solid #B30920;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-}
-
-body.dark-mode .solution-box {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 
 .solution-hint {
@@ -795,7 +807,7 @@ body.dark-mode .solution-box h3 {
 .solution-table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
+  background: transparent;
 }
 
 .solution-table td {
@@ -1088,16 +1100,12 @@ body.dark-mode .not-relevant-label {
 }
 
 .bookmark-item{
-  border: 1px solid rgba(0,0,0,0.12);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px 10px;
   margin-bottom: 10px;
-  background: rgba(0,0,0,0.02);
-}
-
-body.dark-mode .bookmark-item{
-  border-color: rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.05);
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 
 .bookmark-item__title{
@@ -1143,6 +1151,8 @@ body.dark-mode .bm-action{
 
 .law-btn:hover {
   opacity: 1;
+  border-color: currentColor;
+  background: var(--accent-soft);
 }
 
 .law-btn:focus-visible {
