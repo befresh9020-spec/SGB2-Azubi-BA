@@ -49,7 +49,7 @@
 
 <!-- Drop-Down-Menü/Filter -->
 
-<div class="controls">
+<div class="controls controls-container">
   <label for="topicFilter">Thema auswählen</label>
   <div class="select-wrap">
     <select id="topicFilter" class="input-like">
@@ -419,244 +419,253 @@
 
 
 <script>
-    function updateAriaState(card, expanded) {
-        const front = card.querySelector('.flip-card-front');
-        const back = card.querySelector('.flip-card-back');
+(() => {
+  'use strict';
 
-        // Sichtbarkeit für Screenreader steuern
-        front.setAttribute('aria-hidden', expanded);
-        back.setAttribute('aria-hidden', !expanded);
+  // ---------- Helpers ----------
+  const qs  = (sel, root = document) => root.querySelector(sel);
+  const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const norm = (s) => (s ?? '').toString().trim().toLowerCase();
 
-        // Status für Screenreader (Button expanded/collapsed)
-        card.setAttribute('aria-expanded', expanded);
-    }
+  // ---------- Flip Cards (ARIA + Interaction) ----------
+  function updateAriaState(card, expanded) {
+    const front = qs('.flip-card-front', card);
+    const back  = qs('.flip-card-back', card);
 
-    function flipCard(card) {
-        const expanded = card.classList.toggle('flipped');
-        updateAriaState(card, expanded);
+    if (!front || !back) return;
 
-        if (navigator.vibrate) {
-            navigator.vibrate(50);
+    const expandedStr = expanded ? 'true' : 'false';
+    front.setAttribute('aria-hidden', expanded ? 'true' : 'false');
+    back.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+    card.setAttribute('aria-expanded', expandedStr);
+  }
+
+  function flipCard(card) {
+    const expanded = card.classList.toggle('flipped');
+    updateAriaState(card, expanded);
+
+    if (navigator.vibrate) navigator.vibrate(50);
+
+    // Klick-/Tap-Feedback ohne harte Transform-Überschreibung
+    card.classList.add('is-pressing');
+    window.setTimeout(() => card.classList.remove('is-pressing'), 150);
+  }
+
+  function initFlipCards() {
+    const cards = qsa('.flip-card');
+
+    cards.forEach(card => {
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-expanded', 'false');
+
+      // Initiale ARIA-Sichtbarkeit
+      updateAriaState(card, false);
+
+      // Click / Tap
+      card.addEventListener('click', () => flipCard(card));
+
+      // Keyboard
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          flipCard(card);
         }
+      });
 
-        // Klick-Feedback-Effekt
-        card.style.transform = 'scale(0.98)';
-        setTimeout(() => {
-            card.style.transform = '';
-        }, 150);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const cards = document.querySelectorAll('.flip-card');
-
-        cards.forEach(card => {
-            // Wichtige ARIA-Grundausstattung
-            card.setAttribute('role', 'button');
-            card.setAttribute('tabindex', '0');
-            card.setAttribute('aria-expanded', 'false');
-
-            const front = card.querySelector('.flip-card-front');
-            const back = card.querySelector('.flip-card-back');
-            front.setAttribute('aria-hidden', 'false');
-            back.setAttribute('aria-hidden', 'true');
-
-            // Maus-Klick & Tap (umdrehen)
-            card.addEventListener('click', function() {
-                flipCard(card);
-            });
-
-            // Tastatursteuerung
-            card.addEventListener('keydown', function(e) {
-                const keys = ['Enter', ' ', 'Spacebar'];
-                if (keys.includes(e.key)) {
-                    e.preventDefault();
-                    flipCard(card);
-                }
-            });
-
-            // Touch-Feedback (Skalierung)
-            card.addEventListener('touchstart', function() {
-                this.style.transform = 'scale(0.98)';
-            });
-            card.addEventListener('touchend', function() {
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-            });
-        });
+      // Touch feedback (optional zusätzlich)
+      card.addEventListener('touchstart', () => card.classList.add('is-pressing'), { passive: true });
+      card.addEventListener('touchend', () => {
+        window.setTimeout(() => card.classList.remove('is-pressing'), 150);
+      }, { passive: true });
     });
+  }
 
-    // Doppeltap-Zoom verhindern (iOS Safari)
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', function(event) {
-        const now = (new Date()).getTime();
-        if (now - lastTouchEnd <= 300) {
-            event.preventDefault();
-        }
-        lastTouchEnd = now;
-    }, false);
+  // ---------- Theme Switch ----------
+  function initThemeSwitch() {
+    const themeButton = document.getElementById('themeToggle');
+    if (!themeButton) return;
 
-// Theme-Switch Button
-
-const themeButton = document.getElementById('themeToggle');
-
-// gespeicherte Wahl setzen
-const saved = localStorage.getItem('theme');
-if (saved === 'dark' || saved === 'light') {
-  document.documentElement.setAttribute('data-theme', saved);
-  themeButton.setAttribute('aria-pressed', saved === 'dark');
-}
-
-// Toggle
-themeButton.addEventListener('click', () => {
-  const current = document.documentElement.getAttribute('data-theme');
-  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const effective = current ?? (systemDark ? 'dark' : 'light');
-  const next = effective === 'dark' ? 'light' : 'dark';
-
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-  themeButton.setAttribute('aria-pressed', next === 'dark');
-});
-
-// ----------------- 🔍 Paragraphen-Suche -----------------
-
-    // Zuordnung: "7" → "Berechtigte.html#§7" usw.
-    const paragraphIndex = {
-      // Leistungsberechtigte
-      "7":  "Berechtigte.html#§7",
-      "7a": "Berechtigte.html#§7a",
-      "37": "Berechtigte.html#§37",
-      "38": "Berechtigte.html#§38",
-
-      // Bedarfe
-      "19": "Bedarfe.html#§19",
-      "20": "Bedarfe.html#§20",
-      "21": "Bedarfe.html#§21",
-      "22": "Bedarfe.html#§22",
-      "23": "Bedarfe.html#§23",
-      "72": "Bedarfe.html#§72",
-
-      // Vermögen
-      "12": "VM.html#§12",
-
-      // Einkommen
-      "11":  "EK.html#§11",
-      "11a": "EK.html#§11a",
-      "11b": "EK.html#§11b",
-
-      // Hilfebedürftigkeit
-      "9": "Hilfebeduerftigkeit.html#§9",
-
-      // Leistungsminderungen
-      "31":  "Minderung.html#§31",
-      "31a": "Minderung.html#§31a",
-      "31b": "Minderung.html#§31b",
-      "32":  "Minderung.html#§32",
-
-      // Bildung und Teilhabe
-      "28": "BuT.html#§28",
-
-	      // AGP
-      "1": "AGP1.html#§1",
-      "2": "AGP1.html#§2",
-      "6": "AGP1.html#§6",
-      "44b": "AGP1.html#§44b",
-      "6d": "AGP1.html#§6d",
-      "6a": "AGP1.html#§6a",
-	  "18a": "AGP1.html#§18a",
-      "7b": "AGP1.html#§7b",
-      "13": "AGP1.html#§13",
-	  "56": "AGP1.html#§56",
-      "59": "AGP1.html#§59",
-      "3": "AGP2.html#§3",
-	  "4": "AGP2.html#§4",
-	  "36": "AGP2.html#§36",
-	  "5": "AGP2.html#§5",
-	  "12a": "AGP2.html#§12a",
-	  "14": "AGP2.html#§14",
-	  "15": "AGP2.html#§15",
-	  "15a": "AGP2.html#§15a",
-	  "16": "AGP2.html#§16"		
-    };
-
-    function normalizeParagraphInput(raw) {
-      return raw
-        .toLowerCase()
-        .replace(/§/g, '')      // "§ 7" → " 7"
-        .replace(/\s+/g, '')    // " 7 a" → "7a"
-        .replace(/abs\..*/g, ''); // "7 abs. 1" → "7"
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || saved === 'light') {
+      document.documentElement.setAttribute('data-theme', saved);
+      themeButton.setAttribute('aria-pressed', saved === 'dark' ? 'true' : 'false');
+    } else {
+      // Optional: initialer aria-pressed Status passend zum effektiven Theme
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const current = document.documentElement.getAttribute('data-theme');
+      const effective = current ?? (systemDark ? 'dark' : 'light');
+      themeButton.setAttribute('aria-pressed', effective === 'dark' ? 'true' : 'false');
     }
 
+    themeButton.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const effective = current ?? (systemDark ? 'dark' : 'light');
+      const next = (effective === 'dark') ? 'light' : 'dark';
+
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      themeButton.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
+    });
+  }
+
+  // ---------- Paragraph Search ----------
+  const paragraphIndex = {
+    "7":  "Berechtigte.html#§7",
+    "7a": "Berechtigte.html#§7a",
+    "37": "Berechtigte.html#§37",
+    "38": "Berechtigte.html#§38",
+    "19": "Bedarfe.html#§19",
+    "20": "Bedarfe.html#§20",
+    "21": "Bedarfe.html#§21",
+    "22": "Bedarfe.html#§22",
+    "23": "Bedarfe.html#§23",
+    "72": "Bedarfe.html#§72",
+    "12": "VM.html#§12",
+    "11":  "EK.html#§11",
+    "11a": "EK.html#§11a",
+    "11b": "EK.html#§11b",
+    "9": "Hilfebeduerftigkeit.html#§9",
+    "31":  "Minderung.html#§31",
+    "31a": "Minderung.html#§31a",
+    "31b": "Minderung.html#§31b",
+    "32":  "Minderung.html#§32",
+    "28": "BuT.html#§28",
+    "1": "AGP1.html#§1",
+    "2": "AGP1.html#§2",
+    "6": "AGP1.html#§6",
+    "44b": "AGP1.html#§44b",
+    "6d": "AGP1.html#§6d",
+    "6a": "AGP1.html#§6a",
+    "18a": "AGP1.html#§18a",
+    "7b": "AGP1.html#§7b",
+    "13": "AGP1.html#§13",
+    "56": "AGP1.html#§56",
+    "59": "AGP1.html#§59",
+    "3": "AGP2.html#§3",
+    "4": "AGP2.html#§4",
+    "36": "AGP2.html#§36",
+    "5": "AGP2.html#§5",
+    "12a": "AGP2.html#§12a",
+    "14": "AGP2.html#§14",
+    "15": "AGP2.html#§15",
+    "15a": "AGP2.html#§15a",
+    "16": "AGP2.html#§16"
+  };
+
+  function normalizeParagraphInput(raw) {
+    return (raw ?? '')
+      .toLowerCase()
+      .replace(/§/g, '')
+      .replace(/\s+/g, '')
+      .replace(/abs\..*/g, '');
+  }
+
+  function initParagraphSearch() {
     const searchForm  = document.getElementById('paragraphSearchForm');
     const searchInput = document.getElementById('paragraphInput');
     const searchError = document.getElementById('searchError');
 
-    if (searchForm && searchInput && searchError) {
-      searchForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        searchError.textContent = '';
+    if (!searchForm || !searchInput || !searchError) return;
 
-        const key = normalizeParagraphInput(searchInput.value);
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      searchError.textContent = '';
 
-        if (!key) {
-          searchError.textContent = 'Bitte einen Paragraphen eingeben, z.B. 7 oder 31b.';
-          return;
-        }
+      const key = normalizeParagraphInput(searchInput.value);
 
-        const target = paragraphIndex[key];
+      if (!key) {
+        searchError.textContent = 'Bitte einen Paragraphen eingeben, z.B. 7 oder 31b.';
+        return;
+      }
 
-        if (!target) {
-          searchError.textContent = 'Diesen Paragraphen habe ich hier (noch) nicht hinterlegt.';
-          return;
-        }
+      const target = paragraphIndex[key];
+      if (!target) {
+        searchError.textContent = 'Diesen Paragraphen habe ich hier (noch) nicht hinterlegt.';
+        return;
+      }
 
-        window.location.href = target;
-      });
-    }
-
-	  // Service Worker Registrierung (gilt für alle Seiten im Scope)
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js")
-      .then(reg => {
-        console.log("Service Worker registriert:", reg.scope);
-      })
-      .catch(err => {
-        console.error("Service Worker Registrierung fehlgeschlagen:", err);
-      });
-  }
-
-        // Drop-Down-Filter
-
-document.addEventListener('DOMContentLoaded', () => {
-  const select = document.getElementById('topicFilter');
-  const cards  = Array.from(document.querySelectorAll('article.flip-card[data-topic]'));
-
-  if (!select) {
-    console.warn('topicFilter nicht gefunden');
-    return;
-  }
-  if (cards.length === 0) {
-    console.warn('Keine Kacheln mit data-topic gefunden');
-    return;
-  }
-
-  const norm = (s) => (s ?? '').toString().trim().toLowerCase();
-
-  function applyFilter() {
-    const value = norm(select.value);
-
-    cards.forEach(card => {
-      const topic = norm(card.dataset.topic);
-      const match = (value === 'all') || (topic === value);
-      card.classList.toggle('is-hidden', !match);
+      window.location.href = target;
     });
   }
 
-  select.addEventListener('change', applyFilter);
-  applyFilter();
-});
+  // ---------- Service Worker ----------
+  function initServiceWorker() {
+    if (!('serviceWorker' in navigator)) return;
 
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log('Service Worker registriert:', reg.scope))
+      .catch(err => console.error('Service Worker Registrierung fehlgeschlagen:', err));
+  }
+
+  // ---------- Drop-Down Filter + Stagger Animation ----------
+  function initTopicFilter() {
+    const select = document.getElementById('topicFilter');
+    const cards  = qsa('article.flip-card[data-topic]');
+
+    if (!select || cards.length === 0) return;
+
+    function applyFilter() {
+      const value = norm(select.value);
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const topic = norm(card.dataset.topic);
+        const match = (value === 'all') || (topic === value);
+
+        if (match) {
+          card.classList.remove('is-hidden');
+
+          // Animation reset
+          card.style.animation = 'none';
+          // Reflow trigger
+          void card.offsetHeight;
+
+          const delay = visibleCount * 0.1;
+          card.style.animation = `fadeInUp 1s ${delay}s cubic-bezier(0.22, 1, 0.36, 1) forwards`;
+
+          visibleCount++;
+        } else {
+          card.classList.add('is-hidden');
+          card.style.animation = 'none';
+          card.style.opacity = '0';
+        }
+      });
+    }
+
+    select.addEventListener('change', applyFilter);
+    applyFilter();
+  }
+
+  // ---------- iOS Double-tap zoom prevention (eingeschränkt) ----------
+  function initDoubleTapPrevention() {
+    let lastTouchEnd = 0;
+
+    document.addEventListener('touchend', (event) => {
+      // nur für interaktive Bereiche (Karten + Theme Switch)
+      const target = event.target;
+      const isInteractive = target && (target.closest?.('.flip-card') || target.closest?.('#themeToggle') || target.closest?.('.theme-switch'));
+
+      if (!isInteractive) return;
+
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) event.preventDefault();
+      lastTouchEnd = now;
+    }, { passive: false });
+  }
+
+  // ---------- Bootstrap ----------
+  document.addEventListener('DOMContentLoaded', () => {
+    initFlipCards();
+    initThemeSwitch();
+    initParagraphSearch();
+    initServiceWorker();
+    initTopicFilter();
+    initDoubleTapPrevention();
+  });
+
+})();
 </script>
 
 </body>
