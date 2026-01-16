@@ -1,52 +1,120 @@
 /* =================================== */
-/* RESET & GLOBAL STRUCTURE            */
+/* RESET + BASIS                        */
 /* =================================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #E2001A;
-  padding: 20px;
-  min-height: 100vh;
-  transition: background-color 0.4s ease, color 0.4s ease;
-  color: #000;
-}
-
+html { scroll-behavior: smooth; }
 html[data-theme="dark"] { color-scheme: dark; }
 html[data-theme="light"] { color-scheme: light; }
 
 /* =================================== */
-/* TYPOGRAFIE                          */
+/* DESIGN TOKENS                         */
 /* =================================== */
+:root{
+--bg-gradient: radial-gradient(circle at 30% 0%,
+  #7f1d1d 0%,   /* Burgunder-Glow */
+  #2a0f17 55%,  /* dunkles Weinrot */
+  #0b0f1a 100%  /* fast schwarz-blau */
+);
+  --glass-bg: rgba(255,255,255,0.10);
+  --glass-border: rgba(255,255,255,0.20);
+  --text-main: #ffffff;
 
-header h1 {
+  --card-bg: #fff7f6;
+  --card-text: #2d3748;
+}
+
+html[data-theme="dark"]{
+  --bg-gradient: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+  --glass-bg: rgba(0,0,0,0.20);
+  --glass-border: rgba(255,255,255,0.10);
+  --text-main: #f1f5f9;
+
+  --card-bg: #1a202c;
+  --card-text: #f1f5f9;
+}
+
+/* System Dark Fallback (wenn kein data-theme gesetzt ist) */
+@media (prefers-color-scheme: dark){
+  html:not([data-theme]){ color-scheme: dark; }
+  html:not([data-theme]){
+    --bg-gradient: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+    --glass-bg: rgba(0,0,0,0.20);
+    --glass-border: rgba(255,255,255,0.10);
+    --text-main: #f1f5f9;
+    --card-bg: #1a202c;
+    --card-text: #f1f5f9;
+  }
+}
+
+/* =================================== */
+/* HINTERGRUND + ORGANISCHE BLOBS       */
+/* =================================== */
+body{
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-main);
+
+  transition: background 0.5s ease, color 0.4s ease;
+}
+
+body::before,
+body::after{
+  content:"";
+  position: fixed;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 50%;
+  z-index: -2;
+  filter: blur(100px);
+  opacity: 0.30;
+  pointer-events: none;
+  animation: floatBlobs 25s infinite alternate ease-in-out;
+}
+
+body::before{ background: rgba(190, 24, 93, 0.28); }  /* rosiges Weinrot */
+body::after { background: rgba(180, 83, 9, 0.22); }   /* Kupfer/Rost */
+
+@keyframes floatBlobs{
+  0%   { transform: translate(0,0) scale(1) rotate(0deg); }
+  50%  { transform: translate(5%,10%) scale(1.1) rotate(10deg); }
+  100% { transform: translate(-5%,5%) scale(1) rotate(-10deg); }
+}
+
+/* Darkmode: Blobs dezenter */
+html[data-theme="dark"] body::before,
+html[data-theme="dark"] body::after{
+  opacity: 0.10;
+}
+
+/* =================================== */
+/* TYPOGRAFIE                           */
+/* =================================== */
+header h1{
   font-size: 2.5rem;
   font-weight: 300;
   margin-bottom: 10px;
   text-shadow: 0 2px 10px rgba(0,0,0,0.35);
 }
 
-header p {
+header p{
   font-size: 1.1rem;
   opacity: 0.95;
 }
 
-.flip-card-front h3 {
+.flip-card-front h3{
   margin: 15px 0;
   font-size: 1.5rem;
   font-weight: 600;
   text-align: center;
 }
 
-.flip-card-back h3 {
+.flip-card-back h3{
   font-size: 1.4rem;
   margin-bottom: 12px;
   font-weight: 600;
@@ -54,14 +122,13 @@ header p {
 }
 
 .flip-card-front p,
-.flip-card-back p {
+.flip-card-back p{
   font-size: 1rem;
   line-height: 1.45;
   text-align: center;
 }
 
-/* Beschreibungstext unter der Überschrift */
-.flip-card-front .card-front-text {
+.flip-card-front .card-front-text{
   margin-top: 8px;
   margin-bottom: 4px;
   font-size: 0.95rem;
@@ -69,8 +136,7 @@ header p {
   opacity: 0.9;
 }
 
-/* Paragraphen-Zeile unten: dezenter, kompakter */
-.flip-card-front .card-front-paragraphs {
+.flip-card-front .card-front-paragraphs{
   margin-top: 4px;
   font-size: 0.85rem;
   line-height: 1.3;
@@ -78,20 +144,22 @@ header p {
   opacity: 0.8;
 }
 
-
 /* =================================== */
-/* HEADER — Zentrierung & Button       */
+/* HEADER – LAYOUT + THEME SWITCH       */
 /* =================================== */
-
-header {
+header{
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
+
+  position: relative;
+  padding-top: 10px;
 }
 
-.theme-toggle {
+/* Optional: alter Button (falls noch im HTML) */
+.theme-toggle{
   padding: 8px 14px;
   border-radius: 25px;
   margin-bottom: 18px;
@@ -103,19 +171,13 @@ header {
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.theme-toggle:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
-.theme-toggle:focus { outline: 3px solid #FFD600; outline-offset: 4px; }
-
-html[data-theme="dark"] .theme-toggle {
-  border-color: rgba(255,255,255,0.8);
-}
-
-/* ================================ */
-/* THEME SWITCH – FINAL             */
-/* ================================ */
+.theme-toggle:hover{ background: rgba(255,255,255,0.15); transform: scale(1.05); }
+.theme-toggle:focus{ outline: 3px solid #FFD600; outline-offset: 4px; }
+html[data-theme="dark"] .theme-toggle{ border-color: rgba(255,255,255,0.8); }
 
 /* Screenreader-only */
-.sr-only{
+.sr-only,
+.visually-hidden{
   position: absolute;
   width: 1px;
   height: 1px;
@@ -125,12 +187,6 @@ html[data-theme="dark"] .theme-toggle {
   clip: rect(0,0,0,0);
   white-space: nowrap;
   border: 0;
-}
-
-/* Header als Referenz für absolute Position */
-header{
-  position: relative; /* falls nicht schon vorhanden */
-  padding-top: 10px;
 }
 
 /* Switch oben rechts im Header */
@@ -154,7 +210,7 @@ header .theme-switch{
   font-size: 0.95rem;
   font-weight: 600;
 
-  min-height: 44px; /* Touch-Zielgröße */
+  min-height: 44px;
   box-shadow: 0 10px 24px rgba(0,0,0,0.18);
 
   backdrop-filter: blur(8px);
@@ -169,16 +225,9 @@ header .theme-switch:hover{
   transform: translateY(-1px);
 }
 
-header .theme-switch:active{
-  transform: translateY(0) scale(0.98);
-}
+header .theme-switch:active{ transform: translateY(0) scale(0.98); }
+header .theme-switch:focus-visible{ outline: 3px solid #FFD600; outline-offset: 4px; }
 
-header .theme-switch:focus-visible{
-  outline: 3px solid #FFD600;
-  outline-offset: 4px;
-}
-
-/* Track + Thumb */
 header .switch-track{
   width: 46px;
   height: 26px;
@@ -205,12 +254,8 @@ header .switch-thumb{
   transition: transform 0.18s ease;
 }
 
-/* Dark aktiv -> Thumb rechts */
-header .theme-switch[aria-pressed="true"] .switch-thumb{
-  transform: translateX(20px);
-}
+header .theme-switch[aria-pressed="true"] .switch-thumb{ transform: translateX(20px); }
 
-/* Symbole im Track (links Sonne, rechts Mond) */
 header .switch-track::before,
 header .switch-track::after{
   position: absolute;
@@ -222,73 +267,28 @@ header .switch-track::after{
   pointer-events: none;
 }
 
-header .switch-track::before{
-  content: "☀️";
-  left: 6px;
-}
+header .switch-track::before{ content:"☀️"; left: 6px; }
+header .switch-track::after { content:"🌙"; right: 6px; }
 
-header .switch-track::after{
-  content: "🌙";
-  right: 6px;
-}
-
-/* aktives Symbol deutlicher */
 header .theme-switch[aria-pressed="false"] .switch-track::before{ opacity: 0.95; }
-header .theme-switch[aria-pressed="false"] .switch-track::after{ opacity: 0.45; }
+header .theme-switch[aria-pressed="false"] .switch-track::after { opacity: 0.45; }
+header .theme-switch[aria-pressed="true"]  .switch-track::before{ opacity: 0.45; }
+header .theme-switch[aria-pressed="true"]  .switch-track::after { opacity: 0.95; }
 
-header .theme-switch[aria-pressed="true"] .switch-track::before{ opacity: 0.45; }
-header .theme-switch[aria-pressed="true"] .switch-track::after{ opacity: 0.95; }
-
-/* Dark Theme: Button-Fläche etwas angepasst */
+/* Dark Theme: Switch-Fläche */
 html[data-theme="dark"] header .theme-switch{
   background: rgba(255,255,255,0.10);
   border-color: rgba(255,255,255,0.35);
 }
-
 html[data-theme="dark"] header .theme-switch:hover{
   background: rgba(255,255,255,0.14);
   border-color: rgba(255,255,255,0.55);
 }
 
-/* Responsive: kompakter + Text ausblenden */
-@media (max-width: 768px){
-  header .theme-switch{
-    top: 8px;
-    right: 8px;
-    padding: 8px 10px;
-    gap: 8px;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.14);
-    opacity: 0.92;
-  }
-
-  header h1{
-    margin-top: 36px; /* Platz für den Switch */
-  }
-
-  header .switch-track{
-    width: 40px;
-    height: 22px;
-  }
-
-  header .switch-thumb{
-    width: 18px;
-    height: 18px;
-  }
-
-  header .theme-switch[aria-pressed="true"] .switch-thumb{
-    transform: translateX(18px);
-  }
-
-  header .switch-text{
-    display: none !important;
-  }
-}
-
 /* =================================== */
-/* LAYOUT: Kartenraster                */
+/* LAYOUT: KARTENRASTER                 */
 /* =================================== */
-
-main {
+main{
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
@@ -297,92 +297,80 @@ main {
   justify-items: center;
 }
 
-@media (max-width: 768px){
-  main{
-    grid-template-columns: 1fr;
-  }
-}
-
-article.flip-card {
+article.flip-card{
   perspective: 1000px;
   cursor: pointer;
   outline: none;
   transition: transform 0.2s ease;
-  height: 320px;                 /* Standardhöhe (Desktop/breit) */
-  width: 100%;        /* füllt die Grid-Spalte aus */
-  max-width: 380px;   /* aber nie breiter als 380px */
+
+  height: 320px;
+  width: 100%;
+  max-width: 380px;
+
+  /* Animation / Performance */
+  opacity: 0;
+  animation-fill-mode: forwards;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
-.flip-card-inner {
+.flip-card.is-pressing { transform: scale(0.98); }
+
+/* Flip-Karten Kern */
+.flip-card-inner{
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
   transition: transform 0.8s cubic-bezier(0.175,0.885,0.32,1.275);
+
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-.flip-card:hover .flip-card-inner { transform: scale(1.02); }
-.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-card:hover .flip-card-inner{ transform: scale(1.02); }
+.flip-card.flipped .flip-card-inner{ transform: rotateY(180deg); }
 
+/* Front/Back */
 .flip-card-front,
-.flip-card-back {
+.flip-card-back{
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 20px;
+  border-radius: 15px;
   padding: 20px;
+
   backface-visibility: hidden;
+
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+
   transition: background 0.4s ease, color 0.4s ease;
+
+  background: var(--card-bg);
+  color: var(--card-text);
+  border: 1px solid var(--glass-border);
 }
 
-.flip-card-front { justify-content: center; }
-.flip-card-back  { justify-content: center; gap: 12px; }
-
-/* Mobile-Anpassungen NACH den Basisregeln */
-@media (max-width: 768px) {
-  header h1 { font-size: 2rem; }
-
-  article.flip-card {
-    height: 240px;                     /* genug Platz für Rückseite */
-  }
-  
-  .flip-card-front {
-    padding: 8px 16px 18px;  /* oben knapper, unten etwas mehr */
-  }
-
-  .flip-card-back {
-    padding: 18px;                     /* Rückseite etwas kompakter */
-  }
-}
-
-/* =================================== */
-/* HELL-MODUS                          */
-/* =================================== */
-.flip-card-front {
-  background: #DDE3E8;
-  color: #333;
-}
-
-.flip-card-back {
-  background: rgba(0,0,0,0.85);
-  color: #fff;
+.flip-card-back{
+  gap: 12px;
   transform: rotateY(180deg);
 }
 
-.card-links {
+/* =================================== */
+/* LINKS AUF DER RÜCKSEITE              */
+/* =================================== */
+.card-links{
   display: flex;
   flex-direction: column;
   gap: 12px;
   width: 100%;
   margin-top: 1rem;
-  align-items: stretch;     /* nimmt die volle Breite */
+  align-items: stretch;
 }
 
-/* Grundstil: richtiger „Button“ */
-.card-link {
+.card-link{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -393,7 +381,7 @@ article.flip-card {
   margin: 0 auto;
 
   padding: 0.75rem 1.2rem;
-  border-radius: 999px;     /* Voll-Pill */
+  border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -407,85 +395,43 @@ article.flip-card {
   color: #fff;
 
   box-shadow: 0 6px 14px rgba(0,0,0,0.3);
-  transition:
-    background 0.2s ease,
-    transform 0.1s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
+  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-/* Hover- / Aktiv-Effekt */
-
 .card-link:hover,
-.card-link:focus {
+.card-link:focus{
   background: rgba(0,0,0,0.45);
   outline: 3px solid #FFD600;
   outline-offset: 3px;
 }
 
-/* Mobile: Buttons noch etwas „fetter“ */
-@media (max-width: 600px) {
-  .card-link {
-    font-size: 1rem;
-    padding: 0.9rem 1.4rem;
-  }
-}
+.flip-card--compact .card-links,
+.flip-card-back--compact .card-links{ gap: 10px; }
 
-.flip-card--compact .card-links { gap: 10px; }
-
-.flip-card--compact .card-link{
-  padding: 0.55rem 1rem;
-  font-size: 0.88rem;
-  max-width: 280px;
-  box-shadow: none; /* optional: spart optisch “Höhe” */
-}
-
-.flip-card-back--compact .card-links{
-  gap: 10px;
-}
-
+.flip-card--compact .card-link,
 .flip-card-back--compact .card-link{
   padding: 0.55rem 1rem;
   font-size: 0.88rem;
   max-width: 280px;
-  box-shadow: none;      /* spart optisch „Höhe“ */
+  box-shadow: none;
 }
 
-/* =================================== */
-/* DARK MODE                           */
-/* =================================== */
-html[data-theme="dark"] body { background-color: #1a1a1a; color: #fff; }
-html[data-theme="dark"] .flip-card-front { background: #2b2b2b; color: #fff; }
-html[data-theme="dark"] .flip-card-back { background: #151515; color: #fff; }
-html[data-theme="dark"] .card-link {
+/* Dark Mode: Card-Link-Variante */
+html[data-theme="dark"] .card-link{
   background: rgba(255,255,255,0.15);
   border-color: rgba(255,255,255,0.35);
 }
 html[data-theme="dark"] .card-link:hover,
-html[data-theme="dark"] .card-link:focus {
+html[data-theme="dark"] .card-link:focus{
   background: rgba(255,255,255,0.3);
 }
 
 /* =================================== */
-/* SYSTEM DARK FALLBACK                */
+/* LOGO – VORDERSEITE                   */
 /* =================================== */
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme]) body { background-color: #1a1a1a; color: #fff; }
-  html:not([data-theme]) .flip-card-front { background: #2b2b2b; color: #fff; }
-  html:not([data-theme]) .flip-card-back { background: #151515; color: #fff; }
-  html:not([data-theme]) .card-link {
-    background: rgba(255,255,255,0.15);
-    border-color: rgba(255,255,255,0.35);
-  }
-}
-
-/* =================================== */
-/* LOGO – Vorderseite: roter Kreis mit Regenbogenrand */
-/* =================================== */
-
-.flip-card-front .logo {
+.flip-card-front .logo{
   position: relative;
-  width: 77px;              /* etwas größer, damit der Rand Platz hat */
+  width: 77px;
   height: 77px;
   border-radius: 50%;
   background: conic-gradient(
@@ -509,177 +455,77 @@ html[data-theme="dark"] .card-link:focus {
   justify-content: center;
 }
 
-/* Innerer roter Kreis */
-.flip-card-front .logo::after {
-  content: "";
-  width: 70px;              /* hier die eigentliche „rote Kugel“ */
+.flip-card-front .logo::after{
+  content:"";
+  width: 70px;
   height: 70px;
   border-radius: 50%;
   background-color: #E2001A;
 }
 
-
-/* Rückseite: kein Logo */
-.flip-card-back .logo {
-  display: none !important;
-}
+.flip-card-back .logo{ display: none !important; }
 
 /* =================================== */
-/* FOOTER                              */
+/* SUCHE / FILTER – CONTAINER           */
 /* =================================== */
+.controls-container{
+  /* Glas + „plastischer“ Schatten (finale Variante) */
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 
-/* Tipp-Animation aus deiner ursprünglichen Version bleibt */
-@keyframes pulse {
-  0%,100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  border-radius: 25px;
+  padding: 30px;
+  margin-bottom: 40px;
+
+  border: 1px solid rgba(255,255,255,0.4);
+
+  transition: all 0.3s ease;
 }
 
-/* gesamter Footer-Container */
-.page-footer {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 0.85rem;
-  opacity: 0.9;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  color: rgba(255,255,255,0.85);
+/* Anpassung für Darkmode (invertierter Effekt) */
+html[data-theme="dark"] .controls-container{
+  background: rgba(15, 23, 42, 0.6);
+  box-shadow:
+    10px 10px 20px rgba(0,0,0,0.3),
+    -5px -5px 15px rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
-/* Zeile 1: Tipp */
-.page-footer .tip {
-  font-size: 0.85rem;
-  opacity: 0.9;
-  animation: pulse 2s infinite;
-  line-height: 1.4;
-}
-
-/* Zeile 2: Autor / Stand */
-.page-footer .author {
-  font-size: 0.8rem;
-  opacity: 0.9;
-  line-height: 1.4;
-}
-
-/* Zeile 3: Branding + Zug */
-.page-footer .branding {
-  font-size: 0.75rem;
-  opacity: 0.85;
-  line-height: 1.35;
-  color: rgba(255,255,255,0.85);
-
-  /* WICHTIG:
-     Wir zwingen Text und Zug VERTIKAL untereinander,
-     egal wie breit der Bildschirm ist */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-/* Der Wrapper um den Zug.
-   Er ist ein eigener Block unter der Textzeile */
-.page-footer .branding .train-wrapper {
-  display: block;
-  line-height: 0;         /* entfernt zusätzliche Text-Zeilenhöhe um die SVG */
-  margin-top: 4px;
-}
-
-/* Die SVG selbst */
-.page-footer .branding .train {
-  display: block;         /* kein Inline-Flow, kein Hochrutschen */
-  margin: 0 auto;
-  width: 120px;
-  height: 40px;
-  transform-origin: center;
-  animation: bounceTrain 1.5s ease-in-out infinite;
-}
-
-/* sanftes „Ruckeln“ / Fahren-Feeling */
-@keyframes bounceTrain {
-  0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-1px); }
-}
-
-/* die Rauch-Wolken sollen immer hell wirken */
-.train .smoke {
-  mix-blend-mode: lighten;
-}
-
-/* Nachtbeleuchtung für Fenster nur im Dark Mode */
-html[data-theme="dark"] .train .window {
-  fill: #FFD43B;
-  filter: drop-shadow(0 0 2px #FFD43B);
-  animation: glow 3s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  0%   { opacity: 0.8; filter: drop-shadow(0 0 2px #FFD43B); }
-  100% { opacity: 1;   filter: drop-shadow(0 0 4px #FFEF9A); }
-}
-
-/* leichte Farbkorrektur der Wagen im Dark Mode */
-html[data-theme="dark"] .train rect[fill="#004A9F"] {
-  fill: #339CFF;
-  stroke: #005BBB;
-}
-
-html[data-theme="dark"] .train rect[fill="#E2001A"] {
-  fill: #FF3350;
-  stroke: #A00012;
-}
-
-html[data-theme="dark"] .train rect[fill="#111"],
-html[data-theme="dark"] .train rect[fill="#333"] {
-  fill: #222;
-}
-
-/* =========================== */
-/* RESPONSIVE FÜR MOBILE       */
-/* =========================== */
-
-/* auf kleinen Screens:
-   - der Zug darf größer sein
-   - Abstände leicht anpassen */
-@media (max-width: 600px) {
-
-  .page-footer {
-    gap: 12px;
-  }
-
-  .page-footer .branding {
-    gap: 8px;
-  }
-
-  .page-footer .branding .train-wrapper {
-    margin-top: 6px;
-  }
-
-  .page-footer .branding .train {
-    width: 160px;
-    height: 60px;
-  }
-}
-
-/* =================================== */
-/* RESPONSIVE HEADLINE / CARDS (deins) */
-/* =================================== */
-
-@media (max-width: 768px) {
-  header h1 { font-size: 2rem; }
-  article.flip-card { height: 380px; }  /* oder 400px, wenn du mehr Platz willst */
-}
-
-.search-bar {
+/* Searchbar */
+.search-bar{
   max-width: 480px;
-  margin: 1.5rem auto 1.5rem;
+  margin: 1.5rem auto;
+
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.9);
+  color: #1a202c;
+  font-size: 1rem;
+  outline: none;
+  transition: box-shadow 0.3s ease;
 }
 
-/* Mobile: untereinander, alles schön breit */
-.search-row {
+.search-bar:focus-within{
+  box-shadow: 0 0 0 3px rgba(66,153,225,0.5);
+}
+
+html[data-theme="dark"] .search-bar{
+  background: rgba(15,23,42,0.75);
+  border-color: rgba(255,255,255,0.18);
+  color: #f1f5f9;
+}
+html[data-theme="dark"] .search-row input,
+html[data-theme="dark"] .search-row button{
+  background: rgba(255,255,255,0.10);
+  color: #f1f5f9;
+  border-color: rgba(255,255,255,0.18);
+}
+
+/* Search Row */
+.search-row{
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -687,17 +533,17 @@ html[data-theme="dark"] .train rect[fill="#333"] {
 }
 
 .search-row input,
-.search-row button {
+.search-row button{
   width: 75%;
   box-sizing: border-box;
   padding: 0.5rem 0.75rem;
 }
 
-.search-row button {
+.search-row button{
   -webkit-appearance: none;
   appearance: none;
 
-  background-color: #ffffff;     /* oder dein Wunsch-Farbcode */
+  background-color: #ffffff;
   color: #000000;
   border: 1px solid #dddddd;
   border-radius: 999px;
@@ -705,39 +551,18 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   cursor: pointer;
 }
 
-/* Desktop: kompakt, zentriert */
-@media (min-width: 768px) {
-  .search-row {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .search-row input {
-    width: 16ch;         /* Platz für ca. 16Zeichen */
-    flex: 0 0 auto;
-    text-align: center; /* sieht bei kurzen Eingaben gut aus */
-  }
-
-  .search-row button {
-    width: auto;
-    flex: 0 0 auto;
-    white-space: nowrap;
-  }
-}
-
-.search-form label {
+.search-form label{
   display: block;
   margin-bottom: 0.3rem;
-  text-align: center;   /* neu */
+  text-align: center;
 }
 
 .controls{
-  display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: .75rem;
-  align-items: center;
+  gap: .75rem;
+  align-items: center;
   margin: 1.5rem auto 2.5rem;
   width: 100%;
 }
@@ -746,7 +571,7 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   display: block;
   width: 100%;
   text-align: center;
-  margin-bottom: 0.25rem; /* kleiner Abstand zur Pille */
+  margin-bottom: 0.25rem;
 }
 
 .select-wrap{
@@ -754,7 +579,6 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   margin: 0 auto;
   position: relative;
 }
-
 
 .input-like{
   -webkit-appearance: none;
@@ -778,14 +602,210 @@ html[data-theme="dark"] .train rect[fill="#333"] {
   -moz-text-align-last: center;
 }
 
-.visually-hidden{
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0,0,0,0);
-  white-space: nowrap; border: 0;
+/* Kategorie-Buttons */
+.filter-btn{
+  background: var(--glass-bg);
+  color: #fff;
+  border: 1px solid var(--glass-border);
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.is-hidden{ display: none !important; 
-  
+.filter-btn:hover,
+.filter-btn.active{
+  background: #4299e1;
+  transform: translateY(-2px);
+}
+
+/* =================================== */
+/* VISIBILITY HELPERS                   */
+/* =================================== */
+.is-hidden{ display: none !important; }
+
+/* =================================== */
+/* ANIMATIONEN                          */
+/* =================================== */
+@keyframes pulse{
+  0%,100% { opacity: 0.6; }
+  50%     { opacity: 1; }
+}
+
+/* Finale fadeInUp-Variante (mit Blur) */
+@keyframes fadeInUp{
+  from{
+    opacity: 0;
+    transform: translateY(30px) scale(0.92);
+    filter: blur(4px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Diese Klasse wird per JS gesetzt */
+.card-animate{ animation: fadeInUp 0.4s ease-out forwards; }
+
+.card-item:nth-child(1){ animation-delay: 0.1s; }
+.card-item:nth-child(2){ animation-delay: 0.15s; }
+.card-item:nth-child(3){ animation-delay: 0.2s; }
+.card-item:nth-child(4){ animation-delay: 0.25s; }
+
+/* =================================== */
+/* FOOTER                               */
+/* =================================== */
+.page-footer{
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.85rem;
+  opacity: 0.9;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  color: rgba(255,255,255,0.85);
+}
+
+.page-footer .tip{
+  font-size: 0.85rem;
+  opacity: 0.9;
+  animation: pulse 2s infinite;
+  line-height: 1.4;
+}
+
+.page-footer .author{
+  font-size: 0.8rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.page-footer .branding{
+  font-size: 0.75rem;
+  opacity: 0.85;
+  line-height: 1.35;
+  color: rgba(255,255,255,0.85);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.page-footer .branding .train-wrapper{
+  display: block;
+  line-height: 0;
+  margin-top: 4px;
+}
+
+.page-footer .branding .train{
+  display: block;
+  margin: 0 auto;
+  width: 120px;
+  height: 40px;
+  transform-origin: center;
+  animation: bounceTrain 1.5s ease-in-out infinite;
+}
+
+@keyframes bounceTrain{
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-1px); }
+}
+
+.train .smoke{ mix-blend-mode: lighten; }
+
+html[data-theme="dark"] .train .window{
+  fill: #FFD43B;
+  filter: drop-shadow(0 0 2px #FFD43B);
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow{
+  0%   { opacity: 0.8; filter: drop-shadow(0 0 2px #FFD43B); }
+  100% { opacity: 1;   filter: drop-shadow(0 0 4px #FFEF9A); }
+}
+
+html[data-theme="dark"] .train rect[fill="#004A9F"]{
+  fill: #339CFF;
+  stroke: #005BBB;
+}
+
+html[data-theme="dark"] .train rect[fill="#E2001A"]{
+  fill: #FF3350;
+  stroke: #A00012;
+}
+
+html[data-theme="dark"] .train rect[fill="#111"],
+html[data-theme="dark"] .train rect[fill="#333"]{
+  fill: #222;
+}
+
+/* =================================== */
+/* RESPONSIVE                           */
+/* =================================== */
+@media (min-width: 768px){
+  .search-row{
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .search-row input{
+    width: 16ch;
+    flex: 0 0 auto;
+    text-align: center;
+  }
+
+  .search-row button{
+    width: auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 768px){
+  main{ grid-template-columns: 1fr; }
+
+  header h1{
+    font-size: 2rem;
+    margin-top: 36px; /* Platz für den Switch */
+  }
+
+  article.flip-card{ height: 380px; }
+
+  .flip-card-front{ padding: 8px 16px 18px; }
+  .flip-card-back { padding: 18px; }
+
+  header .theme-switch{
+    top: 8px;
+    right: 8px;
+    padding: 8px 10px;
+    gap: 8px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+    opacity: 0.92;
+  }
+
+  header .switch-track{ width: 40px; height: 22px; }
+  header .switch-thumb{ width: 18px; height: 18px; }
+  header .theme-switch[aria-pressed="true"] .switch-thumb{ transform: translateX(18px); }
+
+  header .switch-text{ display: none !important; }
+}
+
+@media (max-width: 600px){
+  .card-link{
+    font-size: 1rem;
+    padding: 0.9rem 1.4rem;
+  }
+
+  .page-footer{ gap: 12px; }
+  .page-footer .branding{ gap: 8px; }
+  .page-footer .branding .train-wrapper{ margin-top: 6px; }
+  .page-footer .branding .train{ width: 160px; height: 60px; }
 }
