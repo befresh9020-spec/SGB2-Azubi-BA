@@ -811,7 +811,10 @@ const questions = [
     {text: "Ja, er ist über 15 Jahre alt und hat die Altersgrenze noch nicht erreicht, ist erwerbsfähig, hilfebedürftig und hat seinen gewöhnlichen Aufenthalt in Deutschland.", correct: true},
     {text: "Nein, er ist nicht erwerbsfähig.", correct: false},
     {text: "Nein, er hat die Altersgrenze erreicht.", correct: false}
-  ]},
+  ],
+  reference: "§ 7 (1) S. 1 Nr. 1 - 4 i.V.m. SGB II",
+  explanation: "Mario erfüllt alle Vorausstzungen und ist somit erwerbsfähiger Leistungsberechtigter."
+},
  {question: "Luigi (geboren am 10.11.1944, wohnt in Stuttgart) bezieht Rente, die ihm zur Bestreitung seines Lebensunterhalts nicht ausreicht. Handelt es sich um einen erwerbsfähigen Leistungsberechtigten?", answers: [
     {text: "Nein, er hat seinen gewöhnlichen Aufenthalt nicht in Deutschland.", correct: false},
     {text: "Ja, er ist über 15 Jahre alt und hat die Altersgrenze noch nicht erreicht, ist erwerbsfähig, hilfebedürftig und hat seinen gewöhnlichen Aufenthalt in Deutschland.", correct: false},
@@ -839,12 +842,24 @@ const questions = [
   reference: "§ 7 (4) S. 1 SGB II",
   explanation: "Leistungen nach diesem Buch erhält nicht, wer (...), Rente wegen Alters oder Knappschaftsausgleichsleistung oder ähnliche Leistungen öffentlich-rechtlicher Art bezieht."
   },
+  {question: "Eine Person, die Bürgergeld bezieht, erscheint zum 2. Mal nicht zu einem Meldetermin bei der Arbeitsvermittlung. Wie hoch ist die Leistungsminderung?", answers: [
+    {text: "10 % des maßgebenden Regelbedarfs", correct: true},
+    {text: "20 % des maßgebenden Regelbedarfs", correct: false},
+    {text: "30 % des maßgebenden Regelbedarfs", correct: false},
+    {text: "100 %", correct: false}
+  ],
+  reference: "§ 32 SGB II",
+  explanation: "Die Höhe der Leistungsminderung bei Meldeversäummis beträgt immer jeweils 10 % des maßgebenden Regelbedarfs."
+  },
  {question: "Eine Person, die Bürgergeld bezieht, erscheint zum 3. Mal nicht zu einem Meldetermin bei der Arbeitsvermittlung. Wie hoch ist die Leistungsminderung?", answers: [
     {text: "10 % des maßgebenden Regelbedarfs", correct: true},
     {text: "20 % des maßgebenden Regelbedarfs", correct: false},
     {text: "30 % des maßgebenden Regelbedarfs", correct: false},
     {text: "100 %", correct: false}
-  ]},
+  ],
+  reference: "§ 32 SGB II",
+  explanation: "Die Höhe der Leistungsminderung bei Meldeversäummis beträgt immer jeweils 10 % des maßgebenden Regelbedarfs."
+  },
  {question: "Eine Person, die Bürgergeld bezieht, lehnt erstmalig ein Arbeitsangebot ohne wichtigen Grund ab. Wie hoch ist die Leistungsminderung?", answers: [
     {text: "30 % des maßgebenden Regelbedarfs", correct: false},
     {text: "10 % des maßgebenden Regelbedarfs", correct: true},
@@ -856,7 +871,19 @@ const questions = [
     {text: "2 Monate", correct: false},
     {text: "3 Monate", correct: false},
     {text: "1 Woche", correct: false}
-  ]},
+  ],
+  reference: "§ 32 SGB II",
+  explanation: "Der Minderungszeitraum bei Meldeversäummis beträgt immer jeweils einen Monat."
+  },
+  {question: "Eine Person, die Bürgergeld bezieht, erscheint zum 3. Mal nicht zu einem Meldetermin beim Fallmanager. Wie lange dauert die Leistungsminderung?", answers: [
+    {text: "1 Monat", correct: true},
+    {text: "2 Monate", correct: false},
+    {text: "3 Monate", correct: false},
+    {text: "1 Woche", correct: false}
+  ],
+  reference: "§ 32 SGB II",
+  explanation: "Der Minderungszeitraum bei Meldeversäummis beträgt immer jeweils einen Monat."
+  },
  {question: "Bei einer Person, die Bürgergeld bezieht, tritt eine Sperrzeit nach § 159 SGB III wegen einer erstmaligen Arbeitsablehnung ein. Die Sperrzeit dauert 3 Wochen. Wie hoch ist die Leistungsminderung und wie lange dauert sie?", answers: [
     {text: "10 % des maßgebenden Regelbedarfs & 3 Wochen", correct: false},
     {text: "10 % des maßgebenden Regelbedarfs & 1 Monat", correct: true},
