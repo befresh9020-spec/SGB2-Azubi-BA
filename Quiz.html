@@ -934,7 +934,10 @@ const questions = [
     {text: "Jobcenter", correct: false},
     {text: "Agentur für Arbeit und Jobcenter", correct: true},
     {text: "anderer Träger", correct: false}
-  ]},
+  ],
+  reference: "§ 44 SGB III & § 16 (1) S. 2 Nr. 2 SGB II",
+  explanation: "Bei den Leistungen aus dem Vermittlungsbudget handelt es sich um Leistungen, die im SGB III geregelt sind. Über § 16 SGB II gelangt man auch im Bereich des Jobcenters zu dieser Leistung."
+  },
   {question: "Welcher Träger kann/ muss die Leistung Gründungszuschuss erbringen?", answers: [
     {text: "Agentur für Arbeit", correct: true},
     {text: "Jobcenter", correct: false},
@@ -949,18 +952,33 @@ const questions = [
     {text: "Jobcenter", correct: false},
     {text: "Agentur für Arbeit und Jobcenter", correct: true},
     {text: "anderer Träger", correct: false}
-  ]},
+  ],
+  reference: "§ 88 SGB III & § 16 (1) S. 2 Nr. 5 SGB II",
+  explanation: "Beim Eingliederungszuschuss handelt es sich um eine Leistung, die im SGB III geregelt ist. Über § 16 SGB II gelangt man auch im Bereich des Jobcenters zu dieser Leistung."
+  },
   {question: "Welcher Träger kann/ muss die Leistung Förderung der beruflichen Weiterbildung erbringen?", answers: [
     {text: "Agentur für Arbeit", correct: true},
     {text: "Jobcenter", correct: false},
     {text: "Agentur für Arbeit und Jobcenter", correct: false},
     {text: "anderer Träger", correct: false}
-  ]},
+  ],
+  reference: "§ 81 ff. SGB III",
+  explanation: "Bei der Leistung Förderung der beruflichen Weiterbildung handelt es sich um eine Leistung, die nur im SGB III geregelt ist. Über § 16 SGB II gelangt man seit 1.1.2025 nicht mehr zu dieser Leistung."
+  },
   {question: "Ein Antrag auf Bürgergeld wird am 12. November 2025 gestellt. Ab wann wirkt der Antrag?", answers: [
     {text: "ab 12. November 2025 (Leistungen werden nicht vor Antragstellung erbracht)", correct: false},
     {text: "ab 1. Dezember 2025 (Leistungen werden ab dem Folgemonat erbacht)", correct: false},
-    {text: "ab 1. November 2025 (der Antrag wird auf den Ersten des Monats zurück)", correct: true},
+    {text: "ab 1. November 2025 (der Antrag wirkt auf den Ersten des Monats zurück)", correct: true},
     {text: "ab 17. November 2025 (Leistungen werden nur für volle Kalenderwochen erbracht)", correct: false}
+  ],
+  reference: "§ 37 (2) SGB II",
+  explanation: "Leistungen nach diesem Buch werden nicht für Zeiten vor der Antragstellung erbracht. Der Antrag auf Leistungen zur Sicherung des Lebensunterhalts wirkt auf den Ersten des Monats zurück."
+  },
+  {question: "Ein Antrag auf Bürgergeld wird am 6. Februar 2026 gestellt. Ab wann wirkt der Antrag?", answers: [
+    {text: "ab 6. Februar 2026 (Leistungen werden nicht vor Antragstellung erbracht)", correct: false},
+    {text: "ab 1. März 2026 (Leistungen werden ab dem Folgemonat erbacht)", correct: false},
+    {text: "ab 1. Februar 2026 (der Antrag wirkt auf den Ersten des Monats zurück)", correct: true},
+    {text: "ab 1. Januar 2026 (Leistungen werden ab Jahresbeginn erbracht)", correct: false}
   ],
   reference: "§ 37 (2) SGB II",
   explanation: "Leistungen nach diesem Buch werden nicht für Zeiten vor der Antragstellung erbracht. Der Antrag auf Leistungen zur Sicherung des Lebensunterhalts wirkt auf den Ersten des Monats zurück."
@@ -1024,7 +1042,28 @@ const questions = [
     {text: "am Tag nach Aufgabe zur Post", correct: false},
     {text: "am Tag, an dem der Verwaltungsakt versendet wird", correct: false},
     {text: "am 4. Tag nach Aufgabe zur Post", correct: true}
-  ]},
+  ],
+  reference: "§ 37 (2) SGB X",
+  explanation: "Ein schriftlicher Verwaltungsakt, der im Inland durch die Post übermittelt wird, gilt am vierten Tag nach der Aufgabe zur Post als bekannt gegeben."
+  },
+  {question: "Bürgergeld wird am 5. Februar 2026 bewilligt. Der Bewilligungsbescheid wird am selben Tag zur Post gegeben. Wann gilt diese Entscheidung als bekanntgegeben?", answers: [
+    {text: "am 8. Februar 2026", correct: false},
+    {text: "am 5. Februar 2026", correct: false},
+    {text: "am 6. Februar 2026", correct: false},
+    {text: "am 9. Februar 2026", correct: true}
+  ],
+  reference: "§ 37 (2) SGB X",
+  explanation: "Tag nach Aufgabe zur Post: 6. Februar 2026 (Tag 1: 6.2., Tag 2: 7.2., Tag 3: 8.2., Tag 4: 9.2.). Ein schriftlicher Verwaltungsakt, der im Inland durch die Post übermittelt wird, gilt am vierten Tag nach der Aufgabe zur Post als bekannt gegeben."
+  },
+  {question: "Bürgergeld wird am 1. April 2026 bewilligt. Der Bewilligungsbescheid wird am selben Tag zur Post gegeben. Wann gilt diese Entscheidung als bekanntgegeben?", answers: [
+    {text: "am 4. April 2026", correct: false},
+    {text: "am 2. April 2026", correct: false},
+    {text: "am 1. April 2026", correct: false},
+    {text: "am 5. April 2026", correct: true}
+  ],
+  reference: "§ 37 (2) SGB X",
+  explanation: "Tag nach Aufgabe zur Post: 2. April 2026 (Tag 1: 2.4., Tag 2: 3.4., Tag 3: 4.4., Tag 4: 5.4.). Ein schriftlicher Verwaltungsakt, der im Inland durch die Post übermittelt wird, gilt am vierten Tag nach der Aufgabe zur Post als bekannt gegeben."
+  },
 ];
   
 
