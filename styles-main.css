@@ -475,7 +475,7 @@ html[data-theme="dark"] .card-link:focus{
   -webkit-backdrop-filter: blur(15px);
 
   border-radius: 25px;
-  padding: 30px;
+  padding: 15px;
   margin-bottom: 40px;
 
   border: 1px solid rgba(255,255,255,0.4);
