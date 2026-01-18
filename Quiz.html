@@ -318,12 +318,22 @@ html[data-theme="light"] .content::after {
 }
 
 /* Auf größeren Bildschirmen zwei Spalten (optional) */
+/* Auf größeren Bildschirmen zwei Spalten mit gleicher Höhe */
 @media (min-width: 900px) {
   .quiz-answers {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr; /* Alle Buttons in einer Zeile sind gleich hoch */
+    gap: 15px;
+  }
+
+  .quiz-answer {
+    display: flex;
+    align-items: center; /* Zentriert den Text vertikal */
+    height: 100%;       /* Nutzt die volle Grid-Höhe */
   }
 }
+
 
 .quiz-answer{
   background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
