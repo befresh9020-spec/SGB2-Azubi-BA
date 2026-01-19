@@ -809,3 +809,70 @@ html[data-theme="dark"] .train rect[fill="#333"]{
   .page-footer .branding .train-wrapper{ margin-top: 6px; }
   .page-footer .branding .train{ width: 160px; height: 60px; }
 }
+
+.search-toggle {
+	display: flex;
+  justify-content: center;
+  margin: 1.5rem auto;
+  align-items: center;
+  gap: 0.6rem;
+
+  padding: 0.75rem 1.25rem;
+  margin: 1.5rem auto;
+
+  font-size: 1rem;
+  font-weight: 500;
+
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(0,0,0,0.15);
+  color: inherit;
+
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.15s ease;
+}
+
+.search-toggle:hover {
+  background: rgba(0,0,0,0.25);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.search-toggle:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+.search-toggle .icon {
+  font-size: 1.1rem;
+}
+
+.search-toggle .chevron {
+  margin-left: 0.25rem;
+  transition: transform 0.25s ease;
+}
+
+.search-toggle[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+.search-bar {
+  margin: 1rem auto;
+  max-width: 600px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.search-bar[hidden] {
+  opacity: 0;
+  transform: translateY(-5px);
+}
+
+.search-bar input {
+  font-size: 16px;
+}
