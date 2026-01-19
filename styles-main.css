@@ -876,3 +876,119 @@ html[data-theme="dark"] .train rect[fill="#333"]{
 .search-bar input {
   font-size: 16px;
 }
+
+/* =========================
+   Update Slider
+   ========================= */
+
+.update-banner {
+  max-width: 1100px;
+  margin: 1rem auto 1.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface, rgba(0,0,0,0.04));
+  border-radius: 8px;
+	
+	/* NEU */
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 4px 12px rgba(0,0,0,0.12);
+}
+
+.update-slider {
+  position: relative;
+  min-height: 2.2rem;
+	
+	transition: transform 0.25s ease;
+  will-change: transform;
+}
+
+.update-slide {
+  display: none;
+  font-size: 0.95rem;
+}
+
+.update-slide.is-active {
+  display: block;
+}
+
+.update-slider.is-dragging {
+  transition: none;
+}
+
+.update-slide a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.update-slide a:hover {
+  text-decoration: underline;
+}
+
+.update-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.4rem;
+  margin-right: 0.5rem;
+  border-radius: 4px;
+  background: #555;
+  color: #fff;
+}
+
+.update-dots {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.update-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: #aaa;
+  cursor: pointer;
+}
+
+.update-dots .dot.is-active {
+  background: #333;
+}
+
+.update-date {
+  margin-left: 0.4rem;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.update-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.update-title {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+  color: inherit;
+}
+
+.update-title:hover {
+  text-decoration: underline;
+}
+
+.update-sub {
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+.update-title[aria-disabled="true"] {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+}
