@@ -29,6 +29,13 @@
 </header>
 
 <!-- 🔍 Dezente Paragraphen-Suche -->
+
+<button id="toggleSearch" class="search-toggle" type="button" aria-expanded="false">
+  <span class="icon">🔍</span>
+  <span class="label">§-Suche</span>
+  <span class="chevron" aria-hidden="true">▾</span>
+</button>
+
 <section class="search-bar">
   <form id="paragraphSearchForm" class="search-form">
     <label for="paragraphInput">Paragraph im SGB II suchen</label>
@@ -589,6 +596,30 @@
       window.location.href = target;
     });
   }
+  
+  	  // ---------- Searchbar Toggle ----------
+  function initSearchToggle() {
+    const toggleButton   = document.getElementById('toggleSearch');
+    const searchContainer = document.getElementById('searchContainer');
+    const searchInput     = document.getElementById('paragraphInput');
+
+    if (!toggleButton || !searchContainer) return;
+
+    toggleButton.addEventListener('click', () => {
+      const isOpen = !searchContainer.hasAttribute('hidden');
+
+      if (isOpen) {
+        searchContainer.setAttribute('hidden', '');
+        toggleButton.setAttribute('aria-expanded', 'false');
+      } else {
+        searchContainer.removeAttribute('hidden');
+        toggleButton.setAttribute('aria-expanded', 'true');
+
+        // Fokus ins Suchfeld (optional, aber UX-freundlich)
+        if (searchInput) searchInput.focus();
+      }
+    });
+  }
 
   // ---------- Service Worker ----------
   function initServiceWorker() {
@@ -660,6 +691,7 @@
     initFlipCards();
     initThemeSwitch();
     initParagraphSearch();
+    initSearchToggle();
     initServiceWorker();
     initTopicFilter();
     initDoubleTapPrevention();
