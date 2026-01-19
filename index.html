@@ -28,6 +28,50 @@
 
 </header>
 
+<!-- 🔔 Update-Slider -->
+<section class="update-banner" aria-label="Aktuelle Updates">
+
+  <div class="update-slider" id="updateSlider">
+
+    <!-- Slide 1 -->
+    <div class="update-slide is-active">
+      <div class="update-meta">
+        <span class="update-tag">Neu</span>
+        <span class="update-date">19.01.2026</span>
+      </div>
+
+      <a href="Audio.html" class="update-title">
+        🎧 Neue Podcast-Folge - vom 15.01.2026
+      </a>
+			
+			<div class="update-sub">
+			Grundsicherung: Nahles äußert Zweifel
+      </div>
+			
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="update-slide">
+      <div class="update-meta">
+        <span class="update-tag">Quiz</span>
+        <span class="update-date">16.01.2026</span>
+      </div>
+
+   <a href="Quiz.html" class="update-title">
+       🧩 Neue Quiz-Fragen hinzugefügt
+      </a>
+</div>
+
+    </div>
+	</div>
+
+  <div class="update-dots" role="tablist" aria-label="Updates auswählen">
+    <button class="dot is-active" aria-label="Update 1"></button>
+    <button class="dot" aria-label="Update 2"></button>
+  </div>
+
+</section>
+
 <!-- 🔍 Dezente Paragraphen-Suche -->
 
 <button id="toggleSearch" class="search-toggle" type="button" aria-expanded="false">
@@ -685,6 +729,69 @@
       lastTouchEnd = now;
     }, { passive: false });
   }
+  
+  // ---------- Update Slider (Swipe + Feedback) ----------
+function initUpdateSlider() {
+  const slider = document.getElementById('updateSlider');
+  const slides = document.querySelectorAll('.update-slide');
+  const dots   = document.querySelectorAll('.update-dots .dot');
+
+  if (!slider || slides.length === 0 || dots.length === 0) return;
+
+  let current = 0;
+  let startX  = 0;
+  let deltaX  = 0;
+  let isDragging = false;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('is-active', i === index);
+      dots[i].classList.toggle('is-active', i === index);
+    });
+    current = index;
+  }
+
+  function nextSlide() {
+    showSlide((current + 1) % slides.length);
+  }
+
+  function prevSlide() {
+    showSlide((current - 1 + slides.length) % slides.length);
+  }
+
+  // Dots
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => showSlide(index));
+  });
+
+  // Touch handling mit visuellem Feedback
+  slider.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    slider.classList.add('is-dragging');
+  }, { passive: true });
+
+  slider.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    deltaX = e.touches[0].clientX - startX;
+
+    // leichte Dämpfung, damit es nicht zu weit zieht
+    slider.style.transform = `translateX(${deltaX * 0.3}px)`;
+  }, { passive: true });
+
+  slider.addEventListener('touchend', () => {
+    slider.classList.remove('is-dragging');
+    slider.style.transform = '';
+
+    if (Math.abs(deltaX) > 50) {
+      if (deltaX < 0) nextSlide();
+      else prevSlide();
+    }
+
+    deltaX = 0;
+    isDragging = false;
+  }, { passive: true });
+}
 
   // ---------- Bootstrap ----------
   document.addEventListener('DOMContentLoaded', () => {
@@ -695,6 +802,7 @@
     initServiceWorker();
     initTopicFilter();
     initDoubleTapPrevention();
+    initUpdateSlider();
   });
 
 })();
