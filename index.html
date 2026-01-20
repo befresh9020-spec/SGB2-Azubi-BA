@@ -730,7 +730,7 @@
     }, { passive: false });
   }
   
-  // ---------- Update Slider (Swipe + Feedback) ----------
+  //// ---------- Update Slider (final, smooth & stabil) ----------
 function initUpdateSlider() {
   const slider = document.getElementById('updateSlider');
   const slides = document.querySelectorAll('.update-slide');
@@ -739,10 +739,16 @@ function initUpdateSlider() {
   if (!slider || slides.length === 0 || dots.length === 0) return;
 
   let current = 0;
-  let startX  = 0;
-  let deltaX  = 0;
+  let startX = 0;
+  let deltaX = 0;
   let isDragging = false;
 
+  const THRESHOLD = 60;      // Mindest-Swipe-Distanz
+  const DRAG_RATIO = 0.3;   // Wie stark der Slider dem Finger folgt
+  const COMMIT_OFFSET = 24; // Visueller Impuls beim Wechsel
+  const COMMIT_TIME = 220;  // Dauer der Commit-Animation
+
+  // --- Anzeige eines Slides ---
   function showSlide(index) {
     slides.forEach((slide, i) => {
       slide.classList.toggle('is-active', i === index);
@@ -751,22 +757,35 @@ function initUpdateSlider() {
     current = index;
   }
 
-  function nextSlide() {
-    showSlide((current + 1) % slides.length);
+  // --- Commit-Animation (kein Snap-Back) ---
+  function commitSlide(direction) {
+    slider.style.transform =
+      `translateX(${direction < 0 ? -COMMIT_OFFSET : COMMIT_OFFSET}px)`;
+
+    setTimeout(() => {
+      showSlide(
+        direction < 0
+          ? (current + 1) % slides.length
+          : (current - 1 + slides.length) % slides.length
+      );
+      slider.style.transform = 'translateX(0)';
+    }, COMMIT_TIME);
   }
 
-  function prevSlide() {
-    showSlide((current - 1 + slides.length) % slides.length);
+  // --- Zurücksetzen bei zu kurzem Swipe ---
+  function resetSlide() {
+    slider.style.transform = 'translateX(0)';
   }
 
-  // Dots
+  // --- Dots ---
   dots.forEach((dot, index) => {
     dot.addEventListener('click', () => showSlide(index));
   });
 
-  // Touch handling mit visuellem Feedback
+  // --- Touch Events ---
   slider.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
+    deltaX = 0;
     isDragging = true;
     slider.classList.add('is-dragging');
   }, { passive: true });
@@ -774,22 +793,21 @@ function initUpdateSlider() {
   slider.addEventListener('touchmove', (e) => {
     if (!isDragging) return;
     deltaX = e.touches[0].clientX - startX;
-
-    // leichte Dämpfung, damit es nicht zu weit zieht
-    slider.style.transform = `translateX(${deltaX * 0.3}px)`;
+    slider.style.transform =
+      `translateX(${deltaX * DRAG_RATIO}px)`;
   }, { passive: true });
 
   slider.addEventListener('touchend', () => {
     slider.classList.remove('is-dragging');
-    slider.style.transform = '';
+    isDragging = false;
 
-    if (Math.abs(deltaX) > 50) {
-      if (deltaX < 0) nextSlide();
-      else prevSlide();
+    if (Math.abs(deltaX) > THRESHOLD) {
+      commitSlide(deltaX);
+    } else {
+      resetSlide();
     }
 
     deltaX = 0;
-    isDragging = false;
   }, { passive: true });
 }
 
