@@ -32,6 +32,10 @@ html[data-theme="dark"]{
 
   --card-bg: #1a202c;
   --card-text: #f1f5f9;
+	
+  --btn-glow: rgba(255, 255, 255, 0.2);
+}
+
 }
 
 /* System Dark Fallback (wenn kein data-theme gesetzt ist) */
@@ -112,6 +116,17 @@ header p{
   font-size: 1.5rem;
   font-weight: 600;
   text-align: center;
+}
+
+.flip-card-front h3::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #E2001A;
+  margin: 8px auto 0;
+  border-radius: 2px;
+  opacity: 0.6;
 }
 
 .flip-card-back h3{
@@ -325,9 +340,17 @@ article.flip-card{
 
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+	
 }
 
-.flip-card:hover .flip-card-inner{ transform: scale(1.02); }
+/* Hover-Zustand für mehr "Lift" */
+.flip-card:hover .flip-card-inner {
+  transform: scale(1.03); /* Etwas mehr Vergrößerung */
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(127, 29, 29, 0.2); /* Subtiler weinroter Glow beim Hover */
+}
+
 .flip-card.flipped .flip-card-inner{ transform: rotateY(180deg); }
 
 /* Front/Back */
@@ -337,7 +360,7 @@ article.flip-card{
   width: 100%;
   height: 100%;
   border-radius: 15px;
-  padding: 20px;
+  padding: 15px;
 
   backface-visibility: hidden;
 
@@ -351,6 +374,15 @@ article.flip-card{
   background: var(--card-bg);
   color: var(--card-text);
   border: 1px solid var(--glass-border);
+	
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Sehr feiner Rand */
+  
+  /* Das ist der Trick: Ein innerer Schatten, der nur oben und links weiß leuchtet */
+  box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+html[data-theme="dark"] .flip-card-front {
+  background: linear-gradient(145deg, rgba(26, 32, 44, 0.9) 0%, rgba(15, 23, 42, 1) 100%);
 }
 
 .flip-card-back{
@@ -359,111 +391,218 @@ article.flip-card{
 }
 
 /* =================================== */
-/* LINKS AUF DER RÜCKSEITE              */
+/* LINKS AUF DER RÜCKSEITE (OPTIMIERT) */
 /* =================================== */
-.card-links{
+
+/* =================================== */
+/* 1. LAYOUT RÜCKSEITE (Zentriert)     */
+/* =================================== */
+.flip-card-back {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  margin-top: 1rem;
-  align-items: stretch;
-}
-
-.card-link{
-  display: flex;
+  justify-content: center; /* Zentriert den Inhalt vertikal */
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
-
-  padding: 0.75rem 1.2rem;
-  border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-
-  text-decoration: none;
+  padding: 15px;
   text-align: center;
-  cursor: pointer;
-
-  border: 2px solid rgba(255,255,255,0.85);
-  background: rgba(0,0,0,0.2);
-  color: #fff;
-
-  box-shadow: 0 6px 14px rgba(0,0,0,0.3);
-  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  /* Falls doch mal gescrollt werden muss auf Mini-Handys */
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
-.card-link:hover,
-.card-link:focus{
-  background: rgba(0,0,0,0.45);
-  outline: 3px solid #FFD600;
-  outline-offset: 3px;
+/* Spezialanpassung für kompakte Karten */
+.flip-card-back--compact {
+  padding: 12px;
+  /* Sorgt für gleichmäßige Verteilung bei wenig Platz */
+  justify-content: space-evenly;
 }
 
-.flip-card--compact .card-links,
-.flip-card-back--compact .card-links{ gap: 10px; }
-
-.flip-card--compact .card-link,
-.flip-card-back--compact .card-link{
-  padding: 0.55rem 1rem;
-  font-size: 0.88rem;
-  max-width: 280px;
-  box-shadow: none;
-}
-
-/* Dark Mode: Card-Link-Variante */
-html[data-theme="dark"] .card-link{
-  background: rgba(255,255,255,0.15);
-  border-color: rgba(255,255,255,0.35);
-}
-html[data-theme="dark"] .card-link:hover,
-html[data-theme="dark"] .card-link:focus{
-  background: rgba(255,255,255,0.3);
+.flip-card-back--compact p {
+  margin-bottom: 5px;
 }
 
 /* =================================== */
-/* LOGO – VORDERSEITE                   */
+/* 2. CONTAINER FÜR DIE LINKS          */
 /* =================================== */
-.flip-card-front .logo{
+.card-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;        /* Angenehmer Abstand zwischen den Pills */
+  width: 100%;
+  max-width: 320px; /* Begrenzt die Breite, damit sie "pillig" bleiben */
+  margin-top: 15px;
+}
+
+/* =================================== */
+/* 3. DIE PILL (BUTTON) STYLING        */
+/* =================================== */
+.card-link {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Inhalt (Icon+Text) mittig */
+  gap: 0.6rem;
+
+  width: 100%;
+  padding: 0.7rem 1rem;
+  
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  
+  color: var(--card-text);
+  /* Subtiles Glas-Grau für besseren Kontrast */
+  background: rgba(0, 0, 0, 0.04); 
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  
+  transition: all 0.2s ease;
+  /* WICHTIG für den Shine-Effekt: */
   position: relative;
-  width: 77px;
-  height: 77px;
-  border-radius: 50%;
-  background: conic-gradient(
-    #ff0000 0deg,
-    #ff8000 45deg,
-    #ffff00 90deg,
-    #80ff00 135deg,
-    #00ff00 180deg,
-    #00ff80 225deg,
-    #00ffff 270deg,
-    #0080ff 315deg,
-    #0000ff 360deg,
-    #8000ff 405deg,
-    #ff00ff 450deg,
-    #ff0080 495deg,
-    #ff0000 540deg
+  overflow: hidden;
+}
+
+/* Mobile Touch-Feedback */
+.card-link:active {
+  transform: scale(0.98);
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* =================================== */
+/* 4. FARBAKZENTE (Borders)            */
+/* =================================== */
+.card-link:nth-of-type(1) { border-left: 4px solid #7f1d1d; } /* Weinrot */
+.card-link:nth-of-type(2) { border-left: 4px solid #b45309; } /* Kupfer */
+.card-link:nth-of-type(3) { border-left: 4px solid #2d3748; } /* Dunkelgrau (neu!) */
+/* Fallback für weitere Links */
+.card-link:nth-of-type(n+4) { border-left: 4px solid #718096; }
+
+/* =================================== */
+/* 5. DER SHINE EFFEKT (Zurück!)       */
+/* =================================== */
+.card-link::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 60%;
+  height: 100%;
+  /* Der Glanz-Verlauf */
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
   );
-  margin-bottom: 15px;
+  transform: skewX(-25deg);
+  pointer-events: none;
+}
+
+@keyframes buttonShine {
+  0% { left: -150%; }
+  100% { left: 200%; } /* Läuft weiter durch für sauberes Ende */
+}
+
+/* Basis-Animation beim Umdrehen */
+.flipped .card-link::after {
+  animation: buttonShine 1.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+/* STAGGERED SHINE: Verzögerung für den Domino-Effekt */
+/* Der erste Button glänzt nach 0.4s */
+.flipped .card-link:nth-of-type(1)::after { animation-delay: 0.4s; }
+/* Der zweite Button glänzt nach 0.65s */
+.flipped .card-link:nth-of-type(2)::after { animation-delay: 0.65s; }
+/* Der dritte Button glänzt nach 0.8s */
+.flipped .card-link:nth-of-type(3)::after { animation-delay: 0.8s; }
+
+
+/* =================================== */
+/* DARK MODE ANPASSUNG                 */
+/* =================================== */
+html[data-theme="dark"] .card-link {
+  color: #ffffff; /* Weißer Text nur im Darkmode */
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="dark"] .card-link:nth-of-type(1) {
+  box-shadow: inset 0 0 15px rgba(127, 29, 29, 0.15);
+}
+
+html[data-theme="dark"] .card-link:nth-of-type(2) {
+  box-shadow: inset 0 0 15px rgba(180, 83, 9, 0.15);
+}
+
+
+/* =================================== */
+/* DARK MODE SPEZIAL                   */
+/* =================================== */
+html[data-theme="dark"] .card-link {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+}
+
+/* Der "Innere Glow" Effekt im Darkmode */
+html[data-theme="dark"] .card-link::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 11px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+  pointer-events: none;
+}
+
+/* Weinrot im Darkmode etwas satter */
+html[data-theme="dark"] .card-link:nth-of-type(1) {
+  background: linear-gradient(135deg, #5a1212 0%, #7f1d1d 100%);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(127, 29, 29, 0.3);
+}
+
+/* Kupfer im Darkmode etwas erdiger */
+html[data-theme="dark"] .card-link:nth-of-type(2) {
+  background: linear-gradient(135deg, #7c3a0d 0%, #b45309 100%);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(180, 83, 9, 0.3);
+}
+
+html[data-theme="dark"] .card-link:hover {
+  filter: brightness(1.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--btn-glow);
+}
+
+
+/* =================================== */
+/* LOGO – VORDERSEITE (Variante 2)      */
+/* =================================== */
+.flip-card-front .logo {
+  /* HIER DIE GRÖSSE EINFACH ANPASSEN */
+  --logo-size: 55px; 
+  
+  position: relative;
+  width: var(--logo-size);
+  height: var(--logo-size);
+  border-radius: 50%;
+  
+  /* Dein bestehender Regenbogen-Verlauf */
+  background: conic-gradient(
+    #ff0000 0deg, #ff8000 45deg, #ffff00 90deg, #80ff00 135deg,
+    #00ff00 180deg, #00ff80 225deg, #00ffff 270deg, #0080ff 315deg,
+    #0000ff 360deg, #8000ff 405deg, #ff00ff 450deg, #ff0080 495deg, #ff0000 540deg
+  );
+  
+  margin-bottom: 12px; /* Etwas weniger Abstand, da Logo kleiner ist */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.flip-card-front .logo::after{
-  content:"";
-  width: 70px;
-  height: 70px;
+.flip-card-front .logo::after {
+  content: "";
+  /* Der innere rote Kreis skaliert jetzt automatisch mit (90% der Außengröße) */
+  width: calc(var(--logo-size) * 0.9);
+  height: calc(var(--logo-size) * 0.9);
   border-radius: 50%;
   background-color: #E2001A;
 }
-
-.flip-card-back .logo{ display: none !important; }
 
 /* =================================== */
 /* SUCHE / FILTER – CONTAINER           */
@@ -887,23 +1026,24 @@ html[data-theme="dark"] .train rect[fill="#333"]{
   padding: 0.75rem 1rem;
   background: var(--surface, rgba(0,0,0,0.04));
   border-radius: 8px;
-  overflow: hidden;
 	
 	/* NEU */
   border: 1px solid rgba(255,255,255,0.15);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.08),
     0 4px 12px rgba(0,0,0,0.12);
+		
+	overflow: hidden;
 }
 
 .update-slider {
   position: relative;
-  min-height: 4.5rem;
+	min-height: 4.5rem;
   display: grid;
   align-items: center;
 	
   will-change: transform;
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .update-slide {
