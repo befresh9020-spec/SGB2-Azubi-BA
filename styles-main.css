@@ -887,6 +887,7 @@ html[data-theme="dark"] .train rect[fill="#333"]{
   padding: 0.75rem 1rem;
   background: var(--surface, rgba(0,0,0,0.04));
   border-radius: 8px;
+  overflow: hidden;
 	
 	/* NEU */
   border: 1px solid rgba(255,255,255,0.15);
@@ -902,7 +903,7 @@ html[data-theme="dark"] .train rect[fill="#333"]{
   align-items: center;
 	
   will-change: transform;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .update-slide {
