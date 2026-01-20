@@ -897,7 +897,9 @@ html[data-theme="dark"] .train rect[fill="#333"]{
 
 .update-slider {
   position: relative;
-  min-height: 2.2rem;
+  min-height: 4.5rem;
+  display: grid;
+  align-items: center;
 	
 	transition: transform 0.25s ease;
   will-change: transform;
