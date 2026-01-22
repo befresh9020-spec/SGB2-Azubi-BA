@@ -1,3 +1,13 @@
+(function() {
+    const isAccessGranted = localStorage.getItem("access_granted") === "true";
+    const isIndexPage = window.location.pathname.endsWith("index.html") || window.location.pathname === "/";
+
+    // Wenn kein Zugriff UND wir sind nicht auf der Startseite -> Umleiten!
+    if (!isAccessGranted && !isIndexPage) {
+        window.location.href = "index.html";
+    }
+})();
+
 const VALID_HASH = "e45d96dc2837c40369aff18c148b007cd543ea71f9af7be4d2e84ed6f58ae7be";
 
 async function hashString(str) {
