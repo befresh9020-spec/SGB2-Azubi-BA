@@ -7,12 +7,24 @@
     <meta name="theme-color" content="#2a0f17">
     <title>SGB2 lernen</title>
     <link rel="stylesheet" href="styles-main.css">
+		<script src="gate.js" defer></script>
 </head>
 	
 <body>
-<header class="header">
+    <div id="gate-screen">
+        <div class="lock-card">
+            <div class="logo"></div> <h2>Lernreise SGB II</h2>
+            <p>Zugang nur für BA-Auszubildende.</p>
+            <input type="password" id="pw-field" placeholder="Passwort eingeben...">
+            <button onclick="unlockApp()">Einloggen</button>
+        </div>
+    </div>
+
+    <div id="main-app" style="display: none;">
+					
+					<header class="header">
     <h1>SGB II - Bürgergeld</h1>
-    <p>Ein Überblick für Auszubildende der Bundesagentur für Arbeit zum Thema SGB II</p>
+    <p>Lernplattform für Azubis der BA</p>
 	
 	<button id="themeToggle" class="theme-switch" aria-pressed="false" type="button">
   <span class="switch-track" aria-hidden="true">
@@ -80,7 +92,7 @@
   <span class="chevron" aria-hidden="true">▾</span>
 </button>
 
-<section class="search-bar" id="searchContainer" hidden>
+	<section class="search-bar" id="searchContainer" hidden>
   <form id="paragraphSearchForm" class="search-form">
     <label for="paragraphInput">Paragraph im SGB II suchen</label>
 
@@ -116,7 +128,7 @@
     </select>
   </div>
 </div>
-
+					
 <main class="container">
 
     <!-- Karte 1 -->
@@ -357,14 +369,13 @@
                 <a href="https://www.bmas.de/DE/Service/Presse/Pressemitteilungen/2025/gesetzentwurf-umgestaltung-grundsicherung-arbeitsuchende.html"
                    class="card-link"
                    target="_blank"
-                   rel="noopener noreferrer">📰 Pressemitteilung BMAS vom 17.12.2025</a>
-                <a href="https://www.tagesschau.de/inland/innenpolitik/buergergeldreform-kritik-100.html"
+                   rel="noopener noreferrer">📰Pressemitteilung BMAS vom 17.12.2025</a>
+                   <a href="https://www.tagesschau.de/inland/innenpolitik/buergergeldreform-kritik-100.html"
                    class="card-link"
                    target="_blank"
-                   rel="noopener noreferrer">📰 Tagesschau: „Studie: Bürgergeld und Stellensuche“</a>
-				
+                   rel="noopener noreferrer">📰Tagesschau: „Studie: Bürgergeld und Stellensuche“</a>
 				</div>
-            </div>
+				</div>
         </div>
     </article>
 
@@ -391,26 +402,24 @@
       </article>
 
 </main>
-
-<footer class="page-footer">
-
-  <!-- Tipp -->
-  <div class="tip">
-    💡 Klicken oder Enter drücken, um eine Karte zu drehen
+					
+				<footer class="page-footer">
+  <div class="footer-pill tip">
+    💡 Klicken oder Enter, um eine Karte zu drehen
   </div>
 
-  <!-- Absenderzeile -->
-  <div class="author">
-    🤵🏻‍♂️ Erstellt von: B. Frischer – Stand: 2026
+  <div class="footer-info">
+    <span class="author">🤵🏻‍♂️ B. Frischer</span>
+    <span class="version-tag">Version 2.0 • Stand Jan. 2026</span>
   </div>
 
-  <!-- Branding mit Zug -->
- <div class="branding">
-    Für Auszubildende der BA · Deine Lernreise:
-  <span class="train-wrapper">
-  <svg class="train" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+  <div class="branding-text">
+    Für Auszubildende der BA · <strong>Deine Lernreise</strong>
+  </div>
 
-    <!-- Gleise -->
+  <div class="train-container">
+    <svg class="train" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+			<!-- Gleise -->
     <rect x="0" y="32" width="120" height="2" fill="#666"/>
     <rect x="0" y="34" width="120" height="1" fill="#444"/>
 
@@ -462,12 +471,17 @@
     <!-- Bewegung -->
     <animateTransform attributeName="transform" type="translate"
                       values="0; -40; 0" dur="3s" repeatCount="indefinite"/>
-  </svg>
-</span>
+      </svg>
   </div>
 
-</footer>
+  <nav class="footer-links">
+   <a href="mailto:ba-azubicontent@posteo.de?subject=Feedback%20zur%20Lernreise%20SGB%20II">Feedback senden</a>
+	 <a href="#">Disclaimer</a>
+  </nav>
+</footer>	
+    </div>
 
+</body>
 
 <script>
 (() => {
@@ -640,8 +654,8 @@
       window.location.href = target;
     });
   }
-  
-  	  // ---------- Searchbar Toggle ----------
+	
+	  // ---------- Searchbar Toggle ----------
   function initSearchToggle() {
     const toggleButton   = document.getElementById('toggleSearch');
     const searchContainer = document.getElementById('searchContainer');
@@ -729,8 +743,8 @@
       lastTouchEnd = now;
     }, { passive: false });
   }
-  
-  //// ---------- Update Slider (final, smooth & stabil) ----------
+	
+	// ---------- Update Slider (final, smooth & stabil) ----------
 function initUpdateSlider() {
   const slider = document.getElementById('updateSlider');
   const slides = document.querySelectorAll('.update-slide');
@@ -816,11 +830,11 @@ function initUpdateSlider() {
     initFlipCards();
     initThemeSwitch();
     initParagraphSearch();
-    initSearchToggle();
+		initSearchToggle();
     initServiceWorker();
     initTopicFilter();
     initDoubleTapPrevention();
-    initUpdateSlider();
+		initUpdateSlider();
   });
 
 })();
