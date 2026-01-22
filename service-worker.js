@@ -5,6 +5,7 @@ const CACHE_NAME = "sgb2-lernen-cache-v1";
 const PRECACHE_URLS = [
   "index.html",
   "styles.main.css",
+  "gate.js",
   "Quiz.html",
   "Berechtigte.html",
   "Berechtigte_SV.html",
