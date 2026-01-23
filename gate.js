@@ -38,3 +38,26 @@ async function unlockApp() {
         alert("Passwort nicht korrekt.");
     }
 }
+
+function revealAddress() {
+	
+    const data = {
+        n: "Björn Frischer",
+        s: "Musterstraße",
+        h: "123",
+        z: "12345",
+        o: "Musterstadt"
+    };
+
+    const container = document.getElementById('address-container');
+    
+    container.innerHTML = `
+        <p class="revealed-text">
+            ${data.n}<br>
+            ${data.s} ${data.h}<br>
+            ${data.z} ${data.o}
+        </p>
+    `;
+    
+    container.classList.add('fade-in');
+}
