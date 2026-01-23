@@ -1,0 +1,87 @@
+/* Container für die rechtliche Karte */
+.legal-card {
+    background: var(--card-bg);
+    color: var(--card-text);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.legal-section {
+    margin-bottom: 30px;
+    text-align: left; /* Rechtstexte immer linksbündig lesen */
+}
+
+.legal-section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #7f1d1d; /* Dein Weinrot als Akzent */
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 5px;
+}
+
+html[data-theme="dark"] .legal-section h2 {
+    color: #f1f5f9;
+    border-bottom-color: rgba(255,255,255,0.1);
+}
+
+.legal-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* Spezielles Styling für den Disclaimer */
+.disclaimer {
+    background: rgba(127, 29, 29, 0.05); /* Ganz zarter Rotschimmer */
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid #7f1d1d;
+}
+
+html[data-theme="dark"] .disclaimer {
+    background: rgba(255, 255, 255, 0.05);
+    border-left-color: #b45309; /* Kupfer im Darkmode */
+}
+
+.back-link {
+    margin-top: 40px;
+    text-align: center;
+}
+
+/* Mobile Optimierung */
+@media (max-width: 600px) {
+    .legal-card {
+        padding: 20px;
+        margin: 10px;
+    }
+}
+
+.legal-section h3 {
+    font-size: 1rem;
+    margin: 15px 0 5px 0;
+    font-weight: 600;
+    color: var(--card-text);
+    opacity: 0.95;
+}
+
+/* Link-Styling innerhalb der Rechtstexte */
+.legal-section a {
+    color: #7f1d1d;
+    text-decoration: underline;
+    transition: opacity 0.2s;
+}
+
+html[data-theme="dark"] .legal-section a {
+    color: #339CFF;
+}
+
+.legal-section a:hover {
+    opacity: 0.7;
+}
