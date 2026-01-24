@@ -43,10 +43,10 @@ function revealAddress() {
 	
     const data = {
         n: "Björn Frischer",
-        s: "Musterstraße",
-        h: "123",
-        z: "12345",
-        o: "Musterstadt"
+        s: "***",
+        h: "****",
+        z: "*****",
+        o: "******"
     };
 
     const container = document.getElementById('address-container');
