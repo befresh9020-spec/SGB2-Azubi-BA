@@ -1,5 +1,5 @@
 // Name deiner Cache-Version – bei Änderungen hochzählen, z.B. "v2"
-const CACHE_NAME = "sgb2-lernen-cache-v1";
+const CACHE_NAME = "sgb2-lernen-cache-v1.1";
 
 // Dateien, die direkt beim Installieren gecacht werden sollen:
 const PRECACHE_URLS = [
