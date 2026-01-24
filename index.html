@@ -12,13 +12,23 @@
 	
 <body>
     <div id="gate-screen">
-        <div class="lock-card">
-            <div class="logo"></div> <h2>Lernportal SGB II</h2>
-            <p>Zugang nur für BA-Auszubildende.</p>
+    <div class="lock-card">
+        <div class="logo"></div> 
+        <h2>Lernportal SGB II</h2>
+        <p>Zugang nur für BA-Auszubildende.</p>
+        
+        <div class="input-group">
             <input type="password" id="pw-field" placeholder="Passwort eingeben...">
-            <button onclick="unlockApp()">Einloggen</button>
+            
+            <button class="login-btn" onclick="unlockApp()">Einloggen</button>
+            
+            <a href="mailto:sgb2-lernen-pw@gmx.net?subject=Passwortanfrage%20Lernportal&body=Hallo%20Bjørn%2C%20ich%20bitte%20um%20das%20Passwort%20f%C3%BCr%20das%20Lernportal.%20Dienststelle%3A%20..." 
+               class="request-btn">
+               Passwort anfragen (per Mail)
+            </a>
         </div>
     </div>
+</div>
 
     <div id="main-app" style="display: none;">
 					
