@@ -1276,3 +1276,60 @@ html[data-theme="dark"] .page-footer {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+
+/* Container für die Eingaben */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Abstand zwischen Feld und Buttons */
+    width: 100%;
+}
+
+/* Der Haupt-Button */
+.login-btn {
+    background: #7f1d1d; /* Dein Weinrot */
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.login-btn:hover {
+    background: #a82525;
+    transform: translateY(-1px);
+}
+
+/* Der Anfrage-Button (unter dem Login) */
+
+.request-btn {
+    display: inline-block;    /* Damit Breite und Padding korrekt wirken */
+    text-decoration: none;    /* Entfernt den typischen blauen Unterstrich */
+    box-sizing: border-box;   /* Verhindert, dass der Button über den Rand ragt */
+    
+    /* Hier folgt dein restliches CSS von vorhin... */
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: center;
+		transition: all 0.2s ease;
+}
+
+.request-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Darkmode/Lightmode Check für den Text */
+html[data-theme="light"] .request-btn {
+    color: #4a5568;
+    border-color: #cbd5e0;
+}
