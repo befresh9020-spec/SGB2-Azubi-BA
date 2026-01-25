@@ -902,6 +902,32 @@ html[data-theme="dark"] .search-row button{
   margin: 0 auto; /* Zusätzliche Sicherheit für die Zentrierung */
 }
 
+/* Zug klickbar machen */
+.train {
+  cursor: pointer;
+}
+
+.smoke {
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+/* Grundzustand Fenster */
+.train-window {
+  transition: fill 0.25s ease;
+}
+
+/* Easteregg aktiv */
+.train.easteregg-active .smoke {
+  transform: scale(1.35);
+  opacity: 1;
+}
+
+.train.easteregg-active .train-window {
+  fill: #FFD966;
+}
+
 /* 5. Footer Links */
 .footer-links {
   display: flex;
