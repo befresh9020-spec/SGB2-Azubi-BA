@@ -428,81 +428,97 @@
   </div>
 
   <div class="train-container">
-    <svg class="train" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
-			<!-- Gleise -->
+     <svg class="train"
+       width="120"
+       height="40"
+       viewBox="0 0 120 40"
+       aria-hidden="true"
+       role="button"
+       tabindex="0">
+
+    <!-- Gleise -->
     <rect x="0" y="32" width="120" height="2" fill="#666"/>
     <rect x="0" y="34" width="120" height="1" fill="#444"/>
-            <!-- Schatten unter Gleis -->
+
+    <!-- Schatten unter Gleis -->
     <rect x="0" y="35" width="120" height="1" fill="rgba(0,0,0,0.4)"/>
 
     <!-- Rauch -->
     <circle class="smoke" cx="15" cy="10" r="3" fill="rgba(255,255,255,0.8)">
       <animate attributeName="cy" values="10;4;10" dur="2.5s" repeatCount="indefinite"/>
-      <animate attributeName="r"  values="2.5;3.5;2.5" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="2.5;3.5;2.5" dur="2.5s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite"/>
     </circle>
+
     <circle class="smoke" cx="19" cy="9" r="2.5" fill="rgba(255,255,255,0.7)">
       <animate attributeName="cy" values="9;3;9" dur="3s" begin="0.6s" repeatCount="indefinite"/>
-      <animate attributeName="r"  values="2;3;2" dur="3s" begin="0.6s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="2;3;2" dur="3s" begin="0.6s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0.7;0.1;0.7" dur="3s" begin="0.6s" repeatCount="indefinite"/>
     </circle>
+
     <circle class="smoke" cx="23" cy="8" r="2" fill="rgba(255,255,255,0.6)">
       <animate attributeName="cy" values="8;2;8" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
-      <animate attributeName="r"  values="1.5;3;1.5" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="1.5;3;1.5" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0.6;0;0.6" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
     </circle>
 
     <!-- Lok -->
-    <!-- Schornstein -->
     <rect x="13" y="14" width="4" height="6"
-      fill="#111"
-      stroke="rgba(255,255,255,0.35)"
-      stroke-width="0.4"/>
+          fill="#111"
+          stroke="rgba(255,255,255,0.35)"
+          stroke-width="0.4"/>
 
-    <!-- Kessel -->
     <rect x="10" y="20" width="18" height="10"
-      fill="#111"
-      stroke="rgba(255,255,255,0.35)"
-      stroke-width="0.6"/>
-    
-    <!-- Lichtkante Kessel -->
-    <rect x="10" y="20" width="18" height="1" fill="rgba(255,255,255,0.12)"/>
+          fill="#111"
+          stroke="rgba(255,255,255,0.35)"
+          stroke-width="0.6"/>
 
-    <!-- Fenster -->
-    <rect class="window" x="18.5" y="15" width="3" height="3" fill="#d0d0d0" rx="0.5"/>
+    <!-- Lichtkante -->
+    <rect x="10" y="20" width="18" height="1"
+          fill="rgba(255,255,255,0.12)"/>
+
+    <!-- Fenster Lok -->
+    <rect class="window train-window"
+          x="18.5" y="15" width="3" height="3"
+          fill="#d0d0d0" rx="0.5"/>
 
     <!-- Fahrwerk -->
     <rect x="9" y="30" width="20" height="2" fill="#333"/>
     <circle cx="13" cy="32" r="2" fill="#000"/>
     <circle cx="18" cy="32" r="2" fill="#222"/>
     <circle cx="23" cy="32" r="2" fill="#000"/>
-    
+
     <!-- Kupplung -->
     <rect x="28" y="27" width="3" height="1" fill="#555"/>
 
     <!-- Waggon 1 -->
-    <rect x="32" y="22" width="20" height="8" fill="#004A9F" stroke="#002A5F" stroke-width="0.8"/>
-    <rect class="window" x="37" y="23.5" width="3" height="3" fill="#d0d0d0" rx="0.5"/>
+    <rect x="32" y="22" width="20" height="8"
+          fill="#004A9F" stroke="#002A5F" stroke-width="0.8"/>
+    <rect class="window train-window"
+          x="37" y="23.5" width="3" height="3"
+          fill="#d0d0d0" rx="0.5"/>
     <circle cx="36" cy="32" r="2" fill="#000"/>
     <circle cx="46" cy="32" r="2" fill="#000"/>
 
     <!-- Waggon 2 -->
-    <rect x="56" y="22" width="20" height="8" fill="#E2001A" stroke="#A00012" stroke-width="0.8"/>
-    <rect class="window" x="61" y="23.5" width="3" height="3" fill="#d0d0d0" rx="0.5"/>
+    <rect x="56" y="22" width="20" height="8"
+          fill="#E2001A" stroke="#A00012" stroke-width="0.8"/>
+    <rect class="window train-window"
+          x="61" y="23.5" width="3" height="3"
+          fill="#d0d0d0" rx="0.5"/>
     <circle cx="60" cy="32" r="2" fill="#000"/>
     <circle cx="70" cy="32" r="2" fill="#000"/>
-    
+
     <!-- Waggon 3 -->
     <rect x="80" y="22" width="20" height="8"
-      fill="#FFB300"
-      stroke="#9A9A94"
-      stroke-width="0.8"/>
-    <rect class="window" x="85" y="23.5" width="3" height="3"
-      fill="#f2f2f2" rx="0.5"/>
+          fill="#FFB300" stroke="#9A9A94" stroke-width="0.8"/>
+    <rect class="window train-window"
+          x="85" y="23.5" width="3" height="3"
+          fill="#f2f2f2" rx="0.5"/>
     <circle cx="84" cy="32" r="2" fill="#000"/>
     <circle cx="94" cy="32" r="2" fill="#000"/>
 
-    </svg>
+  </svg>
   </div>
 
   <nav class="footer-links">
@@ -856,6 +872,27 @@ function initUpdateSlider() {
     deltaX = 0;
   }, { passive: true });
 }
+
+// --- Zug --- //
+
+document.addEventListener('DOMContentLoaded', () => {
+    const train = document.querySelector('.train');
+    let isRunning = false;
+
+    if (!train) return;
+
+    train.addEventListener('click', () => {
+      if (isRunning) return;
+
+      isRunning = true;
+      train.classList.add('easteregg-active');
+
+      setTimeout(() => {
+        train.classList.remove('easteregg-active');
+        isRunning = false;
+      }, 1500);
+    });
+  });
 
   // ---------- Bootstrap ----------
   document.addEventListener('DOMContentLoaded', () => {
