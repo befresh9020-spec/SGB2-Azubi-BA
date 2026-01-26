@@ -1359,3 +1359,155 @@ html[data-theme="light"] .request-btn {
     color: #4a5568;
     border-color: #cbd5e0;
 }
+
+/* Die sanfte Disco-Animation */
+@keyframes chill-disco {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Wir nutzen Pastellfarben oder BA-verwandte Töne */
+body.disco-active .flip-card-front,
+body.disco-active .header,
+body.disco-active .update-banner,
+body.disco-active .login-btn {
+  /* Ein schöner, breiter Verlauf */
+  background: linear-gradient(-45deg, #004A9F, #1e90ff, #702082, #009d66) !important;
+  background-size: 400% 400% !important;
+  animation: chill-disco 8s ease infinite !important; /* Viel langsamer (8 Sek.) */
+  color: white !important;
+  border: none !important;
+  transition: all 0.5s ease;
+}
+
+/* Optional: Ein dezentes Glühen für die Karten */
+body.disco-active .flip-card {
+  box-shadow: 0 0 20px rgba(30, 144, 255, 0.4);
+}
+
+body.disco-active .train rect[fill="#004A9F"],
+body.disco-active .train rect[fill="#E2001A"],
+body.disco-active .train rect[fill="#FFB300"] {
+  filter: brightness(1.5) drop-shadow(0 0 5px white);
+  transition: filter 1s ease;
+}
+
+
+/* --- BASIS LEGENDE (Schrift & Abstände) --- */
+body.legend-mode {
+  font-family: "Times New Roman", serif !important;
+  transition: all 0.4s ease-in-out;
+}
+
+body.legend-mode h1, 
+body.legend-mode h2, 
+body.legend-mode h3 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: bold;
+}
+
+/* --- LEGENDE IM HELLMODUS (Klassisches Papier) --- */
+html[data-theme="light"] body.legend-mode {
+  background-color: #dfd3c3 !important;
+  background-image: url('https://www.transparenttextures.com/patterns/old-paper.png') !important;
+  color: #2d241e !important;
+  filter: sepia(0.2) contrast(1.1);
+}
+
+/* --- LEGENDE IM DUNKELMODUS (Das "Bild"-Design) --- */
+html[data-theme="dark"] body.legend-mode {
+  background-color: #0a0a0a !important; /* Tiefschwarz */
+  background-image: none !important;
+  color: #e0e0e0 !important; /* Sanftes Weiß/Grau */
+}
+
+/* Karten-Styling für den Dunkel-Legenden-Look */
+html[data-theme="dark"] body.legend-mode .flip-card-front,
+html[data-theme="dark"] body.legend-mode .header,
+html[data-theme="dark"] body.legend-mode .update-banner {
+  background: #121212 !important;
+  border: 1px solid #333 !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+}
+
+/* Der goldene Akzent für Überschriften im Dark-Modus */
+html[data-theme="dark"] body.legend-mode h1,
+html[data-theme="dark"] body.legend-mode h2 {
+  color: #d4af37 !important; /* Goldener Akzent wie im Bild */
+  border-bottom: 1px solid #444;
+}
+
+/* Logo-Anpassung im Dark-Legenden-Modus */
+html[data-theme="dark"] body.legend-mode .logo {
+  border: 2px solid #d4af37 !important;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+
+body.legend-mode::after {
+  content: "ARCHIVARISCH GEPRÜFT";
+  position: fixed;
+  top: 50px;
+  right: -30px;
+  transform: rotate(25deg);
+  border: 4px double #b71c1c;
+  color: #b71c1c;
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+
+/* Logo in Header */
+
+.header-logo {
+  width: 64px;
+  height: 64px;
+}
+
+.header-logo-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Farben */
+.header-logo-svg circle {
+  fill: #7f1d1d; /* dein Weinrot */
+}
+
+.header-logo-svg path {
+  fill: #ffffff;
+  opacity: 0.95;
+}
+
+.header-logo-svg text {
+  fill: #7f1d1d;
+  font-size: 26px;
+  font-weight: 700;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* HELL MODE – dezenter Außenring */
+html[data-theme="light"] .header-logo-svg circle {
+  stroke: rgba(0, 0, 0, 0.15);
+  stroke-width: 1.5;
+}
+
+/* DARK MODE – Header Logo korrekt kontrastiert */
+html[data-theme="dark"] .header-logo-svg circle {
+  fill: #f1f5f9; /* sehr helles Grau, kein Reinweiß */
+}
+
+html[data-theme="dark"] .header-logo-svg path {
+  fill: #334155; /* dunkles Schiefergrau für Buchform */
+  opacity: 1;
+}
+
+html[data-theme="dark"] .header-logo-svg text {
+  fill: #0f172a; /* sehr dunkles Blau-Schwarz für § */
+}
