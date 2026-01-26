@@ -32,9 +32,23 @@
 
     <div id="main-app" style="display: none;">
 					
-					<header class="header">
-    <h1>SGB II - Bürgergeld</h1>
-    <p>Lernplattform für Azubis der BA</p>
+	<header class="header">
+   <div class="logo header-logo" aria-hidden="true">
+  <svg viewBox="0 0 100 100" class="header-logo-svg">
+    <!-- äußerer Kreis -->
+    <circle cx="50" cy="50" r="48" />
+
+    <!-- Buchform -->
+    <path d="M30 30 h20 a10 10 0 0 1 10 10 v30 h-20 a10 10 0 0 0 -10 -10 z" />
+    <path d="M50 30 h20 a10 10 0 0 1 10 10 v30 h-20 a10 10 0 0 0 -10 -10 z" />
+
+    <!-- Paragraphenzeichen -->
+    <text x="50" y="58" text-anchor="middle">§</text>
+  </svg>
+</div> <div class="header-text">
+        <h1>SGB II - Bürgergeld</h1>
+        <p>Lernplattform für Azubis der BA</p>
+    </div>
 	
 	<button id="themeToggle" class="theme-switch" aria-pressed="false" type="button">
   <span class="switch-track" aria-hidden="true">
@@ -595,33 +609,55 @@
   }
 
   // ---------- Theme Switch ----------
-  function initThemeSwitch() {
-    const themeButton = document.getElementById('themeToggle');
-    if (!themeButton) return;
+   function initThemeSwitch() {
+  const themeButton = document.getElementById('themeToggle');
+  if (!themeButton) return;
 
-    const saved = localStorage.getItem('theme');
-    if (saved === 'dark' || saved === 'light') {
-      document.documentElement.setAttribute('data-theme', saved);
-      themeButton.setAttribute('aria-pressed', saved === 'dark' ? 'true' : 'false');
-    } else {
-      // Optional: initialer aria-pressed Status passend zum effektiven Theme
-      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const current = document.documentElement.getAttribute('data-theme');
-      const effective = current ?? (systemDark ? 'dark' : 'light');
-      themeButton.setAttribute('aria-pressed', effective === 'dark' ? 'true' : 'false');
-    }
+  // Variablen für das Easter Egg
+  let clickCount = 0;
+  let clickTimer;
 
-    themeButton.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const effective = current ?? (systemDark ? 'dark' : 'light');
-      const next = (effective === 'dark') ? 'light' : 'dark';
-
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      themeButton.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
-    });
+  // Bestehende Theme-Logik
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark' || saved === 'light') {
+    document.documentElement.setAttribute('data-theme', saved);
+    themeButton.setAttribute('aria-pressed', saved === 'dark' ? 'true' : 'false');
   }
+
+  themeButton.addEventListener('click', () => {
+    // 1. Normale Theme-Umschaltung
+    const current = document.documentElement.getAttribute('data-theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const effective = current ?? (systemDark ? 'dark' : 'light');
+    const next = (effective === 'dark') ? 'light' : 'dark';
+
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    themeButton.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
+
+    // 2. Disco-Modus Logik
+    clickCount++;
+    
+    // Setzt den Zähler zurück, wenn 2 Sekunden lang nicht geklickt wurde
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => {
+      clickCount = 0;
+    }, 2000);
+
+    // Wenn 10-mal geklickt wurde
+    if (clickCount === 10) {
+      document.body.classList.toggle('disco-active');
+      
+      if (document.body.classList.contains('disco-active')) {
+        console.log("🕺 Disco Time!");
+        // Optional: Kurzes Handy-Vibrieren
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
+      }
+      
+      clickCount = 0; // Zähler zurücksetzen
+    }
+  });
+}
 
   // ---------- Paragraph Search ----------
   const paragraphIndex = {
@@ -894,16 +930,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+// ---------- Legenden-Modus (Multi-Trigger) ----------
+  function initLegendMode() {
+    const body = document.body;
+    
+    // Hilfsfunktion zum Umschalten
+    const toggleLegend = (msg) => {
+      body.classList.toggle('legend-mode');
+      if (body.classList.contains('legend-mode')) {
+        if (navigator.vibrate) navigator.vibrate(200);
+        alert(msg || "📜 Legenden-Modus aktiviert!");
+      }
+    };
+
+    // --- 1. Klassischer Konami-Code (für PC/Tastatur) ---
+    const konami = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let kIndex = 0;
+    document.addEventListener('keydown', (e) => {
+      if (e.key === konami[kIndex]) {
+        kIndex++;
+        if (kIndex === konami.length) {
+          toggleLegend("⌨️ Konami-Code akzeptiert. Legenden-Modus aktiv!");
+          kIndex = 0;
+        }
+      } else {
+        kIndex = 0;
+      }
+    });
+
+    // --- 2. Variante 2: 5-Taps auf Versionsnummer (Mobil & PC) ---
+    const versionTag = qs('.version-tag');
+    if (versionTag) {
+      let vTaps = 0;
+      let vTimer;
+      versionTag.addEventListener('click', () => {
+        vTaps++;
+        clearTimeout(vTimer);
+        vTimer = setTimeout(() => { vTaps = 0; }, 500);
+        if (vTaps === 5) {
+          toggleLegend("🕵️‍♂️ Insider-Check bestanden!");
+          vTaps = 0;
+        }
+      });
+    }
+
+    // --- 3. Variante 1: Long-Press auf Logo (Mobil) ---
+    const logo = qs('.header .logo') || qs('.logo');
+    if (logo) {
+      let pTimer;
+      // Start bei Berührung
+      logo.addEventListener('touchstart', () => {
+        pTimer = setTimeout(() => {
+          toggleLegend("⏳ Geduld zahlt sich aus... Legenden-Modus aktiv!");
+        }, 3000); // 3 Sekunden halten
+      }, { passive: true });
+      // Abbruch, wenn Finger weg oder bewegt (Scrollen)
+      logo.addEventListener('touchend', () => clearTimeout(pTimer));
+      logo.addEventListener('touchmove', () => clearTimeout(pTimer));
+    }
+  }
+
   // ---------- Bootstrap ----------
   document.addEventListener('DOMContentLoaded', () => {
     initFlipCards();
     initThemeSwitch();
     initParagraphSearch();
-		initSearchToggle();
+	initSearchToggle();
     initServiceWorker();
     initTopicFilter();
     initDoubleTapPrevention();
-		initUpdateSlider();
+	initUpdateSlider();
+    initLegendMode();
   });
 
 })();
