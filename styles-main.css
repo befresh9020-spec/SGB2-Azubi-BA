@@ -1462,52 +1462,49 @@ body.legend-mode::after {
   z-index: 1000;
 }
 
-
-/* Logo in Header */
-
+/* =================================== */
+/* LOGO CSS (Kontrast-Fix)             */
+/* =================================== */
 .header-logo {
-  width: 64px;
-  height: 64px;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 5px;
+  /* Ein leichter Schatten hilft zusätzlich, das Logo vom Hintergrund zu lösen */
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+  transition: transform 0.3s ease;
+}
+
+.header-logo:hover {
+  transform: scale(1.05) rotate(3deg);
 }
 
 .header-logo-svg {
   width: 100%;
   height: 100%;
+  overflow: visible;
 }
 
-/* Farben */
-.header-logo-svg circle {
-  fill: #7f1d1d; /* dein Weinrot */
+/* --- LIGHT MODE --- */
+/* WICHTIG: Auf dem dunklen Header-Verlauf muss das Logo WEISS sein */
+html[data-theme="light"] .header-logo-svg path {
+  /* Vorher war hier dein Weinrot (#7f1d1d) */
+  stroke: #ffffff; /* Jetzt: Weiß für top Kontrast */
+  fill: none;
 }
 
-.header-logo-svg path {
-  fill: #ffffff;
-  opacity: 0.95;
+html[data-theme="light"] .header-logo-svg text {
+  /* Vorher war hier dein Weinrot (#7f1d1d) */
+  fill: #ffffff; /* Jetzt: Weiß */
+  font-family: 'Times New Roman', serif;
 }
 
-.header-logo-svg text {
-  fill: #7f1d1d;
-  font-size: 26px;
-  font-weight: 700;
-  font-family: "Inter", system-ui, sans-serif;
-}
-
-/* HELL MODE – dezenter Außenring */
-html[data-theme="light"] .header-logo-svg circle {
-  stroke: rgba(0, 0, 0, 0.15);
-  stroke-width: 1.5;
-}
-
-/* DARK MODE – Header Logo korrekt kontrastiert */
-html[data-theme="dark"] .header-logo-svg circle {
-  fill: #f1f5f9; /* sehr helles Grau, kein Reinweiß */
-}
-
+/* --- DARK MODE (Bleibt unverändert gut) --- */
 html[data-theme="dark"] .header-logo-svg path {
-  fill: #334155; /* dunkles Schiefergrau für Buchform */
-  opacity: 1;
+  stroke: #f1f5f9;
+  /* Im Darkmode sieht eine leichte Füllung beim Schild oft gut aus */
+  fill: rgba(255,255,255,0.05);
 }
 
 html[data-theme="dark"] .header-logo-svg text {
-  fill: #0f172a; /* sehr dunkles Blau-Schwarz für § */
+  fill: #f1f5f9;
 }
