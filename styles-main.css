@@ -1106,33 +1106,39 @@ html[data-theme="dark"] .page-footer {
   position: relative;
 }
 
+/* Container für die Slides */
 .update-slider {
-  /* WICHTIG: Flexbox legt die Slides nebeneinander (Filmstreifen) */
   display: flex;
-  width: 100%;
+  width: 100%; 
+  flex-wrap: nowrap; /* Zwingend: Verhindert Umbrüche in Firefox */
   
-  /* Verhindert Layout-Sprünge beim Laden */
+  /* Layout-Stabilität */
   min-height: 4.5rem; 
   align-items: center;
-
-  /* Optimierung für Touch-Geräte: Erlaubt vertikales Scrollen der Seite */
-  touch-action: pan-y;
   
-  /* Hardware-Beschleunigung für flüssige Animation */
+  touch-action: pan-y;
   will-change: transform;
-  /* Standard-Transition (wird vom JS teilweise überschrieben beim Draggen) */
   transition: transform 0.3s ease-out;
+  
+  /* WICHTIG: Setzt den Koordinaten-Kontext für die Breite */
+  box-sizing: border-box; 
 }
 
+/* Der einzelne Slide */
 .update-slide {
-  min-width: 100%;
-  flex-shrink: 0;
-  box-sizing: border-box;
+  /* DER FIX: */
+  width: 100%;       /* Fallback */
+  flex: 0 0 100%;    /* Nicht wachsen (0), nicht schrumpfen (0), Basis 100% */
+  
+  box-sizing: border-box; /* Padding wird eingerechnet */
+  padding: 0 1rem;   /* Abstand innen, damit Text nicht am Rand klebt */
+  
+  /* Text-Verhalten sicherstellen */
+  white-space: normal; /* Erlaubt normalen Textumbruch */
+  overflow-wrap: break-word; /* Verhindert, dass lange Wörter das Layout sprengen */
+  
   font-size: 0.95rem;
   display: block;
-  
-  /* ÄNDERUNG: Das seitliche Padding liegt jetzt hier im Slide */
-  padding: 0 1rem; 
 }
 
 .update-slider.is-dragging {
