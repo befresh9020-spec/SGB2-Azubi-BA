@@ -830,86 +830,107 @@
     }, { passive: false });
   }
 	
-	// ---------- Update Slider (final, smooth & stabil) ----------
+ //---------- Update Slider (Smooth Gliding) ----------//
 function initUpdateSlider() {
   const slider = document.getElementById('updateSlider');
   const slides = document.querySelectorAll('.update-slide');
   const dots   = document.querySelectorAll('.update-dots .dot');
 
-  if (!slider || slides.length === 0 || dots.length === 0) return;
+  if (!slider || slides.length === 0) return;
 
-  let current = 0;
+  let currentIndex = 0;
   let startX = 0;
-  let deltaX = 0;
+  let currentTranslate = 0;
+  let prevTranslate = 0;
   let isDragging = false;
+  let animationID;
 
-  const THRESHOLD = 60;      // Mindest-Swipe-Distanz
-  const DRAG_RATIO = 0.3;   // Wie stark der Slider dem Finger folgt
-  const COMMIT_OFFSET = 24; // Visueller Impuls beim Wechsel
-  const COMMIT_TIME = 220;  // Dauer der Commit-Animation
+  // --- 1. Position aktualisieren (Kern-Funktion) ---
+  function setSliderPosition() {
+    slider.style.transform = `translateX(${currentTranslate}px)`;
+  }
 
-  // --- Anzeige eines Slides ---
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('is-active', i === index);
-      dots[i].classList.toggle('is-active', i === index);
+  // --- 2. Zum Slide gleiten (mit Animation) ---
+  function setPositionByIndex() {
+    // Berechne die Verschiebung basierend auf der Breite des Sliders
+    currentTranslate = currentIndex * -slider.offsetWidth;
+    prevTranslate = currentTranslate;
+    
+    // Aktiviere CSS Transition für softes Gleiten
+    slider.style.transition = 'transform 0.3s ease-out';
+    setSliderPosition();
+    updateDots();
+  }
+
+  // --- 3. Dots aktualisieren ---
+  function updateDots() {
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('is-active', index === currentIndex);
     });
-    current = index;
   }
-
-  // --- Commit-Animation (kein Snap-Back) ---
-  function commitSlide(direction) {
-    slider.style.transform =
-      `translateX(${direction < 0 ? -COMMIT_OFFSET : COMMIT_OFFSET}px)`;
-
-    setTimeout(() => {
-      showSlide(
-        direction < 0
-          ? (current + 1) % slides.length
-          : (current - 1 + slides.length) % slides.length
-      );
-      slider.style.transform = 'translateX(0)';
-    }, COMMIT_TIME);
-  }
-
-  // --- Zurücksetzen bei zu kurzem Swipe ---
-  function resetSlide() {
-    slider.style.transform = 'translateX(0)';
-  }
-
-  // --- Dots ---
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => showSlide(index));
-  });
 
   // --- Touch Events ---
+
+  // Start: Finger berührt Bildschirm
   slider.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
-    deltaX = 0;
     isDragging = true;
-    slider.classList.add('is-dragging');
+    
+    // Entferne Transition während des Ziehens (für direkte Reaktion 1:1)
+    slider.style.transition = 'none';
+    
+    // Animation Loop starten
+    animationID = requestAnimationFrame(animation);
   }, { passive: true });
 
+  // Move: Finger bewegt sich
   slider.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    deltaX = e.touches[0].clientX - startX;
-    slider.style.transform =
-      `translateX(${deltaX * DRAG_RATIO}px)`;
+    if (isDragging) {
+      const currentX = e.touches[0].clientX;
+      const diff = currentX - startX;
+      currentTranslate = prevTranslate + diff;
+    }
   }, { passive: true });
 
+  // End: Finger lässt los
   slider.addEventListener('touchend', () => {
-    slider.classList.remove('is-dragging');
     isDragging = false;
+    cancelAnimationFrame(animationID);
 
-    if (Math.abs(deltaX) > THRESHOLD) {
-      commitSlide(deltaX);
-    } else {
-      resetSlide();
+    const movedBy = currentTranslate - prevTranslate;
+    const threshold = 50; // Wie weit muss man wischen?
+
+    // Logik: Nächster, Vorheriger oder Zurücksnappen
+    if (movedBy < -threshold && currentIndex < slides.length - 1) {
+      currentIndex += 1; // Nach links gewischt -> Nächster Slide
+    } else if (movedBy > threshold && currentIndex > 0) {
+      currentIndex -= 1; // Nach rechts gewischt -> Vorheriger Slide
     }
 
-    deltaX = 0;
-  }, { passive: true });
+    // Slider an die neue (oder alte) Position einrasten lassen
+    setPositionByIndex();
+  });
+
+  // Animation Loop (für flüssige 60fps während des Draggens)
+  function animation() {
+    setSliderPosition();
+    if (isDragging) requestAnimationFrame(animation);
+  }
+
+  // --- Klick auf Dots ---
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      currentIndex = index;
+      setPositionByIndex();
+    });
+  });
+  
+  // Fenstergröße geändert? Position korrigieren
+  window.addEventListener('resize', setPositionByIndex);
 }
+
+// Initialisierung
+document.addEventListener('DOMContentLoaded', initUpdateSlider);
 
 // --- Zug --- //
 
