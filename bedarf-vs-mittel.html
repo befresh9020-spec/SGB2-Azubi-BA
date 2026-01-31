@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Hilfebedürftigkeit § 9 SGB II</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* =================================== */
+/* SGB Visualisierung – Dark CI Style  */
+/* =================================== */
+
+html, body {
+  min-height: 100%;
+  margin: 0;
+}
+
+html {
+  background:
+    radial-gradient(circle at top,
+      rgba(122, 31, 43, 0.95),
+      rgba(55, 10, 16, 0.98)
+    );
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  color: #1f1f1f;
+  padding: 20px 14px 32px;
+}
+
+/* ============================= */
+/* Überschriften                 */
+/* ============================= */
+
+h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 0 0 6px;
+  color: #ffffff;
+}
+
+.intro {
+  text-align: center;
+  font-size: 0.95rem;
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ============================= */
+/* Buttons oben                  */
+/* ============================= */
+
+.top-controls {
+  margin-bottom: 16px;
+}
+
+.top-controls button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background: #ffffff;
+  color: #222;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.top-controls button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.35);
+}
+
+/* ============================= */
+/* Karten (Legend, Result)       */
+/* ============================= */
+
+.legend,
+.result {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  font-size: 0.85rem;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.legend span {
+  display: inline-block;
+  margin-right: 12px;
+}
+
+/* ============================= */
+/* Farbpunkte                    */
+/* ============================= */
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+/* ============================= */
+/* Hauptbereich                  */
+/* ============================= */
+
+.container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.glass-wrapper {
+  width: 190px;
+  text-align: center;
+}
+
+.glass-wrapper strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #ffffff;
+  font-size: 1.05rem;
+}
+
+/* ============================= */
+/* Gläser                        */
+/* ============================= */
+
+.glass {
+  height: 360px;
+  background: #ffffff;
+  border-radius: 0 0 26px 26px;
+  border: 3px solid rgba(0, 0, 0, 0.35);
+  padding: 8px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-end;
+
+  box-shadow:
+    inset 0 3px 6px rgba(0, 0, 0, 0.06),
+    0 14px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* ============================= */
+/* Perlen                        */
+/* ============================= */
+
+.bead {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin: 2px;
+}
+
+/* Farben */
+.regelbedarf { background: #4a90e2; }
+.kdu         { background: #f5a623; }
+.mehrbedarf  { background: #7ed321; }
+.einkommen   { background: #f8e71c; }
+.vermoegen   { background: #bd10e0; }
+
+/* ============================= */
+/* Steuerungsbuttons unten       */
+/* ============================= */
+
+.controls button {
+  width: 100%;
+  margin: 6px 0;
+  padding: 8px;
+  font-size: 0.85rem;
+  background: #ffffff;
+  color: #222;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease;
+}
+
+.controls button:hover {
+  transform: translateY(-1px);
+}
+
+/* ============================= */
+/* Ergebnis                      */
+/* ============================= */
+
+.result {
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* ============================= */
+/* Reset-Button                  */
+/* ============================= */
+
+body > div[style*="text-align:center"] button {
+  margin-top: 10px;
+  padding: 10px 16px;
+  border-radius: 18px;
+  border: none;
+  background: #ffffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.3);
+}
+
+/* Reaktives Ergebnis */
+
+.result {
+  background: #ffffff;
+  color: #222222;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.result.is-eligible {
+  background: #d90421;
+  border: 2px solid rgba(122, 31, 43, 0.6);
+  color: #e38692;
+}
+
+.result.is-not-eligible {
+  background: rgba(46, 125, 50, 0.15);
+  border: 2px solid rgba(46, 125, 50, 0.6);
+  color: #6fde77;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Hilfebedürftigkeit (§ 9 SGB II)</h1>
+<p class="intro">Vergleich von Bedarf und eigenen Mitteln</p>
+
+<div class="top-controls">
+  <button onclick="setHousehold('single')">Alleinstehend</button>
+  <button onclick="setHousehold('couple')">Paar</button>
+</div>
+
+<div class="legend">
+  <div>1 Perle ≈ 11 €</div>
+  <span><span class="dot regelbedarf"></span>Regelbedarf</span>
+  <span><span class="dot kdu"></span>KdU</span>
+  <span><span class="dot mehrbedarf"></span>Mehrbedarf</span><br>
+  <span><span class="dot einkommen"></span>Einkommen</span>
+  <span><span class="dot vermoegen"></span>Vermögen</span>
+</div>
+
+<div class="container">
+
+  <div class="glass-wrapper">
+    <strong>Bedarf</strong>
+    <div id="bedarfGlass" class="glass"></div>
+    <div class="controls">
+      <button id="rbBtn" onclick="addOnce('regelbedarf')">+ Regelbedarf</button>
+      <button id="kduBtn" onclick="addOnce('kdu')">+ Kosten Unterkunft</button>
+      <button onclick="change('mehrbedarf',5)">+ Mehrbedarf</button>
+      <button onclick="change('mehrbedarf',-5)">− Mehrbedarf</button>
+    </div>
+  </div>
+
+  <div class="glass-wrapper">
+    <strong>Eigene Mittel</strong>
+    <div id="mittelGlass" class="glass"></div>
+    <div class="controls">
+      <button onclick="change('einkommen',10)">+ Einkommen</button>
+      <button onclick="change('einkommen',-10)">− Einkommen</button>
+      <button onclick="change('vermoegen',10)">+ Vermögen</button>
+      <button onclick="change('vermoegen',-10)">− Vermögen</button>
+    </div>
+  </div>
+
+</div>
+
+<div id="result" class="result">Fall aufbauen</div>
+
+<div style="text-align:center;margin-top:12px;">
+  <button onclick="resetAll()">Zurücksetzen</button>
+</div>
+
+<script>
+let household = 'single';
+let counts = { bedarf:0, mittel:0 };
+let added = { regelbedarf:false, kdu:false };
+
+const RB = { single:50, couple:80 };
+const KDU = 55;
+
+function bead(glass, cls) {
+  const d=document.createElement("div");
+  d.className="bead "+cls;
+  glass.appendChild(d);
+}
+
+function addOnce(type) {
+  if(added[type]) return;
+  const amount = type==='regelbedarf'?RB[household]:KDU;
+  for(let i=0;i<amount;i++) bead(bedarfGlass,type);
+  counts.bedarf+=amount;
+  added[type]=true;
+  document.getElementById(type==='regelbedarf'?'rbBtn':'kduBtn').disabled=true;
+  evalResult();
+}
+
+function change(type, amt) {
+  const glass = (type==='einkommen'||type==='vermoegen')?mittelGlass:bedarfGlass;
+  if(amt>0){
+    for(let i=0;i<amt;i++) bead(glass,type);
+    type==='einkommen'||type==='vermoegen'?counts.mittel+=amt:counts.bedarf+=amt;
+  } else {
+    let remove=Math.abs(amt);
+    [...glass.children].reverse().forEach(b=>{
+      if(remove>0 && b.classList.contains(type)){
+        glass.removeChild(b);
+        remove--;
+        type==='einkommen'||type==='vermoegen'?counts.mittel--:counts.bedarf--;
+      }
+    });
+  }
+  evalResult();
+}
+
+function setHousehold(h) {
+  resetAll();
+  household=h;
+}
+
+function evalResult() {
+  result.classList.remove("is-eligible", "is-not-eligible");
+
+  if (counts.bedarf > counts.mittel) {
+    result.textContent = "Hilfebedürftigkeit liegt vor (§ 9 SGB II)";
+    result.classList.add("is-eligible");
+  } else {
+    result.textContent = "Bedarf ist gedeckt – keine Hilfebedürftigkeit";
+    result.classList.add("is-not-eligible");
+  }
+}
+
+function resetAll() {
+  bedarfGlass.innerHTML="";
+  mittelGlass.innerHTML="";
+  counts={bedarf:0,mittel:0};
+  added={regelbedarf:false,kdu:false};
+  rbBtn.disabled=false;
+  kduBtn.disabled=false;
+  result.textContent = "Fall aufbauen";
+ result.classList.remove("is-eligible", "is-not-eligible");
+}
+</script>
+
+</body>
+</html>
