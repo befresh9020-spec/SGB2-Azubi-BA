@@ -20,6 +20,7 @@ const PRECACHE_URLS = [
   "EK_FW_Fahrt.html",
   "EK_SV.html",
   "Hilfebeduerftigkeit.html",
+  "bedarf-vs-mittel.html",
   "9_SV.html",
   "BAM.html",
   "Minderung.html",
