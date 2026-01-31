@@ -281,10 +281,10 @@ body > div[style*="text-align:center"] button {
     <strong>Eigene Mittel</strong>
     <div id="mittelGlass" class="glass"></div>
     <div class="controls">
-      <button onclick="change('einkommen',10)">+ Einkommen</button>
-      <button onclick="change('einkommen',-10)">− Einkommen</button>
-      <button onclick="change('vermoegen',10)">+ Vermögen</button>
-      <button onclick="change('vermoegen',-10)">− Vermögen</button>
+      <button onclick="change('einkommen', EINKOMMEN_STEP)">+ Einkommen</button>
+      <button onclick="change('einkommen', -EINKOMMEN_STEP)">− Einkommen</button>
+      <button onclick="change('vermoegen', VERMOEGEN_STEP)">+ Vermögen</button>
+      <button onclick="change('vermoegen', -VERMOEGEN_STEP)">− Vermögen</button>
     </div>
   </div>
 
@@ -303,6 +303,8 @@ let added = { regelbedarf:false, kdu:false };
 
 const RB = { single:50, couple:80 };
 const KDU = 55;
+const EINKOMMEN_STEP = 36;
+const VERMOEGEN_STEP = 27;
 
 function bead(glass, cls) {
   const d=document.createElement("div");
