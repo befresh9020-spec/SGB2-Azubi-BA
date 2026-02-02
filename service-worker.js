@@ -9,6 +9,7 @@ const PRECACHE_URLS = [
   "Quiz.html",
   "Berechtigte.html",
   "Berechtigte_SV.html",
+  "Erwun.html",
   "Bedarfe.html",
   "Bedarfe_SV.html",
   "VM.html",
