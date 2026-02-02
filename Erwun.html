@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2a0f17">
+    <title>SGB2 lernen</title>
+    <link rel="stylesheet" href="styles-main.css">
+		<script src="gate2.js" defer></script>
+</head>
+
+<style>
+
+/* =================================== */
+/* SGB Accordion – Light Theme (CI)    */
+/* =================================== */
+
+.sgb-accordion {
+  max-width: 700px;
+  margin: 1.8rem auto;
+  color: var(--surface-text);
+}
+
+.sgb-accordion h2 {
+  margin-bottom: 1.2rem;
+}
+
+/* Accordion-Container */
+.sgb-accordion details {
+  /* HINTERGRUND: Weiß für maximalen Kontrast zum dunklen Seitenhintergrund */
+  background: #ffffff;
+  
+  /* SCHRIFTFARBE: WICHTIG! Hier muss nun eine dunkle Farbe stehen.
+     Ich verwende ein dunkles Grau (#222222). 
+     Falls du eine Variable für dunklen Text hast (z.B. var(--text-dark)), nutze diese.*/
+  color: #222222;
+
+  /* SCHATTEN: Sorgt für den "Karte"-Effekt und hebt die Box ab */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  
+  /* RAHMEN: Ein heller grauer Rahmen zur feinen Abgrenzung */
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  
+  border-radius: 14px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  /* Transition auch für transform und box-shadow hinzufügen */
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover-Effekt für die weißen Karten */
+.sgb-accordion details:hover {
+  /* Beim Hover bleibt es weiß, aber der Schatten wird stärker und die Box hebt sich */
+  background: #ffffff; 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px); /* Leichtes Anheben nach oben */
+  border-color: rgba(122, 31, 43, 0.3); /* Optional: Rahmen färbt sich leicht in der Akzentfarbe */
+}
+
+/*/* Geöffneter Zustand */
+.sgb-accordion details[open] {
+  /* WICHTIG: Hier stand vorher 'rgba(122, 31, 43, 0.06)' 
+     Das machte die Box transparent. Wir müssen es auf WEISS zwingen: */
+  background: #ffffff; 
+  
+  /* Der Rahmen darf rötlich sein als Akzent */
+  border-color: rgba(122, 31, 43, 0.5);
+  
+  /* Optional: Box-Shadow noch etwas verstärken, wenn offen */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+
+/* ============================= */
+/* Haupt-Summary                 */
+/* ============================= */
+
+.sgb-accordion summary {
+  position: relative;
+  padding: 1.1rem 3rem 1.1rem 1.4rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  cursor: pointer;
+  list-style: none;
+  color: var(--accent);
+  background: transparent;
+}
+
+/* Standard-Browser-Pfeil entfernen */
+.sgb-accordion summary::-webkit-details-marker {
+  display: none;
+}
+.sgb-accordion summary::marker {
+  content: "";
+}
+
+/* Chevron */
+.sgb-accordion summary::after {
+  content: "▸";
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%) scale(1.2);
+  font-size: 1.4rem;
+  opacity: 0.8;
+  transition: transform 0.22s ease;
+}
+
+/* Geöffnet */
+.sgb-accordion details[open] > summary::after {
+  transform: translateY(-50%) rotate(90deg) scale(1.2);
+}
+
+/* Fokus */
+.sgb-accordion summary:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* ============================= */
+/* Inhalt                         */
+/* ============================= */
+
+.sgb-accordion p {
+  padding: 0.7rem 1.4rem;
+  margin: 0;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Merke-Kasten */
+.sgb-accordion .note {
+  margin: 1.2rem 1.4rem 1.4rem;
+  padding: 1rem 1.2rem;
+  background: rgba(122, 31, 43, 0.06);
+  border: 1px solid rgba(122, 31, 43, 0.35);
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* ============================= */
+/* Rechtsgrundlagen (law-ref)    */
+/* ============================= */
+
+.law-ref {
+  margin: 0.6rem 1.4rem 1rem;
+  border-left: 3px solid rgba(122, 31, 43, 0.45);
+  padding-left: 0.6rem;
+}
+
+/* eigenes Summary */
+.law-ref summary {
+  position: relative;
+  padding: 0.4rem 0.5rem 0.4rem 1.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  list-style: none;
+}
+
+/* Marker entfernen */
+.law-ref summary::-webkit-details-marker {
+  display: none;
+}
+.law-ref summary::marker {
+  content: "";
+}
+
+/* Paragraphen-Symbol */
+.law-ref summary::before {
+  content: "§";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  opacity: 0.75;
+  transition: transform 0.2s ease;
+}
+
+/* Drehung bei geöffnet */
+.law-ref[open] summary::before {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Text innerhalb der Rechtsgrundlage */
+.law-ref p {
+  color: #444444; /* Dunkelgrau statt Theme-Farbe für bessere Lesbarkeit */
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 0.5rem 0;
+}
+
+
+</style>
+
+<body>
+
+<section class="sgb-accordion">
+  <h2>Erwerbsunfähigkeit und Leistungsanspruch</h2>
+
+  <details>
+    <summary>Vorübergehend erwerbsunfähig<br> (bis zu 6 Monate)</summary>
+    <p>
+      Die Person gilt weiterhin als <strong>erwerbsfähig</strong>.
+    </p>
+    <p>
+      → Anspruch als <strong>erwerbsfähige leistungsberechtigte Person</strong>.
+    </p>
+		
+		<details class="law-ref">
+  <summary>Rechtsgrundlage anzeigen</summary>
+
+  <p>
+    <strong>§ 8 SGB II</strong><br>
+    Erwerbsfähigkeit liegt vor, wenn die leistungsberechtigte Person
+    mindestens drei Stunden täglich arbeiten kann.
+  </p>
+
+  <p>
+    <strong>§ 19 (1) S. 1 SGB II</strong><br>
+    Erwerbsfähige Leistungsberechtigte erhalten Bürgergeld.
+  </p>
+</details>
+		
+  </details>
+
+  <details>
+    <summary>Erwerbsunfähigkeit auf Zeit (mehr als 6 Monate)</summary>
+    <p><strong>Einzelperson:</strong></p>
+    <p>
+      → Erwerbsfähigkeit nach § 8 SGB II liegt <strong>nicht</strong> vor. Somit besteht kein Anspruch auf Bürgergeld.
+    </p>
+
+    <p><strong>Familienmitglied:</strong></p>
+    <p>
+      → Leistungsanspruch als <strong>nichterwerbsfähige Person</strong> innerhalb der Bedarfsgemeinschaft,
+sofern eine <strong>erwerbsfähige leistungsberechtigte Person</strong> dort lebt:</p>
+			<p>Bürgergeld nach <strong>§ 19 Abs. 1 S. 2 SGB II</strong></p>
+    
+		
+		<details class="law-ref">
+  <summary>Rechtsgrundlage anzeigen</summary>
+
+  <p>
+    <strong>§ 8 Abs. 1 SGB II</strong><br>
+    Erwerbsfähig ist, wer nicht wegen Krankheit oder Behinderung auf absehbare Zeit außerstande ist, unter den üblichen Bedingungen des allgemeinen Arbeitsmarktes mindestens drei Stunden täglich erwerbstätig zu sein.
+  </p>
+
+  <p>
+    <strong>§ 101 Abs. 1 SGB VI (Umkehrschluss)</strong><br>
+    Befristete Renten wegen verminderter Erwerbsfähigkeit werden nicht vor Beginn des siebten Kalendermonats nach dem Eintritt der Minderung der Erwerbsfähigkeit geleistet.
+
+  </p>
+</details>
+		
+  </details>
+
+  <details>
+    <summary>Erwerbsunfähigkeit <strong>auf Dauer</strong></summary>
+    <p><strong>Einzelperson:</strong></p>
+    <p>
+      → Kein Anspruch auf Bürgergeld, da dauerhaft keine
+  Erwerbsfähigkeit im Sinne des <strong>§ 8 SGB II</strong> besteht.
+    </p>
+
+    <p><strong>Familienmitglied:</strong></p>
+    <p>
+      → <strong>Keine leistungsberechtigte Person nach dem SGB II</strong>;
+  ein eigener Anspruch auf Bürgergeld besteht nicht.</p>
+	<p>→ Es besteht ggf. ein Anspruch auf Leistungen nach dem 4. Kapitel SGB XII
+(Grundsicherung bei dauerhafter voller Erwerbsminderung).</p>
+
+	<details class="law-ref">
+  <summary>Rechtsgrundlage anzeigen</summary>
+
+  <p>
+    <strong>§ 8 Abs. 1 SGB II</strong><br>
+    Erwerbsfähig ist, wer nicht wegen Krankheit oder Behinderung auf absehbare Zeit außerstande ist, unter den üblichen Bedingungen des allgemeinen Arbeitsmarktes mindestens drei Stunden täglich erwerbstätig zu sein.
+  </p>
+
+  <p>
+    <strong>§ 7 Abs. 1 S. 1 Nr. 2</strong><br>
+    Leistungen nach diesem Buch erhalten Personen, die erwerbsfähig sind.
+  </p>
+</details>
+	
+  </details>
+
+  <div class="note">
+    <strong>Merke:</strong> Im SGB II werden Einkommen und Vermögen der
+Mitglieder der Bedarfsgemeinschaft berücksichtigt.
+  </div>
+	
+	<div class="note">
+    <strong>Beachte:</strong> Es handelt sich hierbei um eine vereinfachte Darstellung. Die Feststellung der Erwerbsunfähigkeit ist in der Praxis in der Regel ein längerer Prozess.
+  </div>
+</section>
+
+    </body>
+</html>
