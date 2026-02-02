@@ -119,6 +119,29 @@
   border-radius: 8px;
 }
 
+.back-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border: 1px solid;
+	
+}
+.back-button:hover {
+  background: var(--accent-2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 0, 17, 0.4);
+}
+
+.back-wrapper {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 /* ============================= */
 /* Inhalt                         */
 /* ============================= */
@@ -198,6 +221,10 @@
 </style>
 
 <body>
+
+	<div class="back-wrapper">
+  <a href="index.html" class="back-button">🔙 Zurück</a>
+  </div>
 
 <section class="sgb-accordion">
   <h2>Erwerbsunfähigkeit und Leistungsanspruch</h2>
