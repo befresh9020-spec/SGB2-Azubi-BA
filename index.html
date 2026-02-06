@@ -132,20 +132,20 @@
 
 <button id="toggleSearch" class="search-toggle" type="button" aria-expanded="false">
   <span class="icon">🔍</span>
-  <span class="label">§-Suche</span>
+  <span class="label">Suche</span>
   <span class="chevron" aria-hidden="true">▾</span>
 </button>
 
 	<section class="search-bar" id="searchContainer" hidden>
   <form id="paragraphSearchForm" class="search-form">
-    <label for="paragraphInput">Paragraph im SGB II suchen</label>
+    <label for="paragraphInput">🔎 Paragraf und Schlagwortsuche 🕵️‍♂️</label>
 
     <div class="search-row">
       <input
         id="paragraphInput"
         type="text"
         autocomplete="off"
-        placeholder="§§-Suche…"
+        placeholder="7, Minderung, 11"
       >
       <button type="submit">🔍</button>
     </div>
@@ -723,6 +723,61 @@
     "15a": "AGP2.html#§15a",
     "16": "AGP2.html#§16"
   };
+	
+	// ---------- Keyword Search ----------
+const keywordIndex = [
+  {
+    keywords: ["berechtigt", "leistungsberechtigt", "anspruch", "erwerbsfähig"],
+    target: "Berechtigte.html#§7"
+  },
+  {
+    keywords: ["antrag", "antragstellung", "leistungsbeginn"],
+    target: "Berechtigte.html#§37"
+  },
+  {
+    keywords: ["bedarf", "regelbedarf", "lebensunterhalt"],
+    target: "Bedarfe.html#§20"
+  },
+  {
+    keywords: ["mehrbedarf", "schwangerschaft", "behinderung", "alleinerziehend"],
+    target: "Bedarfe.html#§21"
+  },
+  {
+    keywords: ["kosten der unterkunft", "miete", "heizung", "kdu"],
+    target: "Bedarfe.html#§22"
+  },
+  {
+    keywords: ["einkommen", "erwerbseinkommen", "zufluss"],
+    target: "EK.html#§11"
+  },
+  {
+    keywords: ["freibetrag", "absetzbetrag"],
+    target: "EK.html#§11b"
+  },
+  {
+    keywords: ["sanktion", "minderung", "pflichtverletzung"],
+    target: "Minderung.html#§31"
+  }
+];
+
+function triggerGlitch(searchError) {
+  document.body.classList.add('glitch-active');
+
+  searchError.innerHTML =
+    '⚠️⚠️⚠️ SYSTEMFEHLER! ⚠️⚠️⚠️<br>Realität wird neu geladen…';
+  searchError.classList.add('glitch-error');
+
+  if (navigator.vibrate) {
+    navigator.vibrate([50, 50, 50, 50, 200]);
+  }
+
+  setTimeout(() => {
+    document.body.classList.remove('glitch-active');
+    searchError.classList.remove('glitch-error');
+    searchError.textContent =
+      'Puh… das war knapp. System läuft wieder.';
+  }, 2000);
+}
 
   function normalizeParagraphInput(raw) {
     return (raw ?? '')
@@ -733,32 +788,58 @@
   }
 
   function initParagraphSearch() {
-    const searchForm  = document.getElementById('paragraphSearchForm');
-    const searchInput = document.getElementById('paragraphInput');
-    const searchError = document.getElementById('searchError');
+  const searchForm  = document.getElementById('paragraphSearchForm');
+  const searchInput = document.getElementById('paragraphInput');
+  const searchError = document.getElementById('searchError');
 
-    if (!searchForm || !searchInput || !searchError) return;
+  if (!searchForm || !searchInput || !searchError) return;
 
-    searchForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      searchError.textContent = '';
+  searchForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    searchError.textContent = '';
+    searchError.className = 'search-error';
 
-      const key = normalizeParagraphInput(searchInput.value);
+    const key = normalizeParagraphInput(searchInput.value);
 
-      if (!key) {
-        searchError.textContent = 'Bitte einen Paragraphen eingeben, z.B. 7 oder 31b.';
-        return;
-      }
+    if (!key) {
+      searchError.textContent =
+        'Bitte einen Paragraphen oder ein Stichwort eingeben.';
+      return;
+    }
 
-      const target = paragraphIndex[key];
-      if (!target) {
-        searchError.textContent = 'Diesen Paragraphen habe ich hier (noch) nicht hinterlegt.';
-        return;
-      }
+    // --- GLITCH EASTER EGG ---
+    const triggerWords = [
+      '404', 'error', 'bug', 'glitch',
+      '1337', 'karin', '111', '11aa', 'hartz', 'klausur', 'zk', 'hilfe'
+    ];
 
-      window.location.href = target;
-    });
-  }
+    if (triggerWords.includes(key)) {
+      triggerGlitch(searchError);
+      return;
+    }
+
+    // --- Paragraphensuche ---
+    if (paragraphIndex[key]) {
+      window.location.href = paragraphIndex[key];
+      return;
+    }
+
+    // --- Schlagwortsuche ---
+    const keyword = key.replace(/\d+/g, '').trim();
+
+    const match = keywordIndex.find(entry =>
+      entry.keywords.some(k => k.includes(keyword))
+    );
+
+    if (match) {
+      window.location.href = match.target;
+      return;
+    }
+
+    searchError.textContent =
+      'Kein passender Paragraph oder Suchbegriff gefunden.';
+  });
+}
 	
 	  // ---------- Searchbar Toggle ----------
   function initSearchToggle() {
