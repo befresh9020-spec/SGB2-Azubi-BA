@@ -213,6 +213,29 @@
 	  
   </div>
 </body>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  const hash = decodeURIComponent(window.location.hash);
+
+  if (!hash) return;
+
+  const targetDetails = document.querySelector(hash);
+
+  if (targetDetails && targetDetails.tagName === 'DETAILS') {
+    targetDetails.open = true;
+
+    // optional: leicht nach oben scrollen (wegen sticky header)
+    targetDetails.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+});
+
+</script>
+
 </html>
 
 
