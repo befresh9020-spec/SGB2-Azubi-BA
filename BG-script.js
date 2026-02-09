@@ -87,7 +87,7 @@ const cases = [
   },
 	
 	{
-    text: "Pierre (40) wohnt mit seinen Kindern Yves (10) und Jacques (14) in einer Wohnung in Konstanz. Mona ist nicht erwerbsfähig und bezieht eine Erwerbsminderungsrente. Die Kinder besuchen eine allgemeinbildende Schule.",
+    text: "Pierre (40) wohnt mit seinen Kindern Yves (10) und Jacques (14) in einer Wohnung in Konstanz. Pierre ist nicht erwerbsfähig und bezieht eine Erwerbsminderungsrente. Die Kinder besuchen eine allgemeinbildende Schule.",
     persons: [
       {
         name: "Pierre",
