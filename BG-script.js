@@ -264,3 +264,8 @@ function animateBG() {
 }
 
 animateBG();
+
+function setTheme(theme){
+  document.body.classList.remove("theme-blue","theme-amber","theme-green");
+  document.body.classList.add("theme-" + theme);
+}
