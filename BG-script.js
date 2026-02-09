@@ -119,6 +119,7 @@ const caseTextEl = document.getElementById("case-text");
 const personsEl = document.getElementById("persons");
 const feedbackEl = document.getElementById("feedback");
 const checkBtn = document.getElementById("check-btn");
+const restartBtn = document.getElementById("restart-btn");
 
 // ===== FALL LADEN =====
 
@@ -193,7 +194,24 @@ function nextCase() {
     currentIndex++;
     currentCase = cases[currentIndex];
     loadCase();
+  } else {
+    showEndScreen();
   }
+
+function showEndScreen() {
+  caseTextEl.innerHTML = "<h2>Training abgeschlossen</h2>";
+  personsEl.innerHTML = "";
+  feedbackEl.innerHTML = "Alle Fälle wurden bearbeitet.";
+  restartBtn.style.display = "block";
+}
+
+restartBtn.addEventListener("click", () => {
+  currentIndex = 0;
+  currentCase = cases[currentIndex];
+  restartBtn.style.display = "none";
+  loadCase();
+});
+
 }
 
 // ===== START =====
