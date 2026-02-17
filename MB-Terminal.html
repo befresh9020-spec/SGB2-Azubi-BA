@@ -1256,12 +1256,22 @@ checkBtn.addEventListener("click", () => {
 
 if (currentCase.requireRbInput) {
   const enteredRb = parseFloat(rbInputEl.value.replace(',', '.'));
-  
+
   if (!enteredRb || enteredRb <= 0) {
     alert("Bitte zuerst den maßgebenden Regelbedarf eingeben.");
     return;
   }
-  
+
+  if (enteredRb !== currentCase.baseValue) {
+    feedbackEl.innerHTML = `
+      <div class="feedback-item feedback-wrong">
+        ❌ Der maßgebende Regelbedarf ist falsch.<br>
+        Richtig wäre: ${currentCase.baseValue} €
+      </div>
+    `;
+    return;
+  }
+
   rbBase = enteredRb;
 }
   
